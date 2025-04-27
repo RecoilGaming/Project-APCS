@@ -11,6 +11,11 @@ import com.apcs.disunity.signals.Signals;
  * @author Qinzhao Li
  */
 public class PlayerController extends Controller {
+    private final Inputs inputs;
+
+    public PlayerController(int endpointId) {
+        inputs = Inputs.getInstance(endpointId);
+    }
 
     /* ================ [ NODE ] ================ */
 
@@ -18,8 +23,8 @@ public class PlayerController extends Controller {
     public void update(double delta) {
         // Trigger walking
         Vector2 walkDir = new Vector2(
-            (Inputs.getAction("left") ? -1 : 0) + (Inputs.getAction("right") ? 1 : 0),
-            (Inputs.getAction("up") ? -1 : 0) + (Inputs.getAction("down") ? 1 : 0)
+            (inputs.getAction("left") ? -1 : 0) + (inputs.getAction("right") ? 1 : 0),
+            (inputs.getAction("up") ? -1 : 0) + (inputs.getAction("down") ? 1 : 0)
         ).normalized();
 
         Signals.trigger(Signals.getSignal(getId(), "walk"), walkDir);
@@ -31,5 +36,5 @@ public class PlayerController extends Controller {
             Signals.trigger(Signals.getSignal(getId(), "animate"), "");
         }
     }
-    
+
 }

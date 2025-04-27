@@ -16,8 +16,6 @@ import com.apcs.disunity.annotations.Requires;
  * @author Toshiki Takeuchi
  */
 public abstract class Node<T extends Node<?>> {
-    // MUST DO: remove this
-    public int owner;
 
     /* ================ [ FIELDS ] ================ */
 

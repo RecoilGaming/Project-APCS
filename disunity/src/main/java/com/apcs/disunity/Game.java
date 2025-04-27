@@ -64,11 +64,13 @@ public class Game extends JPanel {
         requestFocusInWindow();
 
         // Attach input handler
-        input = new InputHandler();
-        addKeyListener(input);
-        addMouseListener(input);
-        addMouseMotionListener(input);
-        addFocusListener(input);
+        if(!isHost) {
+            input = new InputHandler();
+            addKeyListener(input);
+            addMouseListener(input);
+            addMouseMotionListener(input);
+            addFocusListener(input);
+        }
 
         // Set current scene
         Scenes.setScene(scene);

@@ -2,9 +2,15 @@ package com.apcs.disunity.server;
 
 import com.apcs.disunity.Options;
 import com.apcs.disunity.ThrottledLoopThread;
+import com.apcs.disunity.input.Inputs;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Arrays;
+
+import static com.apcs.disunity.server.CODEC.decodeInt;
 
 public class ClientSideSyncHandler extends SyncHandler implements Closeable {
 
@@ -19,15 +25,39 @@ public class ClientSideSyncHandler extends SyncHandler implements Closeable {
 
         recieverThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
-                distribute(HOST_ID, transceiver.recieve());
+                distribute(transceiver.recieve());
             }
         });
 
         senderThread = new ThrottledLoopThread(
             Options.getMSPP(),
-            () -> transceiver.send(poll()),
+            () -> {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                Inputs.runtimeInstance().encode(out);
+                transceiver.send(out.toByteArray());
+            },
             ()->{}
         );
+    }
+
+    protected void distribute(byte[] data) {
+        try {
+            ByteArrayInputStream in = new ByteArrayInputStream(data);
+            for (Object sync : syncs) {
+
+                int size = decodeInt(in);
+                byte[] nodePacket = new byte[size];
+                int numBytes = in.read(nodePacket);
+                if (numBytes == -1 && size != 0) throw new RuntimeException("packet was smaller than expected.");
+
+                ByteArrayInputStream packetStream = new ByteArrayInputStream(nodePacket);
+                CODEC.decodeObject(sync, packetStream);
+                if(packetStream.available() != 0) throw new RuntimeException("synced object did not consume all contents of packet");
+            }
+            if(in.available() != 0) throw new RuntimeException("client did not consume all contents of packet");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -48,5 +78,4 @@ public class ClientSideSyncHandler extends SyncHandler implements Closeable {
     public int getEndpointId() {
         return client.id();
     }
-    
 }

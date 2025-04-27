@@ -31,4 +31,9 @@ public class SyncedString extends SyncableWrapper<String> {
         }
         return builder.toString();
     }
+
+    @Override
+    public String toString() {
+        return String.format("synced[%s]", value());
+    }
 }

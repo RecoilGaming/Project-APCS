@@ -1,9 +1,5 @@
 package com.apcs.disunity.server;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +17,7 @@ public abstract class SyncHandler {
         }
     }
 
-    private final List<Object> syncs = new LinkedList<>();
+    protected final List<Object> syncs = new LinkedList<>();
 
     public void register(Object obj) {
         syncs.add(obj);
@@ -31,56 +27,17 @@ public abstract class SyncHandler {
         return instance;
     }
 
-    protected final byte[] poll() {
-        try {
-            // this should only run on server,
-            // and client should have its own protocol for sending inputs.
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ByteArrayOutputStream packetStream = new ByteArrayOutputStream();
-            for (Object sync : syncs) {
-                CODEC.encodeObject(sync,packetStream);
-                out.write(Util.pack(packetStream.toByteArray()));
-                packetStream.reset();
-            }
-            return out.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected final void distribute(int sender, byte[] data) {
-        // this should only run on client,
-        // and server should have its own protocol for applying user input.
-        try {
-            ByteArrayInputStream in = new ByteArrayInputStream(data);
-            for (Object sync : syncs) {
-
-                int size = decodeInt(in);
-                byte[] nodePacket = new byte[size];
-                int numBytes = in.read(nodePacket);
-                if (numBytes == -1 && size != 0) throw new RuntimeException("packet was smaller than expected.");
-                // MUST DO: implement proper client reconciliation
-                // client ignores server packet overriding owning nodes
-                // server ignores clients overriding unowned nodes
-                try {
-                    Field ownerField = sync.getClass().getField("owner");
-                    int owner = (int) ownerField.get(sync);
-                    if(owner == getEndpointId() || getEndpointId() == HOST_ID && sender != owner) continue;
-                } catch (NoSuchFieldException nsfe) {}
-
-                ByteArrayInputStream packetStream = new ByteArrayInputStream(nodePacket);
-                CODEC.decodeObject(sync, packetStream);
-            }
-            if(in.available() != 0) throw new RuntimeException("reciever did not consume all contents of packet");
-        } catch (IOException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public final boolean isClient() {
-        return getEndpointId() == HOST_ID;
+        return getEndpointId() != HOST_ID;
     }
 
     public abstract int getEndpointId();
     public abstract void start();
+    public String getLabel() {
+        return isClient() ? "[CLIENT "+getEndpointId()+"]" : "[SERVER]";
+    }
+
+    public static void log(String fmt, Object... arg) {
+        System.out.printf(getInstance().getLabel()+ ' ' + fmt, arg);
+    }
 }

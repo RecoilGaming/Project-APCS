@@ -1,6 +1,8 @@
 package com.apcs.disunity.nodes.sprite;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.stream.Stream;
 
 import com.apcs.disunity.Game;
 import com.apcs.disunity.animation.AnimationSet;
@@ -11,6 +13,7 @@ import com.apcs.disunity.nodes.Node2D;
 import com.apcs.disunity.nodes.controller.Controllable;
 import com.apcs.disunity.resources.Image;
 import com.apcs.disunity.resources.Resources;
+import com.apcs.disunity.server.SyncHandler;
 import com.apcs.disunity.server.SyncedString;
 import com.apcs.disunity.signals.Signals;
 
@@ -77,7 +80,7 @@ public class AnimatedSprite extends Node2D implements Controllable {
     @Override
     public void update(double delta) {
         // Update frame
-        if (!animation.value().isEmpty()) {
+        if (!animation.value().isEmpty() && !SyncHandler.getInstance().isClient()) {
             if (System.nanoTime() - prevFrame >= animations.getAnimation(animation.value()).getFrameDuration() * 1000000000) {
                 prevFrame = System.nanoTime();
                 animations.getAnimation(animation.value()).nextFrame();
@@ -92,17 +95,20 @@ public class AnimatedSprite extends Node2D implements Controllable {
     public void draw(Transform offset) {
 
         BufferedImage img;
-        if (animation.value().isEmpty()) {
+        // keep the copy of synced value, to avoid unexpected override
+        String animation = this.animation.value();
+        if (animation.isEmpty()) {
             // Default sprite fallback
             img = Resources.loadResource(animations.getBase(), Image.class).getBuffer();
         } else {
             // Load current frame
-            img = Resources.loadResource(animations.getAnimation(animation.value()).getPath(), Image.class).getBuffer();
+            img = Resources.loadResource(animations.getAnimation(animation).getPath(), Image.class).getBuffer();
+
 
             // Crop image to current frame
-            int w = img.getWidth() / animations.getAnimation(animation.value()).getFrameCount();
+            int w = img.getWidth() / animations.getAnimation(animation).getFrameCount();
             img = img.getSubimage(
-                w * animations.getAnimation(animation.value()).getFrame(), 0,
+                w * animations.getAnimation(animation).getFrame(), 0,
                 w, img.getHeight()
             );
         }
@@ -113,5 +119,9 @@ public class AnimatedSprite extends Node2D implements Controllable {
         // Draw children
         super.draw(offset);
     }
-    
+
+    @Override
+    public List<Node<?>> getChildren() {
+        return Stream.concat(super.getChildren().stream(),animations.getChildren().stream()).toList();
+    }
 }

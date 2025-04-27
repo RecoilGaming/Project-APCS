@@ -2,13 +2,14 @@ package com.apcs.disunity.animation;
 
 
 import com.apcs.disunity.annotations.syncedfield.SyncedInt;
+import com.apcs.disunity.nodes.UndrawnNode;
 
 /**
  * Handles one animation with frames
  * 
  * @author Qinzhao Li
  */
-public class Animation {
+public class Animation extends UndrawnNode {
 
     /* ================ [ FIELDS ] ================ */
 

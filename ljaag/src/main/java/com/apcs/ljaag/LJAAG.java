@@ -49,7 +49,7 @@ public class LJAAG {
         }
     }
 
-    public static final int NUM_PLAYERS = 8;
+    public static final int NUM_PLAYERS = 2;
 
     public static class Server {
         public static void main(String[] args) throws IOException, InterruptedException {
@@ -118,9 +118,9 @@ public class LJAAG {
     }
 
     private static void runApp(int players, boolean viewable) {
+        int endpointId = SyncHandler.getInstance().getEndpointId();
 
         // Import keybinds from a JSON file
-        Inputs.fromJSON("keybinds.json");
 
         // Create the game scenes
         Scenes.addScene("test", new Node2D(
@@ -128,23 +128,23 @@ public class LJAAG {
         ));
 
         Scenes.setScene("test");
-        for (int i = 1; i <= players+1; i++) {
+        for (int i = 1; i <= players; i++) {
             Scenes.getScene().addChildren(instantiateCharacter(i));
         }
 
         registerNodeRecursive(Scenes.getScene());
 
-        int endpointId = SyncHandler.getInstance().getEndpointId();
         // Create game application
 
         Game game = new Game(
             Vector2.of(480, 270),
-            "test"
+            "test",
+            endpointId == 0
         );
 
         if (viewable) {
             new App(
-                endpointId == 0 ? "[SERVER]" : "[CLIENT_" + endpointId + "]",
+                SyncHandler.getInstance().getLabel(),
                 800, 
                 450,
                 game);
@@ -155,37 +155,26 @@ public class LJAAG {
     }
 
     private static Body instantiateCharacter(int clientId) {
+        Inputs.fromJSON("keybinds.json", clientId);
         boolean isPlayer = SyncHandler.getInstance().getEndpointId() == clientId;
-        Body body = new Body(
-            isPlayer ? new Camera() : new Node<>() {
-            },
+        return new Body(
+            isPlayer ? new Camera() : new Node2D(),
             new AnimatedSprite(
                 new AnimationSet("player/player.png",
                     new Animation("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
                 ),
-                isPlayer
+                true
             ),
-            isPlayer ? new PlayerController() : new Controller() {
-            },
+            new PlayerController(clientId),
             new WalkAction(),
             new TurnAction()
         );
-        own(body, clientId);
-        return body;
     }
 
     private static void registerNodeRecursive(Node<?> node) {
         SyncHandler.getInstance().register(node);
         for (Node<?> child : node.getChildren()) {
             registerNodeRecursive(child);
-        }
-    }
-
-    // TODO: implement proper client reconciliation
-    private static void own(Node<?> node, int clientId) {
-        node.owner = clientId;
-        for (Node<?> child : node.getChildren()) {
-            own(child, clientId);
         }
     }
 }
