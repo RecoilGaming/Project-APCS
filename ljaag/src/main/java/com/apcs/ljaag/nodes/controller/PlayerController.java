@@ -3,6 +3,7 @@ package com.apcs.ljaag.nodes.controller;
 import com.apcs.disunity.input.Inputs;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.controller.Controller;
+import com.apcs.disunity.server.SyncHandler;
 import com.apcs.disunity.signals.Signals;
 
 /** 
@@ -30,10 +31,12 @@ public class PlayerController extends Controller {
         Signals.trigger(Signals.getSignal(getId(), "walk"), walkDir);
 
         // Trigger animations
-        if (walkDir.length() > 0) {
-            Signals.trigger(Signals.getSignal(getId(), "animate"), "run");
-        } else {
-            Signals.trigger(Signals.getSignal(getId(), "animate"), "");
+        if(!SyncHandler.getInstance().isClient()) {
+            if (walkDir.length() > 0) {
+                Signals.trigger(Signals.getSignal(getId(), "animate"), "run");
+            } else {
+                Signals.trigger(Signals.getSignal(getId(), "animate"), "");
+            }
         }
     }
 
