@@ -14,7 +14,7 @@ public class WalkAction extends MoveAction<Vector2> {
     /* ================ [ ATTRIBUTES ] ================ */
 
     /** The speed of movement */
-    private double speed = 100;
+    private double speed = 20;
 
     /* ================ [ FIELDS ] ================ */
 

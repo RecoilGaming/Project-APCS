@@ -167,6 +167,7 @@ public class Game extends JPanel {
             transform.move(dimensions.mul(0.5)) // Center on camera
         );
 
+
         BufferedImage image = buffer.getImage();
         int w = image.getWidth();
         int h = image.getHeight();

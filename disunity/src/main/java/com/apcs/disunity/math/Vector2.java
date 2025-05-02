@@ -40,8 +40,8 @@ public class Vector2 {
     public Vector2(double x, double y) {
         this.x = x;
         this.y = y;
-        this.xi = (int) Math.round(x);
-        this.yi = (int) Math.round(y);
+        this.xi = (int) x;
+        this.yi = (int) y;
     }
 
     /* ================ [ METHODS ] ================ */
