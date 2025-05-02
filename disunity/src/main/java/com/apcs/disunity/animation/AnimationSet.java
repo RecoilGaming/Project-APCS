@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Stores a set of animations for some game element.
+ * Stores a set of animations for some object
  * 
  * @author Qinzhao Li
  */
@@ -12,28 +12,48 @@ public class AnimationSet {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Base image
+    /** The base (fallback) image */
     private final String base;
 
-    // Animations
+    /** Maps names to animation objects */
     private final Map<String, Animation> animations = new HashMap<>();
 
-    // Constructors
+    /**
+     * Creates a new AnimationSet with the given base image and animations
+     * 
+     * @param base The base image
+     * @param animations The animations
+     */
     public AnimationSet(String base, Animation... animations) {
         this.base = base;
-        for (Animation animation : animations)
+
+        // Map provided animations
+        for (Animation animation : animations) {
             this.animations.put(animation.getName(), animation);
+        }
     }
 
     /* ================ [ METHODS ] ================ */
 
-    // Get base image
+    /**
+     * Get the base image
+     * 
+     * @return The base image
+     */
     public String getBase() { return base; }
 
-    // Get animation
+    /**
+     * Get an animation by name
+     *
+     * @param name The name of the animation
+     * @return The animation
+     */
     public Animation getAnimation(String name) {
-        if (animations.containsKey(name)) return animations.get(name);
-        else throw new RuntimeException("Unable to resolve animation: "+name);
+        if (animations.containsKey(name)) {
+            return animations.get(name);
+        } else {
+            throw new RuntimeException("Animation not found: " + name);
+        }
     }
     
 }

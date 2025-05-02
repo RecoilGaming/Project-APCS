@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * A set of keybinds for an action
+ * An action that can be triggered by other sub-actions (OR)
  * 
  * @author Qinzhao Li
  */
@@ -12,17 +12,25 @@ public class ActionSet {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Actions
-    private final Action[] actions;
+    /** The sub-actions that trigger this action */
+    private final Action[] subactions;
 
-    // Constructors
+    /**
+     * Creates a new ActionSet with the given sub-actions
+     *
+     * @param actions The sub-actions that trigger this action
+     */
     @JsonCreator
-    public ActionSet(Action... actions) { this.actions = actions; }
+    public ActionSet(Action... subactions) { this.subactions = subactions; }
 
     /* ================ [ METHODS ] ================ */
 
-    // Get actions
+    /**
+     * Get the sub-actions that trigger this action
+     *
+     * @return The sub-actions that trigger this action
+     */
     @JsonValue
-    public Action[] getActions() { return actions; }
+    public Action[] getActions() { return subactions; }
     
 }

@@ -36,7 +36,7 @@ public class WalkAction extends MoveAction<Vector2> {
     /**
      * Applies the movement to the given velocity
      * 
-     * @param vel The previous velocity
+     * @param vel The original velocity
      * @param delta The time since the last update
      * @return The new velocity
      */

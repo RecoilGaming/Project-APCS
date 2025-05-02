@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * An enum containing all input types
+ * Contains all input types from all sources
  * 
  * @author Qinzhao Li
  */
@@ -211,28 +211,49 @@ public enum Input {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Name
+    /** The name of the input */
     private String name;
 
-    // Constructors
+    /**
+     * Creates a new Input with the given name
+     * 
+     * @param name The name of the input
+     */
     @JsonCreator
     Input(String name) { this.name = name; }
 
     /* ================ [ METHODS ] ================ */
 
-    // Get name
+    /**
+     * Get the name of the input
+     * 
+     * @return The name of the input
+     */
     @JsonValue
     public String getName() { return name; }
 
-    // Get action by name
+    /**
+     * Get the input by name
+     * 
+     * @param name The name of the input
+     * @return The input
+     */
     public static Input getByName(String name) {
         for (Input input : values()) {
-            if (input.name.equals(name))
+            if (input.name.equals(name)) {
                 return input;
+            }
         } return null;
     }
 
-    // Get action from mouse
+    /* ================ [ INPUTS ] ================ */
+
+    /**
+     * Get the input from a mouse button
+     *
+     * @param button The mouse button
+     * @return The input
+     */
     public static Input getFromMouse(int button) {
         switch (button) {
             case MouseEvent.BUTTON1: return MOUSE_LEFT;
@@ -242,7 +263,12 @@ public enum Input {
         }
     }
 
-    // Get action from keyboard
+    /**
+     * Get the input from a keyboard key
+     *
+     * @param key The key
+     * @return The input
+     */
     public static Input getFromKey(int key) {
         switch (key) {
             case KeyEvent.VK_ENTER: return KEY_ENTER;

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.apcs.disunity.input.actions.Action;
 import com.apcs.disunity.input.actions.ActionSet;
-import static com.apcs.disunity.resources.Resources.loadFileAsInputStream;
+import com.apcs.disunity.resources.Resources;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,51 +22,91 @@ public class Inputs {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Maps actions to their respective bindings
+    /** Maps action names to their action sets */
     private static Map<String, ActionSet> actions = new HashMap<>();
 
-    // Maps inputs to their pressed state
+    /** Lists all inputs that are currently pressed */
     private static final Set<Input> inputs = new HashSet<>();
 
-    // Mouse position on the screen
-    public static int mouseX = 0, mouseY = 0;
+    /** The mouse X position on the screen */
+    public static int mouseX = 0;
+    /** The mouse Y position on the screen */
+    public static int mouseY = 0;
 
     /* ================ [ METHODS ] ================ */
 
-    // Press an input
+    /**
+     * Set an input state to pressed
+     * 
+     * @param input The input
+     */
     public static void press(Input input) { inputs.add(input); }
 
-    // Release an input
+    /**
+     * Set an input state to released
+     * 
+     * @param input The input     
+     */
     public static void release(Input input) { inputs.remove(input); }
-    // Release all keys
+
+    /** Release all inputs */
     public static void releaseAll() { inputs.clear(); }
 
-    // Get if input is pressed
+    /**
+     * Get if an input is pressed
+     * 
+     * @param input The input
+     * @return Whether or not the input is pressed
+     */
     public static boolean get(Input input) { return inputs.contains(input); }
 
-    // Add an action to the map
+    /**
+     * Add an action to the map
+     * 
+     * @param name The name of the action
+     * @param action The action set
+     */
     public static void addAction(String name, ActionSet action) { actions.put(name, action); }
 
-    // Get if an action is pressed
+    /**
+     * Get if an action is triggered
+     * 
+     * @param name The name of the action
+     * @return Whether or not the action is triggered
+     */
     public static boolean getAction(String name) {
         for (Action action : actions.get(name).getActions()) {
             boolean pressed = true;
-            for (Input input : action.getInputs())
-                pressed = pressed && get(input);
             
-            if (pressed) return true;
+            // Check if all required inputs are pressed
+            for (Input input : action.getInputs()) {
+                pressed = pressed && get(input);
+            }
+            
+            if (pressed) {
+                return true;
+            }
         } return false;
     }
 
     /* ================ [ LOADER ] ================ */
 
-    // Load from a JSON file
+    /**
+     * Load actions from a JSON file
+     *
+     * @param path The path to the JSON file
+     */
     public static void fromJSON(String path) {
         try {
-            InputStream file = loadFileAsInputStream(path);
+            // Load file as input stream
+            InputStream file = Resources.loadFileAsInputStream(path);
+
+            // Read the JSON file
             ObjectMapper om = new ObjectMapper();
             actions = om.readValue(file, new TypeReference<Map<String, ActionSet>>() {});
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 }

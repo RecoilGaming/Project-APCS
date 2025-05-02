@@ -1,12 +1,13 @@
 package com.apcs.disunity.nodes;
 
-import com.apcs.disunity.annotations.Requires;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+
+import com.apcs.disunity.annotations.Requires;
 
 /**
  * The base class for all nodes in the game

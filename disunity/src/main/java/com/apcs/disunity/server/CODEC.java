@@ -1,11 +1,11 @@
 package com.apcs.disunity.server;
 
-import com.apcs.disunity.annotations.syncedfield.*;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+
+import com.apcs.disunity.annotations.syncedfield.*;
 
 import static com.apcs.disunity.server.Util.decodeBits;
 import static com.apcs.disunity.server.Util.encodeBits;

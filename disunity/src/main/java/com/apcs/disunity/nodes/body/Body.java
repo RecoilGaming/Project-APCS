@@ -2,8 +2,8 @@ package com.apcs.disunity.nodes.body;
 
 import com.apcs.disunity.annotations.Requires;
 import com.apcs.disunity.annotations.syncedfield.SyncedObject;
-import com.apcs.disunity.appliable.TransformAppliable;
-import com.apcs.disunity.appliable.VelocityAppliable;
+import com.apcs.disunity.applyable.TransformApplyable;
+import com.apcs.disunity.applyable.VelocityApplyable;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.Node;
@@ -60,12 +60,12 @@ public class Body extends Node2D {
     @Override
     public void update(double delta) {
         // Apply velocity nodes
-        for (VelocityAppliable va : getChildren(VelocityAppliable.class)) {
+        for (VelocityApplyable va : getChildren(VelocityApplyable.class)) {
             vel = va.apply(vel, delta);
         }
 
         // Apply transform nodes
-        for (TransformAppliable ta : getChildren(TransformAppliable.class)) {
+        for (TransformApplyable ta : getChildren(TransformApplyable.class)) {
             transform = ta.apply(transform, delta);
         }
 

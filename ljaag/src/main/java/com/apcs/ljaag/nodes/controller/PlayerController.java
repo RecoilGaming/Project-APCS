@@ -6,7 +6,7 @@ import com.apcs.disunity.nodes.controller.Controller;
 import com.apcs.disunity.signals.Signals;
 
 /** 
- * A Controller that is controlled by player inputs
+ * A controller that is controlled by player inputs
  * 
  * @author Qinzhao Li
  */

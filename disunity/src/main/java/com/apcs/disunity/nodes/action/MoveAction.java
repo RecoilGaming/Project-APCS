@@ -1,6 +1,6 @@
 package com.apcs.disunity.nodes.action;
 
-import com.apcs.disunity.appliable.VelocityAppliable;
+import com.apcs.disunity.applyable.VelocityApplyable;
 import com.apcs.disunity.nodes.UndrawnNode;
 import com.apcs.disunity.nodes.controller.Controllable;
 
@@ -9,7 +9,7 @@ import com.apcs.disunity.nodes.controller.Controllable;
  * 
  * @author Qinzhao Li
  */
-public abstract class MoveAction<T> extends GameAction<T> implements VelocityAppliable, Controllable {
+public abstract class MoveAction<T> extends GameAction<T> implements VelocityApplyable, Controllable {
 
     /* ================ [ FIELDS ] ================ */
 

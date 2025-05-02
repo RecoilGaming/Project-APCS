@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import com.apcs.disunity.nodes.Node;
 
 /**
- * Requires a node to have certain children
+ * Specifies the children types that a node must have
  * 
  * @author Qinzhao Li
  */
@@ -17,5 +17,6 @@ import com.apcs.disunity.nodes.Node;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Requires {
+    /** The children types that the node must have */
     Class<? extends Node<?>>[] nodes();
 }

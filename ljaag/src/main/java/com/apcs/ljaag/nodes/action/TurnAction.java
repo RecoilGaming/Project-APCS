@@ -1,16 +1,16 @@
 package com.apcs.ljaag.nodes.action;
 
-import com.apcs.disunity.appliable.TransformAppliable;
+import com.apcs.disunity.applyable.TransformApplyable;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.UndrawnNode;
 
 /**
- * Allows a ndoe to turn in the direction of its movement
+ * Allows a node to turn in the direction of its movement
  *
  * @author Qinzhao Li
  */
-public class TurnAction extends UndrawnNode implements TransformAppliable {
+public class TurnAction extends UndrawnNode implements TransformApplyable {
 
     /* ================ [ FIELDS ] ================ */
 
@@ -25,7 +25,7 @@ public class TurnAction extends UndrawnNode implements TransformAppliable {
     /**
      * Applies the rotation transformation by inverting X scale
      * 
-     * @param transform The previous transform
+     * @param transform The original transform
      * @param delta The time since the last update
      * @return The new transform
      */
