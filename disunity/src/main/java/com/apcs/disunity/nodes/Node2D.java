@@ -1,6 +1,5 @@
 package com.apcs.disunity.nodes;
 
-import com.apcs.disunity.annotations.syncedfield.SyncedObject;
 import com.apcs.disunity.math.Transform;
 
 /**

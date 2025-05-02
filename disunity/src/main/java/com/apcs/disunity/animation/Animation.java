@@ -1,7 +1,5 @@
 package com.apcs.disunity.animation;
 
-import com.apcs.disunity.annotations.syncedfield.SyncedInt;
-
 /**
  * Handles frame progression within an animation
  * 
@@ -20,7 +18,6 @@ public class Animation {
     private final double[] frameDurations;
 
     /** The current frame index */
-    @SyncedInt
     private int frame = 0;
 
     /**

@@ -1,12 +1,5 @@
 package com.apcs.disunity.math;
 
-import com.apcs.disunity.server.SelfCodec;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import static com.apcs.disunity.server.CODEC.*;
-
 /**
  * Stores x and y components of a vector
  * IMMUTABLE
@@ -14,7 +7,7 @@ import static com.apcs.disunity.server.CODEC.*;
  * @author Qinzhao Li
  * @author Sharvil Phadke
  */
-public class Vector2 implements SelfCodec<Vector2> {
+public class Vector2 {
 
     /* ================ [ CONSTANTS ] ================ */
 
@@ -161,18 +154,4 @@ public class Vector2 implements SelfCodec<Vector2> {
     @Override
     public String toString() { return "(" + x + ", " + y + ")"; }
 
-    /* ================ [ CODEC ] ================ */
-    
-    @Override
-    public void encode(OutputStream out) {
-        encodeDouble(x,out);
-        encodeDouble(y,out);
-    }
-
-    @Override
-    public Vector2 decode(InputStream in) {
-        var x = decodeDouble(in);
-        var y = decodeDouble(in);
-        return Vector2.of(x,y);
-    }
 }

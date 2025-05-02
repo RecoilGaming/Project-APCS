@@ -18,35 +18,4 @@
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.apcs</groupId>
-            <artifactId>processor</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/hem1sphereCHS/FieldTypeEnforcer</url>
-        </repository>
-    </repositories>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <annotationProcessors>
-                        com.apcs.disunity.annotations.FieldTypeEnforcer
-                    </annotationProcessors>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

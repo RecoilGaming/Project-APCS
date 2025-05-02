@@ -1,8 +1,5 @@
 package com.apcs.disunity.math;
 
-import com.apcs.disunity.annotations.syncedfield.SyncedDouble;
-import com.apcs.disunity.annotations.syncedfield.SyncedObject;
-
 /**
  * Stores position, scale, and rotation information
  * IMMUTABLE
@@ -19,15 +16,12 @@ public class Transform {
     /* ================ [ FIELDS ] ================ */
 
     /** The position of the transform */
-    @SyncedObject
     public final Vector2 pos;
 
     /** The scale of the transform */
-    @SyncedObject
     public final Vector2 scale;
 
     /** The rotation of the transform (degrees) */
-    @SyncedDouble
     public final double rot;
 
     /** Creates a new Transform */
