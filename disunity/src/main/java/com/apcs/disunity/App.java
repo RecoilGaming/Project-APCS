@@ -1,5 +1,6 @@
 package com.apcs.disunity;
 
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -26,15 +27,16 @@ public class App extends JFrame {
     public App(String title, int width, int height, Game game) {
         // Window setup
         setTitle(title);
-        setSize(width, height);
+        setSize(width,height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Window resize listener
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+                Rectangle bounds = getContentPane().getBounds();
                 game.setBufferSize(
-                    Vector2.of(getWidth(), getHeight())
+                    Vector2.of(bounds.width, bounds.height)
                 );
             }
         });
