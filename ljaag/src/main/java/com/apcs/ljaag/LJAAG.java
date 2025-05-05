@@ -38,7 +38,6 @@ public class LJAAG {
     public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException, InterruptedException {
         MultiplayerLauncher launcher = new MultiplayerLauncher(LJAAG::runApp);
         launcher.lauch();
-        runApp(false);
     }
 
     public static final int NUM_PLAYERS = 8;

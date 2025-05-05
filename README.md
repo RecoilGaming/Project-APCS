@@ -6,15 +6,11 @@
 
 **Node** is the base node and has children.
 
-**Node** is a Node that is not visible in the game. They can only have other Nodes as children.
-
 **Camera** is a Node that controls the viewport.
 
 **Controller** is an Node that controls a body node.
 
 **MoveAction** is an Node that performs a movement action.
-
-**Node** is a Node that is visible in the game.
 
 **Node2D** is a Node with a transform. It renders its children relative to its own transform.
 
