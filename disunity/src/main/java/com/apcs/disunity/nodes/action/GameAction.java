@@ -1,33 +1,41 @@
 package com.apcs.disunity.nodes.action;
 
-import com.apcs.disunity.nodes.UndrawnNode;
+import com.apcs.disunity.nodes.Node;
 import com.apcs.disunity.signals.Signals;
-
-// TODO: Documentation
 
 /**
  * A node that performs an action
  * 
  * @author Qinzhao Li
  */
-public abstract class GameAction<T> extends UndrawnNode {
+public abstract class GameAction<T> extends Node {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Source id
+    /** The id of the source node */
     private int source = -1;
 
-    // Constructors
+    /** Create a new GameAction */
     public GameAction() { super(); }
-    public GameAction(UndrawnNode... children) { super(children); }
+    /**
+     * Create a new GameAction with the given children
+     *
+     * @param children The children of this node
+     */
+    public GameAction(Node... children) { super(children); }
     
     /* ================ [ METHODS ] ================ */
 
-    // Set source id
+    /**
+     * Set the source id
+     *
+     * @param source The source id
+     */
     public void setSource(int source) { this.source = source; }
 
     /* ================ [ NODE ] ================ */
 
+    /** Initialize the node */
     @Override
     public void initialize() {
         // Connect to signal
@@ -39,10 +47,18 @@ public abstract class GameAction<T> extends UndrawnNode {
 
     /* ================ [ ACTION ] ================ */
 
-    // Get action id
+    /**
+     * Get the action id
+     *
+     * @return The action id
+     */
     public abstract String actionId();
 
-    // Trigger the action
+    /**
+     * Trigger the action
+     *
+     * @param data The data to trigger the action with
+     */
     public abstract void trigger(T data);
 
 }

@@ -28,10 +28,10 @@ public class CollisionInfo {
         return you;
     }
 
-    /**
-     * Check if this is a trigger collision
-     */
-    public boolean isTrigger() {
-        return me.isTrigger() || you.isTrigger();
-    }
+    // /**
+    //  * Check if this is a trigger collision
+    //  */
+    // public boolean isTrigger() {
+    //     return me.isTrigger() || you.isTrigger();
+    // }
 }

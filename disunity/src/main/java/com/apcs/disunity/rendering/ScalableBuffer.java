@@ -17,16 +17,28 @@ public class ScalableBuffer {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Image
+    /** The buffer image */
     private BufferedImage image;
+    /** The buffer's graphics context */
     private Graphics2D graphics;
 
-    // Scale
+    /** The screen ratio of the buffer */
     private Vector2 ratio;
+    /** The x and y stretch factors */
     private double xScale, yScale;
 
-    // Constructors
+    /**
+     * Create a new ScalableBuffer with the given ratio
+     * 
+     * @param ratio The screen ratio of the buffer
+     */
     public ScalableBuffer(Vector2 ratio) { this(ratio, ratio); }
+    /**
+     * Create a new ScalableBuffer with the given ratio and target size
+     *
+     * @param ratio The screen ratio of the buffer
+     * @param target The target size of the buffer
+     */
     public ScalableBuffer(Vector2 ratio, Vector2 target) {
         // Set ratio
         this.ratio = ratio;
@@ -37,7 +49,11 @@ public class ScalableBuffer {
 
     /* ================ [ METHODS ] ================ */
 
-    // Refresh buffer
+    /**
+     * Set the buffer size
+     *
+     * @param size The buffer size
+     */
     public void setSize(Vector2 size) {
         size = Vector2.of(
             Math.min(size.x, size.y * ratio.x / ratio.y),
@@ -59,17 +75,36 @@ public class ScalableBuffer {
         graphics.setBackground(Color.WHITE);
     }
 
-    // Clear buffer
+    /** Clear the buffer contents */
     public void clear() { graphics.clearRect(0, 0, image.getWidth(), image.getHeight()); }
 
-    // Getters
+    /**
+     * Get the X scale of the buffer
+     * 
+     * @return The X scale of the buffer
+     */
     public double getXScale() { return xScale; }
+    /**
+     * Get the Y scale of the buffer
+     *
+     * @return The Y scale of the buffer
+     */
     public double getYScale() { return yScale; }
+    /**
+     * Get the buffer image
+     * 
+     * @return The buffer image
+     */
     public BufferedImage getImage() { return image; }
 
     /* ================ [ GRAPHICS ] ================ */
 
-    // Draw image
+    /**
+     * Draw an image to the buffer
+     *
+     * @param img The image to draw
+     * @param transform The image transform
+     */
     public void drawImage(Image img, Transform transform) {
         // Image dimensions
         double imgWidth = img.getWidth(null);

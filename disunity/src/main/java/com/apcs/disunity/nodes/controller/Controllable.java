@@ -1,7 +1,7 @@
 package com.apcs.disunity.nodes.controller;
 
 /**
- * Any node that requires a controller
+ * A node that can be controlled by a controller
  * 
  * @author Qinzhao Li
  */
@@ -9,7 +9,11 @@ public interface Controllable {
 
     /* ================ [ METHODS ] ================ */
 
-    // Set controller id
+    /**
+     * Set the controller id
+     * 
+     * @param controller The controller id
+     */
     public void setController(int controller);
 
 }

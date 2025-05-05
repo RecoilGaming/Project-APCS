@@ -23,36 +23,67 @@ public class AnimatedSprite extends Node2D implements Controllable {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Controller id
+    /** The id of the controller */
     private int controller;
 
-    // Animation set
+    /** The set of animations to play */
     private final AnimationSet animations;
 
-    // Current animation
+    /** The current animation id */
     @SyncedObject
     private SyncedString animation = new SyncedString("");
 
-    // Previous frame time
+    /** The timestamp of the previous frame */
     private long prevFrame = System.nanoTime();
 
-    // Constructors
+    /**
+     * Create a new AnimatedSprite with the given animation set
+     *
+     * @param animations The animation set to play
+     */
     public AnimatedSprite(AnimationSet animations) { super(); this.animations = animations; }
-    public AnimatedSprite(AnimationSet animations, Node<?>... children) { super(children); this.animations = animations; }
-    public AnimatedSprite(AnimationSet animations, Transform transform, Node<?>... children) { super(transform, children); this.animations = animations; }
-    public AnimatedSprite(AnimationSet animations, boolean visible) { super(visible); this.animations = animations; }
-    public AnimatedSprite(AnimationSet animations, boolean visible, Node<?>... children) { super(visible, children); this.animations = animations; }
-    public AnimatedSprite(AnimationSet animations, Transform transform, boolean visible, Node<?>... children) { super(transform, visible, children); this.animations = animations; }
+    /**
+     * Create a new AnimatedSprite with the given animation set and children
+     *
+     * @param animations The animation set to play
+     * @param children The children of this node
+     */
+    public AnimatedSprite(AnimationSet animations, Node... children) { super(children); this.animations = animations; }
+    /**
+     * Create a new AnimatedSprite with the given animation set, transform, and children
+     *
+     * @param animations The animation set to play
+     * @param transform The transform of this node
+     * @param children The children of this node
+     */
+    public AnimatedSprite(AnimationSet animations, Transform transform, Node... children) { super(transform, children); this.animations = animations; }
+    /**
+     * Create a new AnimatedSprite with the given animation set, transform, visibility, and children
+     *
+     * @param animations The animation set to play
+     * @param transform The transform of this node
+     * @param visible Whether or not the node is visible
+     * @param children The children of this node
+     */
+    public AnimatedSprite(AnimationSet animations, Transform transform, boolean visible, Node... children) { super(transform, visible, children); this.animations = animations; }
     
     /* ================ [ CONTROLLABLE ] ================ */
 
-    // Set controller id
+    /**
+     * Set the controller id
+     * 
+     * @param controller The controller id
+     */
     @Override
     public void setController(int controller) { this.controller = controller; }
     
     /* ================ [ METHODS ] ================ */
 
-    // Set animation
+    /**
+     * Set the animation to be played
+     *
+     * @param animation The animation id
+     */
     @SuppressWarnings("StringEquality")
     public void setAnimation(String animation) {
         if (this.animation.value() == animation) return;
@@ -60,11 +91,16 @@ public class AnimatedSprite extends Node2D implements Controllable {
         prevFrame = System.nanoTime();
     }
 
-    // Get animation
+    /**
+     * Get the current animation id
+     *
+     * @return The current animation id
+     */
     public String getAnimation() { return animation.value(); }
 
     /* ================ [ NODE ] ================ */
 
+    /** Initialize the node */
     @Override
     public void initialize() {
         // Connect to signal
@@ -74,8 +110,14 @@ public class AnimatedSprite extends Node2D implements Controllable {
         super.initialize();
     }
 
+    /** 
+     * Update the node and its children
+     * 
+     * @param offset The offset of the node
+     * @param delta The time since the last update
+     */
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
         // Update frame
         if (!animation.value().isEmpty()) {
             if (System.nanoTime() - prevFrame >= animations.getAnimation(animation.value()).getFrameDuration() * 1000000000) {
@@ -85,12 +127,16 @@ public class AnimatedSprite extends Node2D implements Controllable {
         }
 
         // Update children
-        super.update(delta);
+        super.update(offset, delta);
     }
 
+    /**
+     * Draw the node and its children
+     * 
+     * @param offset The offset of the node
+     */
     @Override
     public void draw(Transform offset) {
-
         BufferedImage img;
         if (animation.value().isEmpty()) {
             // Default sprite fallback

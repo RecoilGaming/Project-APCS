@@ -3,14 +3,14 @@ package com.apcs.ljaag.nodes.action;
 import com.apcs.disunity.applyable.TransformApplyable;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.nodes.UndrawnNode;
+import com.apcs.disunity.nodes.Node;
 
 /**
  * Allows a node to turn in the direction of its movement
  *
  * @author Qinzhao Li
  */
-public class TurnAction extends UndrawnNode implements TransformApplyable {
+public class TurnAction extends Node implements TransformApplyable {
 
     /* ================ [ FIELDS ] ================ */
 

@@ -11,6 +11,11 @@ import com.apcs.disunity.annotations.syncedfield.SyncedObject;
  */
 public class Transform {
 
+    /* ================ [ CONSTANTS ] ================ */
+
+    /** The identity transform */
+    public static final Transform IDENTITY = new Transform();
+
     /* ================ [ FIELDS ] ================ */
 
     /** The position of the transform */

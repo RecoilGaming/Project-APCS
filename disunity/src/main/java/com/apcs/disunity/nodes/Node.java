@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.apcs.disunity.annotations.Requires;
+import com.apcs.disunity.math.Transform;
 
 /**
  * The base class for all nodes in the game
@@ -15,71 +16,133 @@ import com.apcs.disunity.annotations.Requires;
  * @author Qinzhao Li
  * @author Toshiki Takeuchi
  */
-public abstract class Node<T extends Node<?>> {
+public abstract class Node {
 
-    // MUST DO: remove this
+    // TODO: remove this
     public int owner;
 
     /* ================ [ FIELDS ] ================ */
 
-    // List of children
-    private final List<T> children;
+    /** Whether or not the node is visible */
+    private boolean isVisible = true;
 
-    // Parent of node
-    private Node<?> parent;
+    /** The parent of the node */
+    private Node parent;
 
-    // Triggers initialize
+    /** Lists the children of the node */
+    private final List<Node> children;
+
+    /** Whether or not the node is initialized */
     private boolean isInitialized = false;
 
-    // Constructors
+    /** Create a Node */
     public Node() {
-        this.children = new ArrayList<>();
+        this(true);
     }
-
+    /**
+     * Create a Node with the given children
+     * 
+     * @param children The children of this node
+     */
     @SafeVarargs
-    public Node(T... children) {
+    public Node(Node... children) {
+        this(true, children);
+    }
+    /**
+     * Create a Node with the given visiblility and children
+     * 
+     * @param isVisible Whether or not the node is visible
+     * @param children The children of this node
+     */
+    public Node(boolean isVisible, Node... children) {
+        this.isVisible = isVisible;
         this.children = new ArrayList<>(Arrays.asList(children));
     }
 
     /* ================ [ METHODS ] ================ */
+    
+    /**
+     * Get whether or not the node is visible
+     * 
+     * @return Whether or not the node is visible
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
 
-    // Add child
-    public void addChild(T node) {
+    /**
+     * Set whether or not the node is visible
+     * 
+     * @param isVisible Whether or not the node is visible
+     */
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    /**
+     * Get the parent of this node
+     * 
+     * @return The parent of this node
+     */
+    public Node getParent() {
+        return parent;
+    }
+
+    /**
+     * Set the parent of this node
+     * 
+     * @param parent The parent of this node
+     */
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * Add a child node to this node
+     * 
+     * @param node The child node
+     */
+    public void addChild(Node node) {
         children.add(node);
         node.setParent(this);
         isInitialized = false;
     }
 
-    // Get parent
-    public Node<?> getParent() {
-        return parent;
-    }
-
-    // Set parent
-    public void setParent(Node<?> parent) {
-        this.parent = parent;
-    }
-
+    /**
+     * Add multiple child nodes to this node
+     * 
+     * @param nodes The child nodes
+     */
     @SafeVarargs
-    public final void addChildren(T... nodes) {
-        for (T child : nodes) {
+    public final void addChildren(Node... nodes) {
+        for (Node child : nodes) {
             addChild(child);
         }
     }
 
-    // Remove child
-    public void removeChild(T node) {
+    /**
+     * Remove a child node from this node
+     *
+     * @param node The child node
+     */
+    public void removeChild(Node node) {
         children.remove(node);
     }
 
-    // Clear children
+    /** Remove all child nodes from this node */
     public void clearChildren() {
         children.clear();
     }
 
-    // Get child of a certain type
-    public <U extends T> U getChild(Class<U> type) {
-        for (T node : children) {
+    /**
+     * Get the first child node of a certain type
+     * 
+     * @param <T> The type of the child node
+     * @param type The type of the child node
+     * @return The first child node of the specified type
+     */
+    public <T extends Node> T getChild(Class<T> type) {
+        for (Node node : children) {
             if (type.isInstance(node)) {
                 return type.cast(node);
             }
@@ -87,15 +150,25 @@ public abstract class Node<T extends Node<?>> {
         return null;
     }
 
-    // Get children
-    public List<T> getChildren() {
+    /**
+     * Get all child nodes
+     * 
+     * @return All child nodes
+     */
+    public List<Node> getChildren() {
         return children;
     }
 
-    // Get children of a certain type
-    public <U> List<U> getChildren(Class<U> type) {
-        List<U> children = new ArrayList<>();
-        for (T node : getChildren()) {
+    /**
+     * Get all child nodes of a certain type
+     *
+     * @param <T> The type of the child nodes
+     * @param type The type of the child nodes
+     * @return All child nodes of the specified type
+     */
+    public <T> List<T> getChildren(Class<T> type) {
+        List<T> children = new ArrayList<>();
+        for (Node node : getChildren()) {
             if (type.isInstance(node)) {
                 children.add(type.cast(node));
             }
@@ -105,7 +178,7 @@ public abstract class Node<T extends Node<?>> {
 
     /* ================ [ NODE ] ================ */
 
-    // Initialize node
+    /** Initialize the node */
     public void initialize() {
         // Check if node meets requirements
         if (this.getClass().isAnnotationPresent(Requires.class)) {
@@ -116,7 +189,7 @@ public abstract class Node<T extends Node<?>> {
             );
 
             // Check children
-            for (T node : children) {
+            for (Node node : children) {
                 requirements.removeIf(required ->
                     required.isAssignableFrom(node.getClass())
                 );
@@ -138,19 +211,43 @@ public abstract class Node<T extends Node<?>> {
         isInitialized = true;
     }
 
-    // Tick node
-    public final void tick(double delta) {
+    /**
+     * Tick the node and its children
+     *
+     * @param offset The offset of the node
+     * @param delta The time since the last update
+     */
+    public final void tick(Transform offset, double delta) {
         // Re-initialize node
         if (!isInitialized) initialize();
 
         // Update node
-        update(delta);
+        update(offset, delta);
     }
 
-    // Update node
-    public void update(double delta) {
+    /**
+     * Update the node and its children
+     *
+     * @param offset The offset of the node
+     * @param delta The time since the last update
+     */
+    public void update(Transform offset, double delta) {
         // Update children
-        for (T node : children) node.tick(delta);
+        for (Node node : children) node.tick(offset, delta);
+    }
+
+    /**
+     * Draw the node and its children
+     * 
+     * @param offset
+     */
+    public void draw(Transform offset) {
+        // Draw visible children
+        for (Node node : getChildren()) {
+            if (node.isVisible()) {
+                node.draw(offset);
+            }
+        }
     }
 
     /* ================ [ PRINTING ] ================ */
@@ -171,7 +268,7 @@ public abstract class Node<T extends Node<?>> {
     /// @param indent string used to indent this node
     private void print(
         boolean isLast,
-        Function<Node<?>, String> formatter,
+        Function<Node, String> formatter,
         List<String> indent
     ) {
         indent.forEach(System.out::print);
@@ -182,10 +279,10 @@ public abstract class Node<T extends Node<?>> {
         else indent.add("│ ");
 
         for (int i = 0; i < children.size() - 1; i++) {
-            ((Node<?>) children.get(i)).print(false, formatter, indent);
+            ((Node) children.get(i)).print(false, formatter, indent);
         }
         if (!children.isEmpty()) {
-            ((Node<?>) children.getLast()).print(true, formatter, indent);
+            ((Node) children.getLast()).print(true, formatter, indent);
         }
 
         indent.removeLast();

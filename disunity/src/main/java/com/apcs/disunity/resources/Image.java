@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+// TODO: Document
 
 /**
  * An image to be used in the game
@@ -15,7 +16,9 @@ import javax.imageio.ImageIO;
  */
 public class Image {
 
-    static { Resources.loaders.put(Image.class, Image::new); }
+    static {
+        Resources.loaders.put(Image.class, Image::new);
+    }
 
     private final BufferedImage buffer;
 

@@ -6,17 +6,17 @@
 
 **Node** is the base node and has children.
 
-**UndrawnNode** is a Node that is not visible in the game. They can only have other UndrawnNodes as children.
+**Node** is a Node that is not visible in the game. They can only have other Nodes as children.
 
-**Camera** is a UndrawnNode that controls the viewport.
+**Camera** is a Node that controls the viewport.
 
-**Controller** is an UndrawnNode that controls a body node.
+**Controller** is an Node that controls a body node.
 
-**MoveAction** is an UndrawnNode that performs a movement action.
+**MoveAction** is an Node that performs a movement action.
 
-**DrawnNode** is a Node that is visible in the game.
+**Node** is a Node that is visible in the game.
 
-**Node2D** is a DrawnNode with a transform. It renders its children relative to its own transform.
+**Node2D** is a Node with a transform. It renders its children relative to its own transform.
 
 **Sprite** is a Node2D that renders an image or animation.
 

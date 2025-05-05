@@ -1,6 +1,7 @@
 package com.apcs.ljaag.nodes.controller;
 
 import com.apcs.disunity.input.Inputs;
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.controller.Controller;
 import com.apcs.disunity.signals.Signals;
@@ -17,10 +18,11 @@ public class PlayerController extends Controller {
     /**
      * Updates the node and triggers all necessary actions
      * 
+     * @param offset The offset of the node
      * @param delta The time since the last update
      */
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
         // Trigger walking
         Vector2 walkDir = new Vector2(
             (Inputs.getAction("left") ? -1 : 0) + (Inputs.getAction("right") ? 1 : 0),

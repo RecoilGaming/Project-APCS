@@ -1,7 +1,7 @@
 package com.apcs.disunity.nodes.action;
 
 import com.apcs.disunity.applyable.VelocityApplyable;
-import com.apcs.disunity.nodes.UndrawnNode;
+import com.apcs.disunity.nodes.Node;
 import com.apcs.disunity.nodes.controller.Controllable;
 
 /**
@@ -13,13 +13,22 @@ public abstract class MoveAction<T> extends GameAction<T> implements VelocityApp
 
     /* ================ [ FIELDS ] ================ */
 
-    // Constructors
+    /** Create a new MoveAction */
     public MoveAction() { super(); }
-    public MoveAction(UndrawnNode... children) { super(children); }
+    /**
+     * Create a new MoveAction with the given children
+     *
+     * @param children The children of this node
+     */
+    public MoveAction(Node... children) { super(children); }
 
     /* ================ [ CONTROLLABLE ] ================ */
 
-    // Set controller id
+    /**
+     * Set the controller id
+     *
+     * @param controller The controller id
+     */
     public void setController(int controller) { setSource(controller); }
     
 }

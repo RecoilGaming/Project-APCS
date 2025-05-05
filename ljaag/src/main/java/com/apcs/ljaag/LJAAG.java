@@ -8,6 +8,7 @@ import com.apcs.disunity.animation.Animation;
 import com.apcs.disunity.animation.AnimationSet;
 import com.apcs.disunity.camera.Camera;
 import com.apcs.disunity.input.Inputs;
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.Node;
 import com.apcs.disunity.nodes.Node2D;
@@ -37,6 +38,7 @@ public class LJAAG {
     public static void main(String[] args) throws IOException, NoSuchFieldException, IllegalAccessException, InterruptedException {
         MultiplayerLauncher launcher = new MultiplayerLauncher(LJAAG::runApp);
         launcher.lauch();
+        runApp(false);
     }
 
     public static final int NUM_PLAYERS = 8;
@@ -81,12 +83,13 @@ public class LJAAG {
     private static Body instantiateCharacter(int clientId) {
         boolean isPlayer = SyncHandler.getInstance().getEndpointId() == clientId;
         Body body = new Body(
-            isPlayer ? new Camera() : new Node<>() {
+            isPlayer ? new Camera() : new Node() {
             },
             new AnimatedSprite(
                 new AnimationSet("player/player.png",
                     new Animation("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
                 ),
+                Transform.IDENTITY,
                 isPlayer
             ),
             isPlayer ? new PlayerController() : new Controller() {
@@ -98,17 +101,17 @@ public class LJAAG {
         return body;
     }
 
-    private static void registerNodeRecursive(Node<?> node) {
+    private static void registerNodeRecursive(Node node) {
         SyncHandler.getInstance().register(node);
-        for (Node<?> child : node.getChildren()) {
+        for (Node child : node.getChildren()) {
             registerNodeRecursive(child);
         }
     }
 
     // TODO: implement proper client reconciliation
-    private static void own(Node<?> node, int clientId) {
+    private static void own(Node node, int clientId) {
         node.owner = clientId;
-        for (Node<?> child : node.getChildren()) {
+        for (Node child : node.getChildren()) {
             own(child, clientId);
         }
     }

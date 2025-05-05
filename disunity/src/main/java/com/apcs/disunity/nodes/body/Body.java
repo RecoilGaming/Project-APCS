@@ -21,34 +21,54 @@ public class Body extends Node2D {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Controller id
+    /** The id of the controller */
     private int controller;
 
-    // Velocity
+    /** The velocity of the body */
     @SyncedObject
     private Vector2 vel = Vector2.ZERO;
 
-    // Constructors
+    /** Create a new Body */
     public Body() { super(); }
-    public Body(Node<?>... children) { super(children); }
-    public Body(Transform transform, Node<?>... children) { super(transform, children); }
+    /**
+     * Create a new Body with the given children
+     *
+     * @param children The children of this node
+     */
+    public Body(Node... children) { super(children); }
+    /**
+     * Create a new Body with the given transform and children
+     *
+     * @param transform The transform of this node
+     * @param children The children of this node
+     */
+    public Body(Transform transform, Node... children) { super(transform, children); }
 
     /* ================ [ METHODS ] ================ */
 
-    // Set velocity
-    public void setVel(Vector2 vel) { this.vel = vel; }
-
-    // Get velocity
+    /**
+     * Get the velocity of the body
+     * 
+     * @return The velocity of the body
+     */
     public Vector2 getVel() { return vel; }
+
+    /**
+     * Set the velocity of the body
+     * 
+     * @param vel The velocity of the body
+     */
+    public void setVel(Vector2 vel) { this.vel = vel; }
 
     /* ================ [ NODE ] ================ */
 
+    /** Initialize the node */
     @Override
     public void initialize() {
         // Grab controller id
         this.controller = getChild(Controller.class).getId();
 
-        // Update children controllers
+        // Update children controllables
         for (Controllable action : getChildren(Controllable.class)) {
             action.setController(controller);
         }
@@ -57,8 +77,14 @@ public class Body extends Node2D {
         super.initialize();
     }
 
+    /**
+     * Update the node and its children
+     * 
+     * @param offset The offset of the node
+     * @param delta The time since the last update
+     */
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
         // Apply velocity nodes
         for (VelocityApplyable va : getChildren(VelocityApplyable.class)) {
             vel = va.apply(vel, delta);
@@ -73,7 +99,7 @@ public class Body extends Node2D {
         transform = transform.move(vel.mul(delta));
 
         // Update children
-        super.update(delta);
+        super.update(offset, delta);
     }
 
 }

@@ -18,5 +18,5 @@ import com.apcs.disunity.nodes.Node;
 @Target(ElementType.TYPE)
 public @interface Requires {
     /** The children types that the node must have */
-    Class<? extends Node<?>>[] nodes();
+    Class<? extends Node>[] nodes();
 }

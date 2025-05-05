@@ -19,7 +19,7 @@ public class Vector2 implements SelfCodec<Vector2> {
     /* ================ [ CONSTANTS ] ================ */
 
     /** The zero vector */
-    public static final Vector2 ZERO = new Vector2(0, 0);
+    public static final Vector2 ZERO = new Vector2();
 
     /** The unit vector */
     public static final Vector2 UNIT = new Vector2(1, 1);

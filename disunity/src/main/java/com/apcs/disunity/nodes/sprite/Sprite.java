@@ -18,30 +18,65 @@ public class Sprite extends Node2D {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Sprite image id
+    /** The image id */
     private String image;
 
-    // Constructors
+    /**
+     * Create a new Sprite with the given image
+     *
+     * @param image The image id
+     */
     public Sprite(String image) { super(); this.image = image; }
-    public Sprite(String image, Node<?>... children) { super(children); this.image = image; }
-    public Sprite(String image, Transform transform, Node<?>... children) { super(transform, children); this.image = image; }
-    public Sprite(String image, boolean visible) { super(visible); this.image = image; }
-    public Sprite(String image, boolean visible, Node<?>... children) { super(visible, children); this.image = image; }
-    public Sprite(String image, Transform transform, boolean visible, Node<?>... children) { super(transform, visible, children); this.image = image; }
+    /**
+     * Create a new Sprite with the given image and children
+     *
+     * @param image The image id
+     * @param children The children of this node
+     */
+    public Sprite(String image, Node... children) { super(children); this.image = image; }
+    /**
+     * Create a new Sprite with the given image, transform, and children
+     *
+     * @param image The image id
+     * @param transform The transform of this node
+     * @param children The children of this node
+     */
+    public Sprite(String image, Transform transform, Node... children) { super(transform, children); this.image = image; }
+    /**
+     * Create a new Sprite with the given image, transform, visibility, and children
+     *
+     * @param image The image id
+     * @param transform The transform of this node
+     * @param visible Whether or not the node is visible
+     * @param children The children of this node
+     */
+    public Sprite(String image, Transform transform, boolean visible, Node... children) { super(transform, visible, children); this.image = image; }
 
     /* ================ [ METHODS ] ================ */
 
-    // Get image
+    /**
+     * Get the image id
+     *
+     * @return The image id
+     */
     public String getImage() { return image; }
 
-    // Set image
+    /**
+     * Change the image id
+     *
+     * @param image The image id
+     */
     public void setImage(String image) { this.image = image; }
 
     /* ================ [ NODE ] ================ */
 
+    /**
+     * Draw the node and its children
+     * 
+     * @param offset The offset of the node
+     */
     @Override
     public void draw(Transform offset) {
-
         // Load sprite image
         BufferedImage img = Resources.loadResource(getImage(), Image.class).getBuffer();
 

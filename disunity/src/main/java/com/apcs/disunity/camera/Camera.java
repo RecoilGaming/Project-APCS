@@ -24,14 +24,14 @@ public class Camera extends Node2D {
      * 
      * @param children The children of this node
      */
-    public Camera(Node<?>... children) { super(children); }
+    public Camera(Node... children) { super(children); }
     /**
      * Creates a new Camera with the given transform and children
      * 
      * @param transform The transform of this node
      * @param children The children of this node
      */
-    public Camera(Transform transform, Node<?>... children) { super(transform, children); }
+    public Camera(Transform transform, Node... children) { super(transform, children); }
 
     /* ================ [ METHODS ] ================ */
 
@@ -50,17 +50,18 @@ public class Camera extends Node2D {
     /**
      * Update the global transform of the game
      * 
+     * @param offset The offset of the node
      * @param delta The time since the last update
      */
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
         // Update global transform
         if (isActive) {
             Game.getInstance().setTransform(transform);
         }
 
         // Update children
-        super.update(delta);
+        super.update(transform, delta);
     }
 
 }

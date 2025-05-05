@@ -1,7 +1,7 @@
 package com.apcs.ljaag.nodes.action;
 
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.nodes.UndrawnNode;
+import com.apcs.disunity.nodes.Node;
 import com.apcs.disunity.nodes.action.MoveAction;
 
 /**
@@ -29,7 +29,7 @@ public class WalkAction extends MoveAction<Vector2> {
      * 
      * @param children The children of this node
      */
-    public WalkAction(UndrawnNode... children) { super(children); }
+    public WalkAction(Node... children) { super(children); }
 
     /* ================ [ APPLIABLE ] ================ */
 
