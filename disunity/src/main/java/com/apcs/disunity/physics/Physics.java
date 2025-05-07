@@ -45,8 +45,8 @@ public class Physics {
     private static void intersect(Area a, Area b) {
         // Check if areas are intersecting
         if (a.getLayer() == b.getLayer() && a.getBounds().intersects(b.getBounds())) {
-            Signals.trigger("collision_" + a.getId(), new CollisionInfo(a, b));
-            Signals.trigger("collision_" + b.getId(), new CollisionInfo(b, a));
+            Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(a, b));
+            Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(b, a));
         }
     }
 

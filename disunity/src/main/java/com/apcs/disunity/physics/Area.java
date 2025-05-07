@@ -4,6 +4,7 @@ import com.apcs.disunity.math.Rectangle;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.Node2D;
+import com.apcs.disunity.signals.Signals;
 
 /**
  * Detects collisions within a bounding box (AABB)
@@ -100,7 +101,24 @@ public class Area extends Node2D {
         return prevBounds;
     }
 
+    /**
+     * Handle a collision with another area
+     * 
+     * @param info The collision info
+     */
+    public void handleCollision(CollisionInfo info) { }
+
     /* ================ [ NODE ] ================ */
+    
+    /** Initialize the node */
+    @Override
+    public void initialize() {
+        // Connect to signal
+        Signals.connect(Signals.getSignal(id, "collision"), this::handleCollision);
+
+        // Complete initialization
+        super.initialize();
+    }
     
     /**
      * Update the node and its children
