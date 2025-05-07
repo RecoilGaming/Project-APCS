@@ -24,7 +24,6 @@ public class Body extends Node2D {
     private int controller;
 
     /** The velocity of the body */
-    @SyncedObject
     private Vector2 vel = Vector2.ZERO;
 
     /** Create a new Body */

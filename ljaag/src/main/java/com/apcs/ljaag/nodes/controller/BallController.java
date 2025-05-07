@@ -1,5 +1,6 @@
 package com.apcs.ljaag.nodes.controller;
 
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.controller.Controller;
 import com.apcs.disunity.signals.Signals;
@@ -14,8 +15,10 @@ public class BallController extends Controller {
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
         Signals.trigger(Signals.getSignal(getId(), "walk"), dir.normalized());
+
+        super.update(offset, delta);
     }
     
 }

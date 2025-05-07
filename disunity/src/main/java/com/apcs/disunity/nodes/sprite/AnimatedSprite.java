@@ -28,8 +28,7 @@ public class AnimatedSprite extends Node2D implements Controllable {
     private final AnimationSet animations;
 
     /** The current animation id */
-    @SyncedObject
-    private SyncedString animation = new SyncedString("");
+    private String animation;
 
     /** The timestamp of the previous frame */
     private long prevFrame = System.nanoTime();
@@ -98,7 +97,7 @@ public class AnimatedSprite extends Node2D implements Controllable {
      *
      * @return The current animation id
      */
-    public String getAnimation() { return animation.value(); }
+    public String getAnimation() { return animation; }
 
     /* ================ [ NODE ] ================ */
 

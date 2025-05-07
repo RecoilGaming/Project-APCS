@@ -12,7 +12,6 @@ public class Node2D extends Node {
     /* ================ [ FIELDS ] ================ */
     
     /** The transform of the node */
-    @SyncedObject
     public Transform transform = new Transform();
 
     /** Create a new Node2D */
