@@ -36,11 +36,10 @@ public class Vector2 implements SelfCodec<Vector2> {
     /** The y component rounded to an integer */
     public final int yi;
 
-    /** Creates a new Vector2 */
+    /** Create a new Vector2 */
     public Vector2() { this(0, 0); }
-
     /**
-     * Creates a new Vector2 with the given components
+     * Create a new Vector2 with the given components
      *
      * @param x The x component
      * @param y The y component

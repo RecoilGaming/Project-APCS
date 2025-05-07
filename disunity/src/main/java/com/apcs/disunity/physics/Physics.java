@@ -1,65 +1,67 @@
-// package com.apcs.disunity.physics;
+package com.apcs.disunity.physics;
 
-// import com.apcs.disunity.signals.Signals;
-// import java.util.ArrayList;
-// import java.util.List;
+import com.apcs.disunity.signals.Signals;
+import java.util.ArrayList;
+import java.util.List;
 
-// /**
-//  * Manages physics and collision detection
-//  * 
-//  * @author Aayushya Patel
-//  */
-// public class Physics {
+/**
+ * Manages physics and collision detection
+ * 
+ * @author Aayushya Patel
+ */
+public class Physics {
 
-//     /* ================ [ FIELDS ] ================ */
+    /* ================ [ FIELDS ] ================ */
 
-//     /** Lists the collision areas */
-//     private static final List<Area> areas = new ArrayList<>();
+    /** Lists the collision areas */
+    private static final List<Area> areas = new ArrayList<>();
 
-//     /* ================ [ METHODS ] ================ */
+    /* ================ [ METHODS ] ================ */
 
-//     /**
-//      * Register a collision area with the physics system
-//      * 
-//      * @param area The collision area
-//      */
-//     public static void registerAraea(Area area) {
-//         areas.add(area);
-//     }
+    /**
+     * Register a collision area with the physics system
+     * 
+     * @param area The collision area
+     */
+    public static void registerArea(Area area) {
+        areas.add(area);
+    }
 
-//     /**
-//      * Remove a collider from the physics system
-//      * 
-//      * @param area The collision area
-//      */
-//     public static void removeArea(Area area) {
-//         areas.remove(area);
-//     }
+    /**
+     * Remove a collider from the physics system
+     * 
+     * @param area The collision area
+     */
+    public static void removeArea(Area area) {
+        areas.remove(area);
+    }
 
-//     /**
-//      * Update the physics system
-//      * 
-//      * @param delta The time since the last update
-//      */
-//     public static void update(double delta) {
-//         // Check areas against each other
-//         for (int i = 0; i < areas.size(); i++) {
-//             for (int j = i + 1; j < areas.size(); j++) {
-//                 checkCollision(colliders.get(i), colliders.get(j));
-//             }
-//         }
-//     }
+    /**
+     * Checks and triggers an intersection between two areas
+     * 
+     * @param a The first area
+     * @param b The second area
+     */
+    private static void intersect(Area a, Area b) {
+        // Check if areas are intersecting
+        if (a.getLayer() == b.getLayer() && a.getBounds().intersects(b.getBounds())) {
+            Signals.trigger("collision_" + a.getId(), new CollisionInfo(a, b));
+            Signals.trigger("collision_" + b.getId(), new CollisionInfo(b, a));
+        }
+    }
 
-//     /**
-//      * Check collision between two colliders
-//      */
-//     private static void checkCollision(Collider a, Collider b) {
-//         // Check actual collision
-//         if (a.getBounds().intersects(b.getBounds())) {
-//             // Trigger collision events
-//             Signals.trigger("collision_" + a.getId(), new CollisionInfo(a, b));
+    /**
+     * Update the physics system
+     * 
+     * @param delta The time since the last update
+     */
+    public static void update(double delta) {
+        // Check areas against each other
+        for (int i = 0; i < areas.size() - 1; i++) {
+            for (int j = i + 1; j < areas.size(); j++) {
+                intersect(areas.get(i), areas.get(j));
+            }
+        }
+    }
 
-//             Signals.trigger("collision_" + b.getId(), new CollisionInfo(b, a));
-//         }
-//     }
-// }
+}

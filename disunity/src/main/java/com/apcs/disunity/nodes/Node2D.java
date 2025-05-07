@@ -16,9 +16,6 @@ public class Node2D extends Node {
     @SyncedObject
     public Transform transform = new Transform();
 
-    /** The global transform of the node */
-    public Transform globalTransform = new Transform();
-
     /** Create a new Node2D */
     public Node2D() { super(); }
     /**

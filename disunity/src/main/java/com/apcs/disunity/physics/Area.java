@@ -1,14 +1,16 @@
 package com.apcs.disunity.physics;
 
+import com.apcs.disunity.math.Rectangle;
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.nodes.Node;
+import com.apcs.disunity.nodes.Node2D;
 
 /**
  * Detects collisions within a bounding box (AABB)
  * 
  * @author Qinzhao Li
  */
-public class Area extends Node {
+public class Area extends Node2D {
 
     /* ================ [ FIELDS ] ================ */
 
@@ -19,6 +21,11 @@ public class Area extends Node {
 
     /** The size of the area */
     private Vector2 size;
+
+    /** The bounds of the area in the previous frame */
+    private Rectangle prevBounds;
+    /** The bounds of the area */
+    private Rectangle bounds;
 
     /** The collision layer of the area */
     private int layer = 0;
@@ -32,8 +39,13 @@ public class Area extends Node {
         this.size = size;
         this.id = areas++;
 
-        // Register with physics manager
-        // Physics.registerArea(this);
+        this.bounds = new Rectangle(
+            transform.pos.x - size.x / 2, transform.pos.x + size.x / 2,
+            transform.pos.y - size.y / 2, transform.pos.y + size.y / 2
+        );
+        this.prevBounds = this.bounds;
+
+        Physics.registerArea(this);
     }
 
     /* ================ [ METHODS ] ================ */
@@ -68,6 +80,48 @@ public class Area extends Node {
      */
     public Vector2 getSize() {
         return size;
+    }
+
+    /**
+     * Get the bounds of the area
+     * 
+     * @return The bounds of the area
+     */
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    /**
+     * Get the bounds of the area in the previous frame
+     * 
+     * @return The bounds of the area in the previous frame
+     */
+    public Rectangle getPrevBounds() {
+        return prevBounds;
+    }
+
+    /* ================ [ NODE ] ================ */
+    
+    /**
+     * Update the node and its children
+     * 
+     * @param offset The offset of the node
+     * @param delta The time since the last update
+     */
+    @Override
+    public void update(Transform offset, double delta) {
+        Vector2 pos = transform.apply(offset).pos;
+
+        // Update previous bounds
+        this.prevBounds = this.bounds;
+
+        // Update current bounds
+        this.bounds = new Rectangle(
+            pos.x - size.x / 2, pos.x + size.x / 2,
+            pos.y - size.y / 2, pos.y + size.y / 2
+        );
+
+        super.update(offset, delta);
     }
 
 }
