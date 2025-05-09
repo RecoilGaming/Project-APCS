@@ -7,7 +7,9 @@ import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.Node2D;
 import com.apcs.disunity.nodes.body.Body;
+import com.apcs.disunity.nodes.controller.Controller;
 import com.apcs.disunity.nodes.sprite.Sprite;
+import com.apcs.disunity.physics.Collider;
 import com.apcs.disunity.scenes.Scenes;
 import com.apcs.ljaag.nodes.action.WalkAction;
 import com.apcs.ljaag.nodes.controller.BallController;
@@ -43,14 +45,20 @@ public class LJAAG {
         Scenes.addScene("level1", new Node2D(
             new Sprite("background.png"),
             new Body(
+                new Collider(new Vector2(80, 45), true),
+                new Controller()
+            ),
+            new Body(
                 new Transform().setPos(new Vector2(0, 15.5)),
                 new Sprite("ball.png"),
+                new Collider(new Vector2(2, 2)),
                 new BallController(),
                 new WalkAction()
             ),
             new Body(
                 new Transform().setPos(new Vector2(0, 17.5)),
                 new Sprite("paddle.png"),
+                new Collider(new Vector2(6, 2)),
                 new PaddleController(),
                 new WalkAction()
             )

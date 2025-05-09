@@ -3,6 +3,7 @@ package com.apcs.disunity;
 import com.apcs.disunity.input.InputHandler;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.disunity.physics.Physics;
 import com.apcs.disunity.rendering.ScalableBuffer;
 import com.apcs.disunity.scenes.Scenes;
 import java.awt.*;
@@ -98,11 +99,11 @@ public class Game extends JPanel {
 
     /** Update the game */
     private void update() {
+        // Update physics
+        Physics.update(Options.getSPF());
+
         // Update scene
         Scenes.updateScene(Transform.IDENTITY, Options.getSPF()); // Delta value from configs
-
-        // Update physics
-        // Physics.update(Options.getSPF());
     }
     
     /** Draw the game */

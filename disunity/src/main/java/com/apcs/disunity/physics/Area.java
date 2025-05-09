@@ -20,6 +20,11 @@ public class Area extends Node2D {
     /** The id of the area */
     private int id;
 
+    /** Whether the collider is enabled */
+    private boolean enabled = true;
+    /** Whether the collider is inverted */
+    private boolean isInverted = false;
+
     /** The size of the area */
     private Vector2 size;
 
@@ -37,8 +42,19 @@ public class Area extends Node2D {
      * @param size The size of the area
      */
     public Area(Vector2 size) {
+        this(size, false);
+    }
+    /**
+     * Creates a new Area with the given size and inverted state
+     * 
+     * @param size The size of the area
+     * @param isInverted Whether the collider is inverted
+     */
+    public Area(Vector2 size, boolean isInverted) {
         this.size = size;
         this.id = areas++;
+
+        this.isInverted = isInverted;
 
         this.bounds = new Rectangle(
             transform.pos.x - size.x / 2, transform.pos.x + size.x / 2,
@@ -58,6 +74,42 @@ public class Area extends Node2D {
      */
     public int getId() {
         return id;
+    }
+    
+    /**
+     * Set whether the collider is enabled
+     * 
+     * @param enabled Whether the collider is enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * Get whether the collider is enabled
+     * 
+     * @return Whether the collider is enabled
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Set whether the collider is inverted
+     * 
+     * @param isInverted Whether the collider is inverted
+     */
+    public void setInverted(boolean isInverted) {
+        this.isInverted = isInverted;
+    }
+
+    /**
+     * Get whether the collider is inverted
+     * 
+     * @return Whether the collider is inverted
+     */
+    public boolean isInverted() {
+        return isInverted;
     }
 
     /**
@@ -100,6 +152,8 @@ public class Area extends Node2D {
     public Rectangle getPrevBounds() {
         return prevBounds;
     }
+
+    /* ================ [ AREA ] ================ */
 
     /**
      * Handle a collision with another area

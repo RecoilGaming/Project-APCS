@@ -7,7 +7,7 @@ import com.apcs.disunity.nodes.Node;
  * 
  * @author Qinzhao Li
  */
-public abstract class Controller extends Node {
+public class Controller extends Node {
 
     /* ================ [ FIELDS ] ================ */
 

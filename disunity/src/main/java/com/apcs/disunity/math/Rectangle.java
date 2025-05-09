@@ -53,6 +53,27 @@ public class Rectangle {
     }
 
     /**
+     * Get a clone of the rectangle
+     * 
+     * @return A clone of the rectangle
+     */
+    public Rectangle clone() {
+        return new Rectangle(top, bottom, left, right);
+    }
+
+    /**
+     * Get the center of the rectangle
+     * 
+     * @return The center of the rectangle
+     */
+    public Vector2 getCenter() {
+        return new Vector2(
+            (left + right) / 2,
+            (top + bottom) / 2
+        );
+    }
+
+    /**
      * Check if the rectangle intersects with another
      * 
      * @param other The other rectangle
@@ -62,6 +83,16 @@ public class Rectangle {
         if (top > other.bottom || other.top > bottom) return false;
         if (left > other.right || other.left > right) return false;
         return true;
+    }
+
+    /**
+     * Check if the rectangle contains another
+     * 
+     * @param other The other rectangle
+     * @return Whether or not the rectangles intersect
+     */
+    public boolean contains(Rectangle other) {
+        return other.left >= left && other.right <= right && other.top >= top && other.bottom <= bottom;
     }
     
 }
