@@ -44,7 +44,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
 
     public Vector2 getPos() { return transform.pos; }
 
-    public Vector2 getScale() { return transform.pos; }
+    public Vector2 getScale() { return transform.scale; }
 
     public double getRot() { return transform.rot; }
 
