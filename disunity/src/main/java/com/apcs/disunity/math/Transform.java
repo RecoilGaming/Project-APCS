@@ -49,7 +49,7 @@ public class Transform {
 
     // Apply another transform
     public Transform apply(Transform t) {
-        return new Transform(pos.add(t.pos), scale.mul(t.scale), (rot + t.rot) % 360);
+        return new Transform(pos.mul(t.scale).add(t.pos), scale.mul(t.scale), (rot + t.rot) % 360);
     }
 
     /* ================ [ OBJECT ] ================ */
