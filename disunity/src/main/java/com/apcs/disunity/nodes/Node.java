@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.apcs.disunity.annotations.Requires;
+import com.apcs.disunity.annotations.syncedfield.SyncedBoolean;
 import com.apcs.disunity.math.Transform;
 
 /**
@@ -24,6 +25,7 @@ public abstract class Node {
     /* ================ [ FIELDS ] ================ */
 
     /** Whether or not the node is visible */
+    @SyncedBoolean
     private boolean isVisible = true;
 
     /** The parent of the node */

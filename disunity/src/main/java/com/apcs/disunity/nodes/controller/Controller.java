@@ -1,6 +1,8 @@
 package com.apcs.disunity.nodes.controller;
 
 import com.apcs.disunity.nodes.Node;
+import com.apcs.disunity.nodes.body.Body;
+import com.apcs.disunity.physics.CollisionInfo;
 
 /**
  * Controls a body node
@@ -34,5 +36,12 @@ public abstract class Controller extends Node {
      * @return The id of the controller
      */
     public int getId() { return id; }
+
+    /**
+     * Handle a collision with another area
+     *
+     * @param info The collision info
+     */
+    public void handleCollision(Body body, CollisionInfo info) {}
 
 }

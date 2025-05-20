@@ -22,17 +22,21 @@ public class CollisionInfo {
     /** The previous bounds of the area that received this collision */
     private final Rectangle prevSource;
 
+    /** delta of subsequent update */
+    public final double delta;
+
     /**
      * Create a new CollisionInfo with the given colliders
      * 
      * @param self The area that received this collision
      * @param other The area that triggered this collision
      */
-    public CollisionInfo(Area self, Area other) {
+    public CollisionInfo(Area self, Area other, double delta) {
         this.target = self.getBounds();
         this.prevTarget = self.getPrevBounds();
         this.source = other.getBounds();
         this.prevSource = other.getPrevBounds();
+        this.delta = delta;
     }
 
     /* ================ [ METHODS ] ================ */

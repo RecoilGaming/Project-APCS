@@ -3,8 +3,11 @@ package com.apcs.ljaag.nodes.controller;
 import com.apcs.disunity.input.Inputs;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.disunity.nodes.body.Body;
 import com.apcs.disunity.nodes.controller.Controller;
+import com.apcs.disunity.physics.CollisionInfo;
 import com.apcs.disunity.signals.Signals;
+import com.apcs.ljaag.nodes.action.WalkAction;
 
 /** 
  * A controller that is controlled by player inputs
@@ -38,5 +41,10 @@ public class PlayerController extends Controller {
             Signals.trigger(Signals.getSignal(getId(), "animate"), "");
         }
     }
-    
+
+    @Override
+    public void handleCollision(Body body, CollisionInfo info) {
+        Vector2 vel = body.getChild(WalkAction.class).apply(null, 0);
+        body.transform = body.transform.move(vel.mul(-info.delta));
+    }
 }

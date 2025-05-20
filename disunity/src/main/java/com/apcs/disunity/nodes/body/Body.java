@@ -10,6 +10,9 @@ import com.apcs.disunity.nodes.Node;
 import com.apcs.disunity.nodes.Node2D;
 import com.apcs.disunity.nodes.controller.Controllable;
 import com.apcs.disunity.nodes.controller.Controller;
+import com.apcs.disunity.physics.Area;
+import com.apcs.disunity.physics.CollisionInfo;
+import com.apcs.disunity.signals.Signals;
 
 /**
  * A 2d node that can handle movement and collision
@@ -66,11 +69,19 @@ public class Body extends Node2D {
     @Override
     public void initialize() {
         // Grab controller id
-        this.controller = getChild(Controller.class).getId();
+        Controller controller = getChild(Controller.class);
+        this.controller = controller.getId();
+
+        Area area = getChild(Area.class);
+
+        // Connect area with controller
+        if(area != null) {
+            Signals.connect(Signals.getSignal(area.getId(), "collision"), i -> controller.handleCollision(this, (CollisionInfo) i));
+        }
 
         // Update children controllables
         for (Controllable action : getChildren(Controllable.class)) {
-            action.setController(controller);
+            action.setController(controller.getId());
         }
 
         // Complete initialization

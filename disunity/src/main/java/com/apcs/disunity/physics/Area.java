@@ -101,21 +101,11 @@ public class Area extends Node2D {
         return prevBounds;
     }
 
-    /**
-     * Handle a collision with another area
-     * 
-     * @param info The collision info
-     */
-    public void handleCollision(CollisionInfo info) { }
-
     /* ================ [ NODE ] ================ */
     
     /** Initialize the node */
     @Override
     public void initialize() {
-        // Connect to signal
-        Signals.connect(Signals.getSignal(id, "collision"), this::handleCollision);
-
         // Complete initialization
         super.initialize();
     }

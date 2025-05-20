@@ -37,20 +37,6 @@ public class Physics {
     }
 
     /**
-     * Checks and triggers an intersection between two areas
-     * 
-     * @param a The first area
-     * @param b The second area
-     */
-    private static void intersect(Area a, Area b) {
-        // Check if areas are intersecting
-        if (a.getLayer() == b.getLayer() && a.getBounds().intersects(b.getBounds())) {
-            Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(a, b));
-            Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(b, a));
-        }
-    }
-
-    /**
      * Update the physics system
      * 
      * @param delta The time since the last update
@@ -59,7 +45,11 @@ public class Physics {
         // Check areas against each other
         for (int i = 0; i < areas.size() - 1; i++) {
             for (int j = i + 1; j < areas.size(); j++) {
-                intersect(areas.get(i), areas.get(j));
+                Area a = areas.get(i), b = areas.get(j);
+                if (a.getLayer() == b.getLayer() && a.getBounds().intersects(b.getBounds())) {
+                    Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(a, b, delta));
+                    Signals.trigger(Signals.getSignal(a.getId(), "collision"), new CollisionInfo(b, a, delta));
+                }
             }
         }
     }

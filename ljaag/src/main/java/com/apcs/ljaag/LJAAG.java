@@ -16,6 +16,7 @@ import com.apcs.disunity.nodes.body.Body;
 import com.apcs.disunity.nodes.controller.Controller;
 import com.apcs.disunity.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.nodes.sprite.Sprite;
+import com.apcs.disunity.physics.Area;
 import com.apcs.disunity.scenes.Scenes;
 import com.apcs.disunity.server.MultiplayerLauncher;
 import com.apcs.disunity.server.SyncHandler;
@@ -82,8 +83,7 @@ public class LJAAG {
     private static Body instantiateCharacter(int clientId) {
         boolean isPlayer = SyncHandler.getInstance().getEndpointId() == clientId;
         Body body = new Body(
-            isPlayer ? new Camera() : new Node() {
-            },
+            isPlayer ? new Camera() : new Node2D(),
             new AnimatedSprite(
                 new AnimationSet("player/player.png",
                     new Animation("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
@@ -94,8 +94,10 @@ public class LJAAG {
             isPlayer ? new PlayerController() : new Controller() {
             },
             new WalkAction(),
-            new TurnAction()
+            new TurnAction(),
+            new Area(Vector2.of(6,24))
         );
+        body.transform = body.transform.move(Vector2.of(20*clientId, 0));
         own(body, clientId);
         return body;
     }
