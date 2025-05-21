@@ -55,7 +55,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
         if (!(getParent() instanceof Node2D)) {
             this.update(dt, new Transform());
         }
-        for (Node n : getChildren()) {
+        for (Node n : getAllChildren()) {
             if (n instanceof Node2D node2D) {
                 node2D.update(dt, transform);
             }
