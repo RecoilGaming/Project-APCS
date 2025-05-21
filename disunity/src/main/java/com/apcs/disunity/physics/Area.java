@@ -4,7 +4,6 @@ import com.apcs.disunity.math.Rectangle;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.nodes.Node2D;
-import com.apcs.disunity.signals.Signals;
 
 /**
  * Detects collisions within a bounding box (AABB)

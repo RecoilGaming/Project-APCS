@@ -1,6 +1,5 @@
 package com.apcs.disunity.nodes;
 
-import com.apcs.disunity.annotations.syncedfield.SyncedObject;
 import com.apcs.disunity.math.Transform;
 
 /**
@@ -13,7 +12,6 @@ public class Node2D extends Node {
     /* ================ [ FIELDS ] ================ */
     
     /** The transform of the node */
-    @SyncedObject
     public Transform transform = new Transform();
 
     /** Create a new Node2D */

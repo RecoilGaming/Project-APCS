@@ -1,7 +1,6 @@
 package com.apcs.disunity.nodes.body;
 
 import com.apcs.disunity.annotations.Requires;
-import com.apcs.disunity.annotations.syncedfield.SyncedObject;
 import com.apcs.disunity.applyable.TransformApplyable;
 import com.apcs.disunity.applyable.VelocityApplyable;
 import com.apcs.disunity.math.Transform;
@@ -28,7 +27,6 @@ public class Body extends Node2D {
     private int controller;
 
     /** The velocity of the body */
-    @SyncedObject
     private Vector2 vel = Vector2.ZERO;
 
     /** Create a new Body */
