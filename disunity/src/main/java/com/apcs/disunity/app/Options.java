@@ -8,7 +8,7 @@ package com.apcs.disunity.app;
 public class Options {
 
     /** The frame rate of the game */
-    public static final double FPS = 60.0;
+    public static final double FPS = 120.0;
 
     /**
      * Get the number of seconds per frame

@@ -12,7 +12,7 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.body.LJCharacter;
-import com.apcs.ljaag.nodes.body.Shotgun;
+import com.apcs.ljaag.nodes.items.Shotgun;
 
 /**
  * Untitled game

@@ -48,6 +48,10 @@ public class Vector2 implements SelfCodec<Vector2> {
 
     public static Vector2 of(double x, double y) { return new Vector2(x, y); }
 
+    public static Vector2 basis(double angleRad) {
+        return new Vector2(Math.cos(angleRad), Math.sin(angleRad));
+    }
+
     // Add two vectors
     public Vector2 add(Vector2 v) { return new Vector2(x + v.x, y + v.y); }
 

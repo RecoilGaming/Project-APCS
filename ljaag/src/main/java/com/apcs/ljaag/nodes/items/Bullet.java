@@ -1,7 +1,6 @@
-package com.apcs.ljaag.nodes.body;
+package com.apcs.ljaag.nodes.items;
 
 import com.apcs.disunity.game.nodes.FieldChild;
-import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.nodes.twodim.Collider;
