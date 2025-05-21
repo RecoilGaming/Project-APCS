@@ -49,15 +49,19 @@ public class LJAAG {
             )
         ));
 
+        Game game = new Game(
+            Vector2.of(480, 270),
+            "test"
+        );
+
         // Create game application
         new App(
             "Title", 
             800, 450,
-            new Game(
-                Vector2.of(480, 270),
-                "test"
-            )
+            game
         );
+
+        game.start();
 
     }
 
