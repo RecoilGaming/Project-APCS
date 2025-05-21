@@ -32,8 +32,6 @@ public class PlayerController extends Controller {
             (Inputs.getAction("up") ? -1 : 0) + (Inputs.getAction("down") ? 1 : 0)
         ).normalized();
 
-        System.out.println(walkDir);
-
         Signals.trigger(Signals.getSignal(getId(), "walk"), walkDir);
 
         // Trigger animations
