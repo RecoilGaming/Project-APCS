@@ -49,7 +49,7 @@ public class Shotgun extends UsetimeItem {
         double startingAngle = - range / 2;
         for (int i = 0; i < BULLET_COUNT; i++) {
             double angle = startingAngle + SPREAD * (Math.random() - 0.5 + i);
-            getRootAs(Scene.class).addChild(new Bullet(getTransform().addPos(getParentAs(Node2D.class).getPos()).rotate(angle), Vector2.basis(angle + getTransform().rot).mul(BULLET_SPEED).mul(Math.random() * 0.1 + 0.95)));
+            getRoot(Scene.class).addChild(new Bullet(getTransform().addPos(getParent(Node2D.class).getPos()).rotate(angle), Vector2.basis(angle + getTransform().rot).mul(BULLET_SPEED).mul(Math.random() * 0.1 + 0.95)));
         }
     }
     
