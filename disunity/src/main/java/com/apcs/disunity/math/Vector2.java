@@ -1,11 +1,11 @@
 package com.apcs.disunity.math;
 
-import com.apcs.disunity.app.network.packet.SelfCodec;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static com.apcs.disunity.app.network.packet.CODEC.*;
+import static com.apcs.disunity.app.network.packet.CODEC.decodeDouble;
+import static com.apcs.disunity.app.network.packet.CODEC.encodeDouble;
+import com.apcs.disunity.app.network.packet.SelfCodec;
 
 /**
  * A 2D vector with x and y components
@@ -68,6 +68,9 @@ public class Vector2 implements SelfCodec<Vector2> {
 
     // Dot product with another vector
     public double dot(Vector2 v) { return x * v.x + y * v.y; }
+
+    // Heading of the vector
+    public double heading() { return Math.atan2(y, x); }
 
     // Magnitude of the vector
     public double length() { return Math.sqrt(x * x + y * y); }

@@ -1,9 +1,9 @@
 package com.apcs.disunity.game.nodes.twodim;
 
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
+import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.game.nodes.Node;
 
 /**
  * A base class for 2D nodes with position
@@ -40,7 +40,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
 
     public void setScale(Vector2 scale) { transform = new Transform(transform.pos, scale, transform.rot); }
 
-    public void setRot(double rot) { transform = new Transform(transform.pos, transform.scale, transform.rot); }
+    public void setRot(double rot) { transform = new Transform(transform.pos, transform.scale, rot); }
 
     public Vector2 getPos() { return transform.pos; }
 

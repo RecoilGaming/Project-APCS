@@ -30,11 +30,23 @@ public class Inputs {
     private static final Set<Input> inputs = new HashSet<>();
 
     // Mouse position on the screen
-    public static Vector2 mousePos = Vector2.of(-1);
-    public static Vector2 mouseVel = Vector2.ZERO;
+    static Vector2 mousePos = Vector2.of(-1);
+    static Vector2 mouseVel = Vector2.ZERO;
 
     /* ================ [ METHODS ] ================ */
 
+    // getter for mouse pos
+    public static Vector2 getMousePos() { return mousePos; }
+
+    // setter for mouse pos
+    public static void setMousePos(Vector2 neuu) { mousePos = neuu; }
+
+    // getter for mouse vel
+    public static Vector2 getMouseVel() { return mouseVel; }
+
+    // setter for mouse vel
+    public static void setMouseVel(Vector2 neuu) { mouseVel = neuu; }
+ 
     // Press an input
     public static void press(Input input) { inputs.add(input); }
 

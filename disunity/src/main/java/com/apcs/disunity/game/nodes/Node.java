@@ -1,13 +1,13 @@
 package com.apcs.disunity.game.nodes;
 
-import com.apcs.disunity.math.Transform;
-import com.apcs.disunity.game.selector.Indexed;
-import com.apcs.disunity.app.network.Util;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import com.apcs.disunity.app.network.Util;
+import com.apcs.disunity.game.selector.Indexed;
+import com.apcs.disunity.math.Transform;
 
 /**
  * The base class for all nodes in the game
@@ -15,7 +15,8 @@ import java.util.stream.Stream;
  * @author Qinzhao Li
  * @author Toshiki Takeuchi
  */
-public abstract class Node<T extends Node<?>> {
+@SuppressWarnings("rawtypes")
+public abstract class Node<T extends Node> {
 
     // MUST DO: remove this
     public int owner;
@@ -25,6 +26,9 @@ public abstract class Node<T extends Node<?>> {
     // List of children
     private final List<T> children = new ArrayList<>();
 
+    // Parent
+    Node<?> parent;
+
     // Constructors
     @SafeVarargs
     public Node(T... children) { addChildren(children); }
@@ -32,7 +36,10 @@ public abstract class Node<T extends Node<?>> {
     /* ================ [ METHODS ] ================ */
 
     // Add child
-    public void addChild(T node) { children.add(node); }
+    public void addChild(T node) {
+        node.parent = this;
+        children.add(node);
+    }
 
     @SafeVarargs
     public final void addChildren(T... nodes) {
@@ -115,4 +122,24 @@ public abstract class Node<T extends Node<?>> {
 
         indent.removeLast();
     }
+
+    public Node<?> getRoot() {
+        if (getParent() == null) {
+            return this;
+        }
+        return getParent().getRoot();
+    }
+
+    public <U extends Node<?>> U getRootAs(Class<U> clazz) {
+        return clazz.cast(getRoot());
+    }
+
+    public Node<?> getParent() {
+        return parent;
+    }
+
+    public <U extends Node<?>> U getParentAs(Class<U> clazz) {
+        return clazz.cast(getParent());
+    }
+
 }

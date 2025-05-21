@@ -1,11 +1,17 @@
 package com.apcs.disunity.app.input;
 
+import java.awt.Rectangle;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import com.apcs.disunity.app.rendering.ScalableBuffer;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.app.rendering.ScalableBuffer;
-
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * A listener that detects all inputs in the application.

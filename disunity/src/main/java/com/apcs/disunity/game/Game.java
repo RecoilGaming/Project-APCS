@@ -1,8 +1,15 @@
 package com.apcs.disunity.game;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JPanel;
+
 import com.apcs.disunity.app.Options;
 import com.apcs.disunity.app.input.InputHandler;
 import com.apcs.disunity.app.input.Inputs;
+import com.apcs.disunity.app.rendering.ScalableBuffer;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.Scene;
@@ -10,10 +17,6 @@ import com.apcs.disunity.game.selector.Selector;
 import com.apcs.disunity.game.signals.SignalBus;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.app.rendering.ScalableBuffer;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
 
 /**
  * runs the selected scene, and render it
@@ -102,7 +105,7 @@ public class Game extends JPanel {
         scenes.getSelected().update(Options.getSPF());// Delta value from configs
 
         // reset mouse vel
-        Inputs.mouseVel = Vector2.ZERO;
+        Inputs.setMouseVel(Vector2.ZERO);
     }
 
     /** Draw the game */
