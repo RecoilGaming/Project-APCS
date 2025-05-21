@@ -77,10 +77,4 @@ public final class Util {
         }
     }
 
-    public static Stream<Field> getAnnotatedFields(Class<?> cls, Class<? extends Annotation> annotation) {
-        if (cls == null)
-            return Stream.empty();
-        return Stream.concat(Arrays.stream(cls.getDeclaredFields()).filter(f -> f.isAnnotationPresent(annotation))
-                .peek(field -> field.setAccessible(true)), getAnnotatedFields(cls.getSuperclass(), annotation));
-    }
 }

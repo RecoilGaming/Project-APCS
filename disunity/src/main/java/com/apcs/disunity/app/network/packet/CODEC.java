@@ -2,6 +2,7 @@ package com.apcs.disunity.app.network.packet;
 
 import com.apcs.disunity.app.network.Util;
 import com.apcs.disunity.app.network.packet.annotation.*;
+import com.apcs.disunity.game.nodes.NodeUtil;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -133,7 +134,7 @@ public enum CODEC {
             ((SelfCodec<?>) val).encode(out);
         else
             for (CODEC codec : values()) {
-                for (Field field : Util.getAnnotatedFields(val.getClass(), codec.ANNOTATION).toList()) {
+                for (Field field : NodeUtil.getAnnotatedFields(val.getClass(), codec.ANNOTATION).toList()) {
                     try {
                         codec.ENCODER.encode(field.get(val), out);
                     } catch (IllegalAccessException e) {
@@ -148,7 +149,7 @@ public enum CODEC {
             return (T) decodable.decode(in);
         else
             for (CODEC codec : values()) {
-                for (Field field : Util.getAnnotatedFields(self.getClass(), codec.ANNOTATION).toList()) {
+                for (Field field : NodeUtil.getAnnotatedFields(self.getClass(), codec.ANNOTATION).toList()) {
                     try {
                         field.set(self, codec.DECODER.decode(field.get(self), in));
                     } catch (IllegalAccessException e) {
