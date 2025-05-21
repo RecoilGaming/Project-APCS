@@ -49,4 +49,19 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     public double getRot() { return transform.rot; }
 
     public Transform getTransform() { return transform; }
+
+    @Override
+    public final void update(double dt) {
+        if (!(getParent() instanceof Node2D)) {
+            this.update(dt, new Transform());
+        }
+        for (Node n : getChildren()) {
+            if (n instanceof Node2D node2D) {
+                node2D.update(dt, transform);
+            }
+        }
+        super.update(dt);
+    }
+
+    public void update(double dt, Transform t) { }
 }

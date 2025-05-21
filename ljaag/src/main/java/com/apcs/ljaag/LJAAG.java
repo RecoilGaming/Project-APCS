@@ -41,7 +41,7 @@ public class LJAAG {
         Inputs.fromJSON("keybinds.json");
 
         // Create the game scenes
-        Scene scene = new Scene("test", new Camera(), new Sprite("background.png"));
+        Scene scene = new Scene("test", new Sprite("background.png"));
 
         // for (int i = 1; i <= NUM_PLAYERS; i++) {
         int i = 1;
@@ -52,7 +52,7 @@ public class LJAAG {
             s1.setScale(Vector2.of(0.1, 0.1));
             s2.setScale(Vector2.of(0.1, 0.1));
             s3.setScale(Vector2.of(0.1, 0.1));
-            c.addChildren(s1, s2, s3);
+            c.addChildren(s1, s2, s3, new Camera());
             scene.addChild(c);
         // }
 

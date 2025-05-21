@@ -42,10 +42,10 @@ public abstract class Body extends Node2D<Node<?>> {
 
     /* ================ [ NODE ] ================ */
 
-    public void update(double delta) {
+    public void update(double delta, Transform t) {
         addPos(vel.mul(delta));
 
-        super.update(delta);
+        super.update(delta, t);
     }
 
     public abstract void onCollision(CollisionInfo info);

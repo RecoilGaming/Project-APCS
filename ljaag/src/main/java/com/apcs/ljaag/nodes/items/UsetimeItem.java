@@ -35,7 +35,7 @@ public abstract class UsetimeItem extends Sprite {
     }
 
     @Override
-    public void update(double delta) {
+    public void update(double delta, Transform t) {
         Vector2 mouseDir = Inputs.getMousePos().sub(getParentAs(Node2D.class).getPos()).normalized();
         Vector2 pos = mouseDir.mul(offset.x).add(Vector2.of(-mouseDir.y, mouseDir.x).mul(offset.y));
         setPos(pos);
@@ -50,6 +50,8 @@ public abstract class UsetimeItem extends Sprite {
         } else {
             cooldown -= delta;
         }
+
+        super.update(delta, t);
         
     }
 

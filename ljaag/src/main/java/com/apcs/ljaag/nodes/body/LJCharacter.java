@@ -9,6 +9,7 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.nodes.twodim.Collider;
 import com.apcs.disunity.game.physics.CollisionInfo;
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.LJAAG;
 import com.apcs.ljaag.nodes.indexed.InputVector;
@@ -43,7 +44,7 @@ public class LJCharacter extends Body {
     boolean collidedBefore = false;
 
     @Override
-    public void update(double delta) {
+    public void update(double delta, Transform t) {
 
         collidedBefore = collided;
         collided = false;
@@ -64,7 +65,7 @@ public class LJCharacter extends Body {
         // }
         setRot(getVel().heading());
 
-        super.update(delta);
+        super.update(delta, t);
     }
 
     @Override
