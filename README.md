@@ -1,6 +1,58 @@
 # Project-APCS
 
-## TO RUN THIS: run build.sh or ljaag-1.0.0-jar-with-dependencies.jar
+## TEAM
+
+**Period**: Ferrante 5
+
+**Members**: Qinzhao Li, Sharvil Phadke, Toshiki Takeuchi
+
+## GENERAL
+
+**Title**: Aura Farming Dungeon
+
+**Genre**: Co-op Boss Rush
+
+**Camera**: Top down w/ pixel art
+
+**Proposal**: Our game idea is to have a co-op dungeon crawler / boss rush game where the player chooses between multiple characters and cooperates with their friends to complete an objective: defeating the stage boss.
+
+## MECHANICS
+
+**Controls**:
+
+WASD / Arrows: Directional movement
+
+Mouse: Aiming
+
+Left Click: Basic attack
+
+Q / E / R: Use abilities
+
+Shift: Dodge ability
+
+H: Heal ability
+
+**Aura**: The main unique mechanic in our game is that rather than consuming mana, abilities consume a resource called "aura", which can only be collected by performing certain actions. For instance, successfully dodging attacks, landing certain abilities, and killing minions all increase the player's aura amount.
+
+**Dodge**: The player's dodge ability has a 30 second cooldown, but allows the player to completely mitigate any source of damage. This ability is available by default and cannot be leveled up.
+
+**Heal**: The player's heal ability also has a 30 second cooldown and allows the player to regain 10% of their health. This ability is available by default and cannot be leveled up.
+
+**Leveling**: Characters start the game at level 1, and can reach up to a maximum level of 9. At each level, characters gain a minor stat boost, as well as a skill point that can be used to unlock and upgrade abilities.
+
+**Characters**: Before starting any stage, players must select a character to use. This allows for a wide variety of playstyles built around different characters and / or team compositions.
+
+## ELEMENTS
+
+**Characters**: ~ we have ideas but none of them are finalized
+
+**Boss Enemies**: ~ same as above
+
+## NOTES
+
+<!-- 
+
+# Engine Notes
 
 ## Disunity Nodes
 
@@ -50,3 +102,4 @@ encoding decoding.
 `<T> T decode(T, InputStream)` is expected to return a
 decoded value, which can also be the first argument
 with mutated fields.
+-->
