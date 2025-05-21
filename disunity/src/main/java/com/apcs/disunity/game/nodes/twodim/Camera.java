@@ -11,7 +11,23 @@ import com.apcs.disunity.math.Transform;
  */
 public class Camera extends Node2D<Node<?>> {
 
+    private static Camera instance;
+
+    public static Camera getActiveCamera() {
+        return instance;
+    }
+
+    {
+        instance = this;
+    }
+
+    
+
     /* ================ [ FIELDS ] ================ */
+
+    private Transform lastLoc = new Transform();
+
+    private Transform getLastGlobalLocation() { return lastLoc; }
 
     // Constructors
     public Camera(Node<?>... children) { super(children); }
@@ -22,6 +38,7 @@ public class Camera extends Node2D<Node<?>> {
 
     @Override
     public void update(double delta, Transform t) {
+        lastLoc = t;
         // Update global transform
         // TODO: need to get global transform
         // currently sets to local transform, so camera does not follow the player
@@ -29,6 +46,10 @@ public class Camera extends Node2D<Node<?>> {
 
         // Update children
         super.update(delta, t);
+    }
+
+    public void setActive() {
+        instance = this;
     }
 
 }

@@ -4,6 +4,7 @@ package com.apcs.ljaag.nodes.items;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.Scene;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
+import com.apcs.disunity.game.physics.CollisionLayer;
 import com.apcs.disunity.math.Vector2;
 
 public class Shotgun extends UsetimeItem {

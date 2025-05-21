@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import com.apcs.disunity.app.Options;
 import com.apcs.disunity.app.input.InputHandler;
-import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.app.rendering.ScalableBuffer;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.Node;
@@ -105,7 +104,7 @@ public class Game extends JPanel {
         scenes.getSelected().update(Options.getSPF());// Delta value from configs
 
         // reset mouse vel
-        Inputs.setMouseVel(Vector2.ZERO);
+        // Inputs.setMouseVel(Vector2.ZERO);
     }
 
     /** Draw the game */
@@ -119,6 +118,13 @@ public class Game extends JPanel {
      * @param transform The new transform
      */
     public void setTransform(Transform transform) { this.transform = transform; }
+
+    /**
+     * Gets the global transform of the viewport
+     * 
+     * @return transform The transform
+     */
+    public Transform getTransform() { return transform; }
 
     /**
      * Set the size of the game buffer

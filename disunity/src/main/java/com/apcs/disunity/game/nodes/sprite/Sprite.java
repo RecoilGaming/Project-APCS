@@ -64,28 +64,31 @@ public class Sprite extends Node2D<Node<?>> {
         // Load sprite image
         BufferedImage img = imageLocation.getImage();
 
+        Transform t = getTransform().apply(offset);
+
+        
         switch (rotationType) {
             case RotationType.LOCKED -> {}
             case RotationType.BIDIRECTIONAL -> {
-                double angle = getTransform().rot + offset.rot;
+                double angle = t.rot;
                 if (Math.abs(angle) > Math.PI / 2) {
                     img = Util.flipHorizontally(img);
                 }
             }
             case RotationType.NORMAL -> {
-                img = Util.rotate(img, getTransform().rot + offset.rot);
+                img = Util.rotate(img, t.rot);
             }
             case RotationType.UPRIGHT -> {
-                double angle = getTransform().rot + offset.rot;
+                double angle = t.rot;
                 if (Math.abs(angle) > Math.PI / 2) {
                     img = Util.flipVertically(img);
                 }
-                img = Util.rotate(img, getTransform().rot + offset.rot);
+                img = Util.rotate(img, t.rot);
             }
         }
 
         // Draw image to buffer
-        Game.getInstance().getBuffer().drawImage(img, getTransform().apply(offset));
+        Game.getInstance().getBuffer().drawImage(img, t);
 
         // Draw children
         super.draw(offset);
