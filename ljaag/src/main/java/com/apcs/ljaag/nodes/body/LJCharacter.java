@@ -4,10 +4,10 @@ import com.apcs.disunity.app.network.packet.SyncHandler;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.SelectorNode;
-import com.apcs.disunity.game.nodes.sprite.AnimationSprite;
+import com.apcs.disunity.game.nodes.collider.Collider;
+import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Body;
-import com.apcs.disunity.game.nodes.twodim.Collider;
 import com.apcs.disunity.game.physics.CollisionInfo;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -18,12 +18,12 @@ import com.apcs.ljaag.nodes.indexed.InputVector;
 /// demo of disunity
 public class LJCharacter extends Body {
     @FieldChild
-    private final SelectorNode<String, AnimationSprite> spriteSelector;
+    private final SelectorNode<String, AnimatedSprite> spriteSelector;
     {
-        AnimationSprite s1, s2;
-        spriteSelector = new SelectorNode<String, AnimationSprite>(
-            s1 = new AnimationSprite("stand", "player/player.png", Double.MAX_VALUE),
-            s2 = new AnimationSprite("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
+        AnimatedSprite s1, s2;
+        spriteSelector = new SelectorNode<String, AnimatedSprite>(
+            s1 = new AnimatedSprite("stand", "player/player.png", Double.MAX_VALUE),
+            s2 = new AnimatedSprite("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
 
         s1.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
         s2.setRotationType(Sprite.RotationType.BIDIRECTIONAL);

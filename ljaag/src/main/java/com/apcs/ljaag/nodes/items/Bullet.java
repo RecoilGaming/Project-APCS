@@ -1,9 +1,9 @@
 package com.apcs.ljaag.nodes.items;
 
 import com.apcs.disunity.game.nodes.FieldChild;
+import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Body;
-import com.apcs.disunity.game.nodes.twodim.Collider;
 import com.apcs.disunity.game.physics.CollisionInfo;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;

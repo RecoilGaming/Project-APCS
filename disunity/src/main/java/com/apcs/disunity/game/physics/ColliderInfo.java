@@ -1,7 +1,7 @@
 package com.apcs.disunity.game.physics;
 
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.game.nodes.twodim.Collider;
+import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.signals.Signal;
 
 /// information of collider that is needed to process collision

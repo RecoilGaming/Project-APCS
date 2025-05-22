@@ -11,7 +11,7 @@ import com.apcs.disunity.math.Transform;
  * 
  * @author Qinzhao Li
  */
-public class AnimationSprite extends Sprite implements Indexed<String> {
+public class AnimatedSprite extends Sprite implements Indexed<String> {
 
     /* ================ [ FIELDS ] ================ */
 
@@ -26,7 +26,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     // Current frame
     private int frameCount = 0;
 
-    public AnimationSprite(String name, ImageLocation imageLocation, double... frameDurations) {
+    public AnimatedSprite(String name, ImageLocation imageLocation, double... frameDurations) {
         super(imageLocation);
         baseImage = imageLocation;
         this.name = name;
@@ -34,7 +34,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
         updateFrame();
     }
 
-    public AnimationSprite(String name, String path, double... frameDurations) {
+    public AnimatedSprite(String name, String path, double... frameDurations) {
         this(name, new ImageLocation(path), frameDurations);
     }
 

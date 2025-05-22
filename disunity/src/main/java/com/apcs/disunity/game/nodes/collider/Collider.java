@@ -1,7 +1,8 @@
-package com.apcs.disunity.game.nodes.twodim;
+package com.apcs.disunity.game.nodes.collider;
 
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.game.nodes.Node;
+import com.apcs.disunity.game.nodes.twodim.Node2D;
 import com.apcs.disunity.game.physics.CollisionInfo;
 import com.apcs.disunity.game.physics.CollisionLayer;
 import com.apcs.disunity.game.physics.CollisionMask;
@@ -18,7 +19,7 @@ public class Collider extends Node2D<Node<?>> {
     public static final CollisionMask ALL_LAYER_MASK = new CollisionMask(~0);
     public static final CollisionMask NO_LAYER_MASK = new CollisionMask(0);
 
-    public final Vector2 SIZE;
+    public Vector2 SIZE;
 
     public final CollisionLayer LAYER;
     public final CollisionMask MASK;
