@@ -1,11 +1,14 @@
 package com.apcs.disunity.app.input;
 
-import com.apcs.disunity.game.Game;
-import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.app.rendering.ScalableBuffer;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-import java.awt.*;
-import java.awt.event.*;
+import com.apcs.disunity.math.Vector2;
 
 /**
  * A listener that detects all inputs in the application.
@@ -45,18 +48,15 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
     /* ================ [ MOUSEMOTIONLISTENER ] ================ */
 
     @Override
-    public void mouseDragged(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {
+        Vector2 pos = Vector2.of(e.getX(), e.getY());
+        Inputs.rawMousePos = pos;
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        ScalableBuffer buffer = Game.getInstance().getBuffer();
-        Rectangle bounds = Game.getInstance().getBounds();
         Vector2 pos = Vector2.of(e.getX(), e.getY());
-        Vector2 viewDim = Vector2.of(bounds.width, bounds.height);
-
-        Vector2 newPos = pos.sub(viewDim.div(2)).div(buffer.getScale());
-        Inputs.mouseVel = newPos.sub(Inputs.mousePos);
-        Inputs.mousePos = newPos;
+        Inputs.rawMousePos = pos;
     }
 
     /* ================ [ FOCUSLISTENER ] ================ */

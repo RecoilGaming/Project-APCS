@@ -2,5 +2,6 @@
   "left" : [ [ "A" ], [ "Left" ] ],
   "up" : [ [ "W" ], [ "Up" ] ],
   "right" : [ [ "D" ], [ "Right" ] ],
-  "down" : [ [ "S" ], [ "Down" ] ]
+  "down" : [ [ "S" ], [ "Down" ] ],
+  "fire" : [ [ "F" ], [ "Left Click" ] ]
 }

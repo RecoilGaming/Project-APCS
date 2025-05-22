@@ -47,6 +47,9 @@ public class Transform {
     // Rotate by an amount
     public Transform rotate(double amt) { return new Transform(pos, scale, (rot + amt) % 360); }
 
+    // Rotates to an angle
+    public Transform rotateTo(double amt) { return new Transform(pos, scale, amt); }
+
     // Apply another transform
     public Transform apply(Transform t) {
         return new Transform(pos.mul(t.scale).add(t.pos), scale.mul(t.scale), (rot + t.rot) % 360);

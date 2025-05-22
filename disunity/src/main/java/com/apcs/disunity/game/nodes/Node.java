@@ -1,13 +1,12 @@
 package com.apcs.disunity.game.nodes;
 
-import com.apcs.disunity.math.Transform;
-import com.apcs.disunity.game.selector.Indexed;
-import com.apcs.disunity.app.network.Util;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import com.apcs.disunity.game.selector.Indexed;
+import com.apcs.disunity.math.Transform;
 
 /**
  * The base class for all nodes in the game
@@ -15,67 +14,95 @@ import java.util.stream.Stream;
  * @author Qinzhao Li
  * @author Toshiki Takeuchi
  */
-public abstract class Node<T extends Node<?>> {
-
-    // MUST DO: remove this
-    public int owner;
+public abstract class Node<T extends Node> {
 
     /* ================ [ FIELDS ] ================ */
 
-    // List of children
+    // The id of the client that owns this node
+    public int owner;
+
+    // Parent node
+    private Node<?> parent;
+
+    // List of children nodes
     private final List<T> children = new ArrayList<>();
 
     // Constructors
-    @SafeVarargs
     public Node(T... children) { addChildren(children); }
 
     /* ================ [ METHODS ] ================ */
 
-    // Add child
-    public void addChild(T node) { children.add(node); }
+    // Set parent node
+    public void setParent(Node<?> parent) { this.parent = parent; }
 
-    @SafeVarargs
+    // Get parent node
+    public Node<?> getParent() { return parent; }
+
+    // Get root node
+    public Node<?> getRoot() { return parent == null ? this : parent.getRoot(); }
+
+    // Get root node as a specific type
+    public <U extends Node<?>> U getRoot(Class<U> t) { return t.cast(getRoot()); }
+
+    // Get parent node as a specific type
+    public <U extends Node<?>> U getParent(Class<U> t) { return t.cast(getParent()); }
+
+    // Add a child node
+    public void addChild(T node) {
+        node.setParent(this);
+        children.add(node);
+    }
+
+    // Add multiple child nodes
     public final void addChildren(T... nodes) {
         for (T child : nodes) {
+            child.setParent(this);
             addChild(child);
         }
     }
 
-    // Remove child
-    public void removeChild(T node) { getChildren().remove(node); }
+    // Remove child node
+    public void removeChild(T node) {
+        node.setParent(null);
+        getAllChildren().remove(node);
+    }
 
-    // Clear children
-    public void clearChildren() { getChildren().clear(); }
+    // Clear chi.d nodes
+    public void clearChildren() {
+        for (T child : getAllChildren()) {
+            child.setParent(null);
+        }
+        getAllChildren().clear();
+    }
 
-    // Get children
-    public List<T> getDynamicChildren() { return children; }
+    // Get dynamic child nodes
+    public List<T> getChildren() { return children; }
 
-    public List<T> getFieldChildren() {
-        return Util.getAnnotatedFields(this.getClass(), FieldChild.class).map(f -> {
+    // Get static child nodes
+    public List<T> getStaticChildren() {
+        return NodeUtil.getAnnotatedFields(this.getClass(), FieldChild.class).map(field -> {
             try {
-                return (T) f.get(this);
+                return (T) field.get(this);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         }).toList();
     }
 
-    public List<T> getChildren() {
-        return Stream.concat(getDynamicChildren().stream(), getFieldChildren().stream()).toList();
+    // Get all child nodes
+    public List<T> getAllChildren() {
+        return Stream.concat(getChildren().stream(), getStaticChildren().stream()).toList();
     }
 
     /* ================ [ NODE ] ================ */
 
     // Update node
-    public void update(double delta) {
-        // Update children
-        for (T node : getChildren())
-            node.update(delta);
-    }
+    public void update(double delta) { getAllChildren().forEach(child -> child.update(delta)); }
 
-    public void draw(Transform transform) { getChildren().forEach(n -> n.draw(transform)); }
+    // Draw node
+    public void draw(Transform offset) { getAllChildren().forEach(child -> child.draw(offset)); }
 
-    /* ================ [ PRINTING ] ================ */
+    /* ================ [ PRINT ] ================ */
 
     /// Overload for default behavior of {@link #print(boolean, Function, List)}.
     /// Prints node names in tree structure
@@ -106,13 +133,14 @@ public abstract class Node<T extends Node<?>> {
         else
             indent.add(" |  ");
 
-        for (int i = 0; i < getChildren().size() - 1; i++) {
-            ((Node<?>) getChildren().get(i)).print(false, formatter, indent);
+        for (int i = 0; i < getAllChildren().size() - 1; i++) {
+            ((Node<?>) getAllChildren().get(i)).print(false, formatter, indent);
         }
-        if (!getChildren().isEmpty()) {
-            ((Node<?>) getChildren().getLast()).print(true, formatter, indent);
+        if (!getAllChildren().isEmpty()) {
+            ((Node<?>) getAllChildren().getLast()).print(true, formatter, indent);
         }
 
         indent.removeLast();
     }
+
 }

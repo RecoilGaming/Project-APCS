@@ -1,5 +1,6 @@
 package com.apcs.disunity.app.input;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,7 +10,8 @@ import java.util.Set;
 
 import com.apcs.disunity.app.input.actions.Action;
 import com.apcs.disunity.app.input.actions.ActionSet;
-
+import com.apcs.disunity.app.rendering.ScalableBuffer;
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.math.Vector2;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,11 +32,32 @@ public class Inputs {
     private static final Set<Input> inputs = new HashSet<>();
 
     // Mouse position on the screen
-    public static Vector2 mousePos = Vector2.of(-1);
-    public static Vector2 mouseVel = Vector2.ZERO;
+    static Vector2 rawMousePos = Vector2.of(-1);
+    static Vector2 lastMousePos = Vector2.ZERO;
 
     /* ================ [ METHODS ] ================ */
 
+    public static Vector2 adjustForGame(Vector2 pos) {
+        ScalableBuffer buffer = Game.getInstance().getBuffer();
+        Rectangle bounds = Game.getInstance().getBounds();
+        Vector2 viewDim = Vector2.of(bounds.width, bounds.height);
+        Vector2 newPos = pos.sub(viewDim.div(2)).div(buffer.getScale()).sub(Game.getInstance().getTransform().pos);
+        return newPos;
+    }
+
+    // getter for mouse pos
+    public static Vector2 getMousePos() {
+        lastMousePos = adjustForGame(rawMousePos);
+        return lastMousePos;
+    }
+
+    // getter for mouse vel
+    public static Vector2 getMouseVel() {
+        Vector2 last = lastMousePos;
+        Vector2 pos = getMousePos();
+        return pos.sub(last);
+    }
+ 
     // Press an input
     public static void press(Input input) { inputs.add(input); }
 

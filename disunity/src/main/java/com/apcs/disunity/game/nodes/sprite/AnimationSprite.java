@@ -1,8 +1,9 @@
 package com.apcs.disunity.game.nodes.sprite;
 
-import com.apcs.disunity.game.selector.Indexed;
-
 import java.awt.image.BufferedImage;
+
+import com.apcs.disunity.game.selector.Indexed;
+import com.apcs.disunity.math.Transform;
 
 /**
  * sprite that renders timed cyclic animation, created by splicing a base image
@@ -51,13 +52,15 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     public String index() { return name; }
 
     @Override
-    public void update(double delta) {
+    public void update(double delta, Transform t) {
         // Update frame
         if (System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
             prevFrame = System.nanoTime();
             frameCount++;
             updateFrame();
         }
+
+        super.update(delta, t);
     }
 
     public void updateFrame() {
