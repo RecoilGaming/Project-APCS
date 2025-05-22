@@ -11,45 +11,43 @@ import com.apcs.disunity.math.Transform;
  */
 public class Camera extends Node2D<Node<?>> {
 
-    private static Camera instance;
+    /* ================ [ CONSTANTS ] ================ */
 
-    public static Camera getActiveCamera() {
-        return instance;
-    }
+    // Active camera instance
+    private static Camera active;
 
-    {
-        instance = this;
-    }
-
-    
+    // Get active camera 
+    public static Camera getActive() { return active; }
 
     /* ================ [ FIELDS ] ================ */
 
-    private Transform lastLoc = new Transform();
+    {
+        active = this;
+    }
 
-    private Transform getLastGlobalLocation() { return lastLoc; }
+    // Previous transform
+    private Transform prevT = new Transform();
 
     // Constructors
     public Camera(Node<?>... children) { super(children); }
-
     public Camera(Transform transform, Node<?>... children) { super(transform, children); }
+
+    /* ================ [ METHODS ] ================ */
+
+    // Update the current active camera
+    public void setActive() { active = this; }
 
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void update(double delta, Transform t) {
-        lastLoc = t;
+    public void draw(Transform offset) {
+        prevT = offset;
+
         // Update global transform
-        // TODO: need to get global transform
-        // currently sets to local transform, so camera does not follow the player
-        Game.getInstance().setTransform(new Transform(t.pos.mul(-1), t.scale, 0).apply(getTransform()));
+        Game.getInstance().setTransform(new Transform(offset.pos.mul(-1), offset.scale, 0).apply(getTransform()));
 
         // Update children
-        super.update(delta, t);
-    }
-
-    public void setActive() {
-        instance = this;
+        super.draw(offset);
     }
 
 }

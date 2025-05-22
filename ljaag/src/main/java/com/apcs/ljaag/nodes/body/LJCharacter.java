@@ -44,17 +44,17 @@ public class LJCharacter extends Body {
     boolean collidedBefore = false;
 
     @Override
-    public void update(double delta, Transform t) {
+    public void update(double delta) {
 
         collidedBefore = collided;
         collided = false;
         // movement
         if (isPlayer()) {
-            setVel(input.get());
+            setVelocity(input.get());
         }
 
         // sprite
-        if (Math.abs(getVel().x) + Math.abs(getVel().y) < 0.1) {
+        if (Math.abs(getVelocity().x) + Math.abs(getVelocity().y) < 0.1) {
             spriteSelector.select("stand");
         } else {
             spriteSelector.select("run");
@@ -63,9 +63,9 @@ public class LJCharacter extends Body {
         // if (Math.abs(getVel().x) >= 0.1) {
         //     setScale(Vector2.of(getVel().x > 0 ? 1 : -1, 1));
         // }
-        setRot(getVel().heading());
+        setRot(getVelocity().heading());
 
-        super.update(delta, t);
+        super.update(delta);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LJCharacter extends Body {
         if (!collidedBefore && !collided && isPlayer())
             coinSound.play();
         collided = true;
-        Vector2 vel = getVel().mul(info.delta);
+        Vector2 vel = getVelocity().mul(info.delta);
         addPos(vel.mul(-1));
 
         while (vel.length() > 0) {

@@ -22,17 +22,17 @@ public class Bullet extends Body {
         setPos(t.pos);
         setRot(t.rot);
         setScale(t.scale);
-        setVel(vel);
+        setVelocity(vel);
     }
 
     @Override
-    public void update(double dt, Transform t) {
+    public void update(double dt) {
         lifetime += dt;
         if (lifetime > LIFECYCLE) {
             // getParent().removeChild((Node) this);
             sprite.setHidden(true);
         }
-        super.update(dt, t);
+        super.update(dt);
     }
 
     @Override

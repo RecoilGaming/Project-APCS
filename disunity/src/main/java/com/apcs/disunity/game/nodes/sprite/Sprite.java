@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.apcs.disunity.app.network.packet.annotation.SyncedBoolean;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
-import com.apcs.disunity.app.rendering.Util;
+import com.apcs.disunity.app.rendering.ImageUtil;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
@@ -18,15 +18,10 @@ import com.apcs.disunity.math.Transform;
  */
 public class Sprite extends Node2D<Node<?>> {
 
-    public void setRotationType(RotationType rotationType) {
-        this.rotationType = rotationType;
-    }
+    public void setRotationType(RotationType rotationType) { this.rotationType = rotationType; }
 
     public enum RotationType {
-        NORMAL,
-        LOCKED,
-        BIDIRECTIONAL,
-        UPRIGHT
+        NORMAL, LOCKED, BIDIRECTIONAL, UPRIGHT
     }
 
     /* ================ [ FIELDS ] ================ */
@@ -41,9 +36,7 @@ public class Sprite extends Node2D<Node<?>> {
     @SyncedObject
     private RotationType rotationType = RotationType.NORMAL;
 
-    public RotationType getRotationType() {
-        return rotationType;
-    }
+    public RotationType getRotationType() { return rotationType; }
 
     // Constructors
     public Sprite(ImageLocation imageLocation) { this.imageLocation = imageLocation; }
@@ -59,32 +52,33 @@ public class Sprite extends Node2D<Node<?>> {
     @Override
     public void draw(Transform offset) {
 
-        if (isHidden()) return;
+        if (isHidden())
+            return;
 
         // Load sprite image
         BufferedImage img = imageLocation.getImage();
 
         Transform t = getTransform().apply(offset);
 
-        
         switch (rotationType) {
-            case RotationType.LOCKED -> {}
-            case RotationType.BIDIRECTIONAL -> {
-                double angle = t.rot;
-                if (Math.abs(angle) > Math.PI / 2) {
-                    img = Util.flipHorizontally(img);
-                }
+        case RotationType.LOCKED -> {
+        }
+        case RotationType.BIDIRECTIONAL -> {
+            double angle = t.rot;
+            if (Math.abs(angle) > Math.PI / 2) {
+                img = ImageUtil.flipHorizontally(img);
             }
-            case RotationType.NORMAL -> {
-                img = Util.rotate(img, t.rot);
+        }
+        case RotationType.NORMAL -> {
+            img = ImageUtil.rotate(img, t.rot);
+        }
+        case RotationType.UPRIGHT -> {
+            double angle = t.rot;
+            if (Math.abs(angle) > Math.PI / 2) {
+                img = ImageUtil.flipVertically(img);
             }
-            case RotationType.UPRIGHT -> {
-                double angle = t.rot;
-                if (Math.abs(angle) > Math.PI / 2) {
-                    img = Util.flipVertically(img);
-                }
-                img = Util.rotate(img, t.rot);
-            }
+            img = ImageUtil.rotate(img, t.rot);
+        }
         }
 
         // Draw image to buffer
@@ -94,12 +88,8 @@ public class Sprite extends Node2D<Node<?>> {
         super.draw(offset);
     }
 
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
+    public void setHidden(boolean hidden) { this.hidden = hidden; }
 
-    public boolean isHidden() {
-        return hidden;
-    }
+    public boolean isHidden() { return hidden; }
 
 }

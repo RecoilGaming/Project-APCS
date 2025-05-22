@@ -14,38 +14,40 @@ import com.apcs.disunity.math.Vector2;
  */
 public abstract class Body extends Node2D<Node<?>> {
 
-    /* ================ [ FIELDS ] ================ */
-
-    // Velocity
-    @SyncedObject
-    private Vector2 vel = Vector2.ZERO;
+    /* ================ [ CHILDREN ] ================ */
 
     @FieldChild
     public final Collider collider;
 
+    /* ================ [ FIELDS ] ================ */
+
+    // Body velocity
+    @SyncedObject
+    private Vector2 velocity = Vector2.ZERO;
+
     // Constructors
     public Body(Collider collider, Node<?>... children) { this(new Transform(), collider, children); }
-
     public Body(Transform transform, Collider collider, Node<?>... children) {
         super(transform, children);
         this.collider = collider;
-        collider.collisionInfo.connect(this::onCollision);
+
+        this.collider.collisionInfo.connect(this::onCollision);
     }
 
     /* ================ [ METHODS ] ================ */
 
     // Set velocity
-    public void setVel(Vector2 vel) { this.vel = vel; }
+    public void setVelocity(Vector2 vel) { this.velocity = vel; }
 
     // Get velocity
-    public Vector2 getVel() { return vel; }
+    public Vector2 getVelocity() { return velocity; }
 
     /* ================ [ NODE ] ================ */
 
-    public void update(double delta, Transform t) {
-        addPos(vel.mul(delta));
+    public void update(double delta) {
+        addPos(velocity.mul(delta));
 
-        super.update(delta, t);
+        super.update(delta);
     }
 
     public abstract void onCollision(CollisionInfo info);
