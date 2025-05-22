@@ -1,5 +1,6 @@
 package com.apcs.disunity.game.nodes.collider;
 
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
@@ -25,6 +26,13 @@ public class Collider extends Node2D<Node<?>> {
     public final CollisionMask MASK;
 
     public Signal<CollisionInfo> collisionInfo = new Signal<>(CollisionInfo.class);
+
+    public Collider(Transform t, int w, int h) {
+        super(t);
+        SIZE = Vector2.of(w, h);
+        this.LAYER = DEFAULT_LAYER;
+        this.MASK = DEFAULT_MASK;
+    }
 
     public Collider(int w, int h, CollisionLayer layer, CollisionMask mask) {
         SIZE = Vector2.of(w, h);

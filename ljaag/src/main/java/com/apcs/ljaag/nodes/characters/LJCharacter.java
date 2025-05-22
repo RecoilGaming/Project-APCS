@@ -1,4 +1,4 @@
-package com.apcs.ljaag.nodes.body;
+package com.apcs.ljaag.nodes.characters;
 
 import com.apcs.disunity.app.network.packet.SyncHandler;
 import com.apcs.disunity.app.resources.Sound;
@@ -50,7 +50,7 @@ public class LJCharacter extends Body {
         collided = false;
         // movement
         if (isPlayer()) {
-            setVelocity(input.get());
+            setVelocity(input.get().mul(100));
         }
 
         // sprite
