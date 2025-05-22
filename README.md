@@ -8,13 +8,13 @@
 
 ## GENERAL
 
-**Title**: Aura Farming Dungeon
+**Title**: Heaven's Lament
 
-**Genre**: Co-op Boss Rush
+**Genre**: Co-op Dungeon Crawler
 
 **Camera**: Top down w/ pixel art
 
-**Proposal**: Our game idea is to have a co-op dungeon crawler / boss rush game where the player chooses between multiple characters and cooperates with their friends to complete an objective: defeating the stage boss.
+**Proposal**: Our game idea is to have a co-op dungeon crawler / boss rush game where the player chooses between multiple characters and cooperates with their friends to complete the objetive of defeating each stage's boss. They start the game in the boss room with a character at level 1, and can explore the dungeon to raise their level in order to gain abilities that will help them defeat the boss.
 
 ## MECHANICS
 
@@ -22,7 +22,7 @@
 
 WASD / Arrows: Directional movement
 
-Mouse: Aiming
+Mouse: Aiming for abilities
 
 Left Click: Basic attack
 

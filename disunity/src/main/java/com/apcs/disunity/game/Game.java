@@ -56,7 +56,9 @@ public class Game extends JPanel {
      * 
      * @param dimensions The dimensions of the game buffer
      */
-    public Game(Vector2 dimensions) { this(dimensions, true); }
+    public Game(Vector2 dimensions) {
+        this(dimensions, true);
+    }
 
     /**
      * Creates a new Game with the given dimensions, scene ID, and host status
@@ -96,19 +98,19 @@ public class Game extends JPanel {
     /* ================ [ GAME ] ================ */
 
     /** Start the game loop */
-    public void start() { game.start(); }
+    public void start() {
+        game.start();
+    }
 
     /** Update the game */
     private void update() {
-        // Update scene
-        scenes.getSelected().update(Options.getSPF());// Delta value from configs
-
-        // reset mouse vel
-        // Inputs.setMouseVel(Vector2.ZERO);
+        scenes.getSelected().update(Options.getSPF());
     }
 
     /** Draw the game */
-    private void draw() { repaint(); }
+    private void draw() {
+        repaint();
+    }
 
     /* ================ [ METHODS ] ================ */
 
@@ -117,43 +119,61 @@ public class Game extends JPanel {
      * 
      * @param transform The new transform
      */
-    public void setTransform(Transform transform) { this.transform = transform; }
+    public void setTransform(Transform transform) {
+        this.transform = transform;
+    }
 
     /**
      * Gets the global transform of the viewport
      * 
      * @return transform The transform
      */
-    public Transform getTransform() { return transform; }
+    public Transform getTransform() {
+        return transform;
+    }
 
     /**
      * Set the size of the game buffer
      * 
      * @param size The new size
      */
-    public void setBufferSize(Vector2 size) { buffer.setSize(size); }
+    public void setBufferSize(Vector2 size) {
+        buffer.setSize(size);
+    }
 
     /**
      * Get the game buffer for drawing
      * 
      * @return The game buffer
      */
-    public ScalableBuffer getBuffer() { return buffer; }
+    public ScalableBuffer getBuffer() {
+        return buffer;
+    }
 
     /**
      * Get the singleton instance of the game
      * 
      * @return The game instance
      */
-    public static Game getInstance() { return instance; }
+    public static Game getInstance() {
+        return instance;
+    }
 
-    public void addScene(String name, Node<?>... children) { addScene(new Scene(name, children)); }
+    public void addScene(String name, Node<?>... children) {
+        addScene(new Scene(name, children));
+    }
 
-    public void addScene(Scene s) { scenes.add(s); }
+    public void addScene(Scene s) {
+        scenes.add(s);
+    }
 
-    public void setScene(String name) { globalSignal = scenes.select(name).GLOBAL_SIGNAL_BUS; }
+    public void setScene(String name) {
+        globalSignal = scenes.select(name).GLOBAL_SIGNAL_BUS;
+    }
 
-    public SignalBus getGlobalSignal() { return globalSignal; }
+    public SignalBus getGlobalSignal() {
+        return globalSignal;
+    }
 
     /* ================ [ JPANEL ] ================ */
 
@@ -170,8 +190,7 @@ public class Game extends JPanel {
         buffer.clear();
 
         // Update buffer
-        scenes.getSelected().draw(transform.addPos(dimensions.mul(0.5)) // Center on camera
-        );
+        scenes.getSelected().draw(transform.addPos(dimensions.mul(0.5)));
 
         BufferedImage image = buffer.getImage();
         int w = image.getWidth();

@@ -1,7 +1,5 @@
 package com.apcs.ljaag;
 
-import java.io.IOException;
-
 import com.apcs.disunity.app.App;
 import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.game.Game;
@@ -10,7 +8,7 @@ import com.apcs.disunity.game.nodes.Scene;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.nodes.body.LJCharacter;
+import com.apcs.ljaag.nodes.characters.LJCharacter;
 import com.apcs.ljaag.nodes.items.Shotgun;
 import com.apcs.ljaag.nodes.items.UsetimeAnimation;
 import com.apcs.ljaag.nodes.items.UsetimeItem;
@@ -27,11 +25,10 @@ import com.apcs.ljaag.nodes.items.UsetimeSprite;
  */
 public class LJAAG {
 
-    /* ================ [ DRIVER ] ================ */
+    /* ================ [ METHODS ] ================ */
 
-    public static void main(String[] args) throws IOException { runApp(true); }
-
-    private static void runApp(boolean isServer) {
+    // Play the game 
+    private static void play(boolean isServer) {
         // Import keybinds from a JSON file
         Inputs.fromJSON("keybinds.json");
 
@@ -71,4 +68,9 @@ public class LJAAG {
             own(child, clientId);
         }
     }
+
+    /* ================ [ DRIVER ] ================ */
+
+    public static void main(String[] args) { play(true); }
+
 }

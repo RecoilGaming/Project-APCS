@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * A flag that is true when any of its actions are true. (OR)
+ * A flag that is true when any of its actions are true (OR).
  * 
  * @author Qinzhao Li
  */

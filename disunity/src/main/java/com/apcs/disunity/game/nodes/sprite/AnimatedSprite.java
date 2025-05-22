@@ -11,7 +11,7 @@ import com.apcs.disunity.math.Transform;
  * 
  * @author Qinzhao Li
  */
-public class AnimationSprite extends Sprite implements Indexed<String> {
+public class AnimatedSprite extends Sprite implements Indexed<String> {
 
     /* ================ [ FIELDS ] ================ */
 
@@ -28,15 +28,15 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     // Current frame
     private int frameCount = 0;
 
-    public AnimationSprite(String name, ImageLocation imageLocation, double... frameDurations) {
+    public AnimatedSprite(String name, ImageLocation imageLocation, double... frameDurations) {
         this(name, imageLocation, false, frameDurations);
     }
 
-    public AnimationSprite(String name, String path, double... frameDurations) {
+    public AnimatedSprite(String name, String path, double... frameDurations) {
         this(name, new ImageLocation(path), frameDurations);
     }
 
-    public AnimationSprite(String name, ImageLocation imageLocation, boolean looping, double... frameDurations) {
+    public AnimatedSprite(String name, ImageLocation imageLocation, boolean looping, double... frameDurations) {
         super(imageLocation);
         this.looping = looping;
         baseImage = imageLocation;
@@ -45,7 +45,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
         updateFrame();
     }
 
-    public AnimationSprite(String name, String path, boolean looping, double... frameDurations) {
+    public AnimatedSprite(String name, String path, boolean looping, double... frameDurations) {
         this(name, new ImageLocation(path), looping, frameDurations);
     }
 
@@ -63,7 +63,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     public String index() { return name; }
 
     @Override
-    public void update(double delta, Transform t) {
+    public void update(Transform offset, double delta) {
         // Update frame
         if (!isHidden() && System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
             prevFrame = System.nanoTime();
@@ -71,7 +71,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
             updateFrame();
         }
 
-        super.update(delta, t);
+        super.update(offset, delta);
     }
 
     public void updateFrame() {

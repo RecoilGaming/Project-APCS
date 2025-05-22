@@ -1,9 +1,10 @@
 package com.apcs.ljaag.nodes.items;
 
-import com.apcs.disunity.game.nodes.sprite.AnimationSprite;
+import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
+import com.apcs.disunity.game.nodes.sprite.Sprite.RotationType;
 
-public class UsetimeAnimation extends AnimationSprite implements Usable {
+public class UsetimeAnimation extends AnimatedSprite implements Usable {
 
     {
         setHidden(true);
