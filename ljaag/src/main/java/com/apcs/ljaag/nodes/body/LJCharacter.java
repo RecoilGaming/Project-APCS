@@ -22,8 +22,8 @@ public class LJCharacter extends Body {
     {
         AnimationSprite s1, s2;
         spriteSelector = new SelectorNode<String, AnimationSprite>(
-            s1 = new AnimationSprite("stand", "player/player.png", Double.MAX_VALUE),
-            s2 = new AnimationSprite("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
+            s1 = new AnimationSprite("stand", "player/player.png", true, Double.MAX_VALUE),
+            s2 = new AnimationSprite("run", "player/run.png", true,  0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
 
         s1.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
         s2.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
@@ -39,7 +39,7 @@ public class LJCharacter extends Body {
         setPos(pos);
     }
 
-    static Sound coinSound = new Sound("smw_coin.wav");
+    static Sound coinSound = new Sound("sounds/smw_coin.wav");
     boolean collided = false;
     boolean collidedBefore = false;
 

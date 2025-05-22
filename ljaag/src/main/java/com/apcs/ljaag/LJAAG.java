@@ -12,6 +12,10 @@ import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.body.LJCharacter;
 import com.apcs.ljaag.nodes.items.Shotgun;
+import com.apcs.ljaag.nodes.items.UsetimeAnimation;
+import com.apcs.ljaag.nodes.items.UsetimeItem;
+import com.apcs.ljaag.nodes.items.UsetimeSound;
+import com.apcs.ljaag.nodes.items.UsetimeSprite;
 
 /**
  * Untitled game
@@ -35,13 +39,19 @@ public class LJAAG {
         Scene scene = new Scene("test", new Sprite("background.png"));
 
         Node c = new LJCharacter(0, 0, 1);
-        Sprite s1 = new Shotgun("weapons/boomstick.png");
-        Sprite s2 = new Shotgun(10, "weapons/boomstick.png");
-        Sprite s3 = new Shotgun(-10, "weapons/boomstick.png");
-        s1.setScale(Vector2.of(0.1, 0.1));
-        s2.setScale(Vector2.of(0.1, 0.1));
-        s3.setScale(Vector2.of(0.1, 0.1));
-        c.addChildren(s1, s2, s3, new Camera());
+        Sprite s = new UsetimeSprite("weapons/boomstick.png");
+        s.setScale(Vector2.of(0.1));
+        UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
+            s,
+            new Shotgun(),
+            new UsetimeSound("sounds/boomstick.wav")
+        );
+        UsetimeItem swordSwing = new UsetimeItem(20, 0.30, "swing",
+            s = new UsetimeAnimation("swing", "weapons/sword.png", 0.05, 0.05, 0.05, 0.05, 0.05),
+            new UsetimeSound("sounds/swoosh.wav")
+        );
+        s.setScale(Vector2.of(1));
+        c.addChildren(shotgunAbility1, swordSwing, new Camera());
         scene.addChild(c);
 
         // Create game application

@@ -42,10 +42,10 @@ public abstract class Node<T extends Node> {
     public Node<?> getRoot() { return parent == null ? this : parent.getRoot(); }
 
     // Get root node as a specific type
-    public <U extends Node<?>> U getRoot(Class<U> t) { return t.cast(getRoot()); }
+    public <U extends Node<?>> U getRootAs(Class<U> t) { return t.cast(getRoot()); }
 
     // Get parent node as a specific type
-    public <U extends Node<?>> U getParent(Class<U> t) { return t.cast(getParent()); }
+    public <U extends Node<?>> U getParentAs(Class<U> t) { return t.cast(getParent()); }
 
     // Add a child node
     public void addChild(T node) {

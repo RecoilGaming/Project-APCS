@@ -23,19 +23,30 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     // Frame durations list
     private final double[] frameDurations;
 
+    boolean looping = false;
+
     // Current frame
     private int frameCount = 0;
 
     public AnimationSprite(String name, ImageLocation imageLocation, double... frameDurations) {
+        this(name, imageLocation, false, frameDurations);
+    }
+
+    public AnimationSprite(String name, String path, double... frameDurations) {
+        this(name, new ImageLocation(path), frameDurations);
+    }
+
+    public AnimationSprite(String name, ImageLocation imageLocation, boolean looping, double... frameDurations) {
         super(imageLocation);
+        this.looping = looping;
         baseImage = imageLocation;
         this.name = name;
         this.frameDurations = frameDurations;
         updateFrame();
     }
 
-    public AnimationSprite(String name, String path, double... frameDurations) {
-        this(name, new ImageLocation(path), frameDurations);
+    public AnimationSprite(String name, String path, boolean looping, double... frameDurations) {
+        this(name, new ImageLocation(path), looping, frameDurations);
     }
 
     // Constructors
@@ -54,7 +65,7 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     @Override
     public void update(double delta, Transform t) {
         // Update frame
-        if (System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
+        if (!isHidden() && System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
             prevFrame = System.nanoTime();
             frameCount++;
             updateFrame();
@@ -64,12 +75,27 @@ public class AnimationSprite extends Sprite implements Indexed<String> {
     }
 
     public void updateFrame() {
-        frameCount %= length();
+        if (!looping && frameCount == length()) {
+            setHidden(true);
+        } else {
+            frameCount %= length();
 
-        BufferedImage img = baseImage.getImage();
+            BufferedImage img = baseImage.getImage();
 
-        int w = img.getWidth() / length();
-        setImageLocation(new ImageLocation(baseImage.PATH, w * frameCount, 0, w, img.getHeight()));
+            int w = img.getWidth() / length();
+            setImageLocation(new ImageLocation(baseImage.PATH, w * frameCount, 0, w, img.getHeight()));
+        }
+    }
+
+    public void reset() {
+        frameCount = 0;
+        updateFrame();
+        prevFrame = System.nanoTime();
+    }
+
+    public void play() {
+        reset();
+        setHidden(false);
     }
 
 }
