@@ -40,7 +40,7 @@ public class Camera extends Node2D<Node<?>> {
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void draw(Transform offset) {
+    public void update(Transform offset, double delta) {
         prevT = offset;
 
         // Update global transform

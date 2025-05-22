@@ -44,7 +44,7 @@ public class LJCharacter extends Body {
     boolean collidedBefore = false;
 
     @Override
-    public void update(double delta) {
+    public void update(Transform offset, double delta) {
 
         collidedBefore = collided;
         collided = false;
@@ -65,7 +65,7 @@ public class LJCharacter extends Body {
         // }
         setRot(getVelocity().heading());
 
-        super.update(delta);
+        super.update(offset, delta);
     }
 
     @Override

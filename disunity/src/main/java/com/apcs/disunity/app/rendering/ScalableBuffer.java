@@ -56,8 +56,8 @@ public class ScalableBuffer {
     public void clear() { graphics.clearRect(0, 0, image.getWidth(), image.getHeight()); }
 
     // Getters
+    public Vector2 getDimensions() { return ratio; }
     public double getScale() { return scale; }
-
     public BufferedImage getImage() { return image; }
 
     /* ================ [ GRAPHICS ] ================ */

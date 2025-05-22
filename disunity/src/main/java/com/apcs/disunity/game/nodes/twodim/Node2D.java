@@ -19,7 +19,10 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     private Transform transform;
 
     // Constructors
-    public Node2D(T... children) { this(new Transform(), children); }
+    public Node2D(T... children) {
+        this(new Transform(), children);
+    }
+
     public Node2D(Transform transform, T... children) {
         super(children);
         this.transform = transform;
@@ -28,22 +31,62 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     /* ================ [ METHODS ] ================ */
 
     // Move position
-    public void addPos(Vector2 vel) { transform = transform.addPos(vel); }
+    public void addPos(Vector2 vel) {
+        transform = transform.addPos(vel);
+    }
 
     // Setters
-    public void setPos(Vector2 pos) { transform = new Transform(pos, transform.scale, transform.rot); }
-    public void setScale(Vector2 scale) { transform = new Transform(transform.pos, scale, transform.rot); }
-    public void setRot(double rot) { transform = new Transform(transform.pos, transform.scale, rot); }
+    public void setPos(Vector2 pos) {
+        transform = new Transform(pos, transform.scale, transform.rot);
+    }
+
+    public void setScale(Vector2 scale) {
+        transform = new Transform(transform.pos, scale, transform.rot);
+    }
+
+    public void setRot(double rot) {
+        transform = new Transform(transform.pos, transform.scale, rot);
+    }
 
     // Getters
-    public Vector2 getPos() { return transform.pos; }
-    public Vector2 getScale() { return transform.pos; }
-    public double getRot() { return transform.rot; }
-    public Transform getTransform() { return transform; }
+    public Vector2 getPos() {
+        return transform.pos;
+    }
+
+    public Vector2 getScale() {
+        return transform.pos;
+    }
+
+    public double getRot() {
+        return transform.rot;
+    }
+
+    public Transform getTransform() {
+        return transform;
+    }
 
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void draw(Transform offset) { super.draw(transform.apply(offset)); }
+    public void draw(Transform offset) {
+        super.draw(transform.apply(offset));
+    }
+
+    @Override
+    public final void update(double delta) {
+        if (!(getParent() instanceof Node2D)) {
+            this.update(new Transform(), delta);
+        }
+        for (Node child : getAllChildren()) {
+            if (child instanceof Node2D node) {
+                node.update(transform, delta);
+            }
+        }
+        super.update(delta);
+    }
+
+    public void update(Transform offset, double delta) {
+        super.update(delta);
+    }
 
 }
