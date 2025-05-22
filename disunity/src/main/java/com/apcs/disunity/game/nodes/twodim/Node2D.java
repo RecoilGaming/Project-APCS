@@ -31,12 +31,12 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     /* ================ [ METHODS ] ================ */
 
     // Move position
-    public void addPos(Vector2 vel) {
+    public void addPosition(Vector2 vel) {
         transform = transform.addPos(vel);
     }
 
     // Setters
-    public void setPos(Vector2 pos) {
+    public void setPosition(Vector2 pos) {
         transform = new Transform(pos, transform.scale, transform.rot);
     }
 
@@ -44,12 +44,12 @@ public class Node2D<T extends Node<?>> extends Node<T> {
         transform = new Transform(transform.pos, scale, transform.rot);
     }
 
-    public void setRot(double rot) {
+    public void setRotation(double rot) {
         transform = new Transform(transform.pos, transform.scale, rot);
     }
 
     // Getters
-    public Vector2 getPos() {
+    public Vector2 getPosition() {
         return transform.pos;
     }
 
@@ -57,7 +57,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
         return transform.pos;
     }
 
-    public double getRot() {
+    public double getRotation() {
         return transform.rot;
     }
 

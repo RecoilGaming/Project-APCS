@@ -31,10 +31,10 @@ public class UsetimeItem<T extends Node<?> & Usable> extends Node2D<T> {
 
     @Override
     public void update(Transform offset, double delta) {
-        Vector2 mouseDir = Inputs.getMousePos().sub(getParentAs(Node2D.class).getPos()).normalized();
+        Vector2 mouseDir = Inputs.getMousePos().sub(getParentAs(Node2D.class).getPosition()).normalized();
         Vector2 pos = mouseDir.mul(this.offset.x).add(Vector2.of(-mouseDir.y, mouseDir.x).mul(this.offset.y));
-        setPos(pos);
-        setRot(pos.heading());
+        setPosition(pos);
+        setRotation(pos.heading());
         if (cooldown <= 0) {
             for (Usable u : getChildren()) {
                 u.onReady();

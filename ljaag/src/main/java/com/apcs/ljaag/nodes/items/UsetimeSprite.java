@@ -16,7 +16,7 @@ public class UsetimeSprite extends Sprite implements Usable {
 
     public UsetimeSprite(Vector2 offset, String image) {
         super(image);
-        setPos(offset);
+        setPosition(offset);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.apcs.disunity.game.physics.CollisionInfo;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.indexed.InputVector;
+import com.apcs.ljaag.nodes.stats.StatType;
 import com.apcs.ljaag.nodes.stats.Statset;
 
 public class Immortal extends Body {
@@ -47,6 +48,7 @@ public class Immortal extends Body {
 	private final InputVector moveDir = new InputVector("move");
 
 	// Constructors
+	public Immortal() { this(new Transform()); }
 	public Immortal(Transform transform, Node<?>... children) {
 		super(
 			transform,
@@ -63,6 +65,24 @@ public class Immortal extends Body {
 	@Override
 	public void onCollision(CollisionInfo info) {
 		;
+	}
+
+	/* ================ [ NODE ] ================ */
+
+	@Override
+	public void update(Transform offset, double delta) {
+		// Movement
+		setVelocity(moveDir.get().mul(STATS.getStat(StatType.SPEED)));
+		setRotation(getVelocity().heading());
+
+		// Animation
+		if (getVelocity().length() < 0.1) {
+            sprite.select("idle");
+        } else {
+            sprite.select("run");
+        }
+
+		super.update(offset, delta);
 	}
 	
 }

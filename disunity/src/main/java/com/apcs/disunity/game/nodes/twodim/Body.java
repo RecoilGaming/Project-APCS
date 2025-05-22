@@ -47,7 +47,7 @@ public abstract class Body extends Node2D<Node<?>> {
 
     @Override
     public void update(Transform offset, double delta) {
-        addPos(velocity.mul(delta));
+        addPosition(velocity.mul(delta));
 
         super.update(offset, delta);
     }

@@ -8,7 +8,7 @@ import com.apcs.disunity.game.nodes.Scene;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.nodes.characters.LJCharacter;
+import com.apcs.ljaag.nodes.characters.Immortal;
 import com.apcs.ljaag.nodes.items.Shotgun;
 import com.apcs.ljaag.nodes.items.UsetimeAnimation;
 import com.apcs.ljaag.nodes.items.UsetimeItem;
@@ -35,7 +35,7 @@ public class LJAAG {
         // Create the game scenes
         Scene scene = new Scene("test", new Sprite("background.png"));
 
-        Node c = new LJCharacter(0, 0, 1);
+        Node c = new Immortal();
         Sprite s = new UsetimeSprite("weapons/boomstick.png");
         s.setScale(Vector2.of(0.1));
         UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",

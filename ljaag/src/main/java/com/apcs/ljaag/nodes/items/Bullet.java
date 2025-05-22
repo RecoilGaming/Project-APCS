@@ -19,8 +19,8 @@ public class Bullet extends Body {
 
     public Bullet(Transform t, Vector2 vel) {
         super(new Collider(1, 1));
-        setPos(t.pos);
-        setRot(t.rot);
+        setPosition(t.pos);
+        setRotation(t.rot);
         setScale(t.scale);
         setVelocity(vel);
     }

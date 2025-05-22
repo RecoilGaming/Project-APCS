@@ -36,7 +36,7 @@ public class LJCharacter extends Body {
     public LJCharacter(Vector2 pos, int owner) {
         super(new Collider(8, 20));
         LJAAG.own(this, owner);
-        setPos(pos);
+        setPosition(pos);
     }
 
     static Sound coinSound = new Sound("sounds/smw_coin.wav");
@@ -63,7 +63,7 @@ public class LJCharacter extends Body {
         // if (Math.abs(getVel().x) >= 0.1) {
         //     setScale(Vector2.of(getVel().x > 0 ? 1 : -1, 1));
         // }
-        setRot(getVelocity().heading());
+        setRotation(getVelocity().heading());
 
         super.update(offset, delta);
     }
@@ -74,13 +74,13 @@ public class LJCharacter extends Body {
             coinSound.play();
         collided = true;
         Vector2 vel = getVelocity().mul(info.delta);
-        addPos(vel.mul(-1));
+        addPosition(vel.mul(-1));
 
         while (vel.length() > 0) {
             vel = vel.mul(0.5);
-            addPos(vel);
-            if (info.you.isColliding(info.me.setPos(getPos()))) {
-                addPos(vel.mul(-1));
+            addPosition(vel);
+            if (info.you.isColliding(info.me.setPos(getPosition()))) {
+                addPosition(vel.mul(-1));
             }
         }
         spriteSelector.select("stand");

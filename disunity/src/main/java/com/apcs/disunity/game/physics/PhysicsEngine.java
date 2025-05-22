@@ -34,10 +34,10 @@ public class PhysicsEngine {
 
     private static void searchCollider(Node<?> node, Vector2 absPos, ArrayList<ColliderInfo> infos) {
         if (node instanceof Collider collider) {
-            infos.add(new ColliderInfo(collider, absPos.add(collider.getPos())));
+            infos.add(new ColliderInfo(collider, absPos.add(collider.getPosition())));
         } else {
             if (node instanceof Node2D<?> node2D) {
-                node.getAllChildren().forEach(n -> searchCollider(n, absPos.add(node2D.getPos()), infos));
+                node.getAllChildren().forEach(n -> searchCollider(n, absPos.add(node2D.getPosition()), infos));
             } else {
                 node.getAllChildren().forEach(n -> searchCollider(n, absPos, infos));
             }
