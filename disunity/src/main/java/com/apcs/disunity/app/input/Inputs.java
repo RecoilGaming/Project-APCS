@@ -25,80 +25,88 @@ public class Inputs {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Maps actions to their respective bindings
+    // Maps action names to their respective bindings
     private static Map<String, ActionSet> actions = new HashMap<>();
 
-    // Maps inputs to their pressed state
+    // Tracks which inputs are currently pressed
     private static final Set<Input> inputs = new HashSet<>();
 
-    // Mouse position on the screen
+    // Global mouse position on the screen
     static Vector2 rawMousePos = Vector2.of(-1);
-    static Vector2 lastMousePos = Vector2.ZERO;
 
-    /* ================ [ METHODS ] ================ */
+    // Local mouse position in the world
+    static Vector2 mousePos = Vector2.ZERO;
 
-    public static Vector2 adjustForGame(Vector2 pos) {
-        ScalableBuffer buffer = Game.getInstance().getBuffer();
-        Rectangle bounds = Game.getInstance().getBounds();
-        Vector2 viewDim = Vector2.of(bounds.width, bounds.height);
-        Vector2 newPos = pos.sub(viewDim.div(2)).div(buffer.getScale()).sub(Game.getInstance().getTransform().pos);
-        return newPos;
-    }
+    /* ================ [ ACTIONS ] ================ */
 
-    // getter for mouse pos
-    public static Vector2 getMousePos() {
-        lastMousePos = adjustForGame(rawMousePos);
-        return lastMousePos;
-    }
-
-    // getter for mouse vel
-    public static Vector2 getMouseVel() {
-        Vector2 last = lastMousePos;
-        Vector2 pos = getMousePos();
-        return pos.sub(last);
-    }
- 
-    // Press an input
+    // Registers an input as pressed
     public static void press(Input input) { inputs.add(input); }
 
-    // Release an input
+    // Registers an input as released
     public static void release(Input input) { inputs.remove(input); }
 
-    // Release all keys
+    // Releases all currently pressed inputs
     public static void releaseAll() { inputs.clear(); }
 
-    // Get if input is pressed
+    // Returns true if the given input is currently pressed
     public static boolean get(Input input) { return inputs.contains(input); }
 
-    // Add an action to the map
+    // Adds an action with its associated set of bindings
     public static void addAction(String name, ActionSet action) { actions.put(name, action); }
 
-    // Get if an action is pressed
+    // Returns true if the specified action is currently triggered
     public static boolean getAction(String name) {
-        for (Action action : actions.get(name).getActions()) {
-            boolean pressed = true;
-            for (Input input : action.getInputs()) {
-                pressed = pressed && get(input);
-            }
+        ActionSet set = actions.get(name);
+        if (set == null)
+            return false;
 
-            if (pressed) {
-                return true;
+        for (Action action : set.getActions()) {
+            boolean allInputsPressed = true;
+            for (Input input : action.getInputs()) {
+                if (!get(input)) {
+                    allInputsPressed = false;
+                    break;
+                }
             }
+            if (allInputsPressed)
+                return true;
         }
+
         return false;
     }
 
+    /* ================ [ MOUSE ] ================ */
+
+    // Converts screen position to world position
+    private static Vector2 toLocal(Vector2 pos) {
+        Game game = Game.getInstance();
+        ScalableBuffer buffer = game.getBuffer();
+        Rectangle bounds = game.getBounds();
+
+        Vector2 viewportCenter = Vector2.of(bounds.width, bounds.height).div(2);
+        Vector2 scaledPos = pos.sub(viewportCenter).div(buffer.getScale());
+
+        return scaledPos.sub(game.getTransform().pos);
+    }
+
+    // Returns the local mouse position
+    public static Vector2 getMousePos() {
+        mousePos = toLocal(rawMousePos);
+        return mousePos;
+    }
+
+    // Returns the current mouse movement delta
+    public static Vector2 getMouseVel() { return mousePos.sub(getMousePos()); }
+
     /* ================ [ LOADER ] ================ */
 
-    // Load from a JSON file
+    // Loads input mappings from a JSON file
     public static void fromJSON(String path) {
-        try {
-            InputStream file = Inputs.class.getClassLoader().getResourceAsStream(path);
-            ObjectMapper om = new ObjectMapper();
-            actions = om.readValue(file, new TypeReference<Map<String, ActionSet>>() {});
+        try (InputStream file = Inputs.class.getClassLoader().getResourceAsStream(path)) {
+            ObjectMapper mapper = new ObjectMapper();
+            actions = mapper.readValue(file, new TypeReference<Map<String, ActionSet>>() {});
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

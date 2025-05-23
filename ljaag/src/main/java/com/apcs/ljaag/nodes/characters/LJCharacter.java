@@ -1,13 +1,13 @@
-package com.apcs.ljaag.nodes.body;
+package com.apcs.ljaag.nodes.characters;
 
 import com.apcs.disunity.app.network.packet.SyncHandler;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.SelectorNode;
-import com.apcs.disunity.game.nodes.sprite.AnimationSprite;
+import com.apcs.disunity.game.nodes.collider.Collider;
+import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Body;
-import com.apcs.disunity.game.nodes.twodim.Collider;
 import com.apcs.disunity.game.physics.CollisionInfo;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -18,12 +18,12 @@ import com.apcs.ljaag.nodes.indexed.InputVector;
 /// demo of disunity
 public class LJCharacter extends Body {
     @FieldChild
-    private final SelectorNode<String, AnimationSprite> spriteSelector;
+    private final SelectorNode<String, AnimatedSprite> spriteSelector;
     {
-        AnimationSprite s1, s2;
-        spriteSelector = new SelectorNode<String, AnimationSprite>(
-            s1 = new AnimationSprite("stand", "player/player.png", Double.MAX_VALUE),
-            s2 = new AnimationSprite("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
+        AnimatedSprite s1, s2;
+        spriteSelector = new SelectorNode<String, AnimatedSprite>(
+            s1 = new AnimatedSprite("stand", "player/player.png", true, Double.MAX_VALUE),
+            s2 = new AnimatedSprite("run", "player/run.png", true, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15));
 
         s1.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
         s2.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
@@ -36,25 +36,25 @@ public class LJCharacter extends Body {
     public LJCharacter(Vector2 pos, int owner) {
         super(new Collider(8, 20));
         LJAAG.own(this, owner);
-        setPos(pos);
+        setPosition(pos);
     }
 
-    static Sound coinSound = new Sound("smw_coin.wav");
+    static Sound coinSound = new Sound("sounds/smw_coin.wav");
     boolean collided = false;
     boolean collidedBefore = false;
 
     @Override
-    public void update(double delta, Transform t) {
+    public void update(Transform offset, double delta) {
 
         collidedBefore = collided;
         collided = false;
         // movement
         if (isPlayer()) {
-            setVel(input.get());
+            setVelocity(input.get().mul(100));
         }
 
         // sprite
-        if (Math.abs(getVel().x) + Math.abs(getVel().y) < 0.1) {
+        if (Math.abs(getVelocity().x) + Math.abs(getVelocity().y) < 0.1) {
             spriteSelector.select("stand");
         } else {
             spriteSelector.select("run");
@@ -63,9 +63,9 @@ public class LJCharacter extends Body {
         // if (Math.abs(getVel().x) >= 0.1) {
         //     setScale(Vector2.of(getVel().x > 0 ? 1 : -1, 1));
         // }
-        setRot(getVel().heading());
+        setRotation(getVelocity().heading());
 
-        super.update(delta, t);
+        super.update(offset, delta);
     }
 
     @Override
@@ -73,14 +73,14 @@ public class LJCharacter extends Body {
         if (!collidedBefore && !collided && isPlayer())
             coinSound.play();
         collided = true;
-        Vector2 vel = getVel().mul(info.delta);
-        addPos(vel.mul(-1));
+        Vector2 vel = getVelocity().mul(info.delta);
+        addPosition(vel.mul(-1));
 
         while (vel.length() > 0) {
             vel = vel.mul(0.5);
-            addPos(vel);
-            if (info.you.isColliding(info.me.setPos(getPos()))) {
-                addPos(vel.mul(-1));
+            addPosition(vel);
+            if (info.you.isColliding(info.me.setPos(getPosition()))) {
+                addPosition(vel.mul(-1));
             }
         }
         spriteSelector.select("stand");

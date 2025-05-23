@@ -8,7 +8,7 @@ import static com.apcs.disunity.app.network.packet.CODEC.encodeDouble;
 import com.apcs.disunity.app.network.packet.SelfCodec;
 
 /**
- * A 2D vector with x and y components
+ * A 2D vector with x and y components.
  * 
  * @author Qinzhao Li
  * @author Sharvil Phadke
@@ -33,7 +33,6 @@ public class Vector2 implements SelfCodec<Vector2> {
 
     // Constructors
     public Vector2() { this(0, 0); }
-
     public Vector2(double x, double y) {
         this.x = x;
         this.y = y;
@@ -45,12 +44,10 @@ public class Vector2 implements SelfCodec<Vector2> {
 
     // Create a vector2 given values
     public static Vector2 of(double x) { return new Vector2(x, x); }
-
     public static Vector2 of(double x, double y) { return new Vector2(x, y); }
 
-    public static Vector2 basis(double angleRad) {
-        return new Vector2(Math.cos(angleRad), Math.sin(angleRad));
-    }
+    // Get the basis vector of an angle
+    public static Vector2 basis(double rad) { return new Vector2(Math.cos(rad), Math.sin(rad)); }
 
     // Add two vectors
     public Vector2 add(Vector2 v) { return new Vector2(x + v.x, y + v.y); }
@@ -79,6 +76,11 @@ public class Vector2 implements SelfCodec<Vector2> {
     // Magnitude of the vector
     public double length() { return Math.sqrt(x * x + y * y); }
 
+    // Move towards another vector
+    public Vector2 moveTowards(Vector2 v, double amt) {
+        return this.add(v.sub(this).mul(amt));
+    }
+
     // Return the normalized vector
     public Vector2 normalized() {
         double l = length();
@@ -94,6 +96,7 @@ public class Vector2 implements SelfCodec<Vector2> {
     public String toString() { return "(" + x + ", " + y + ")"; }
 
     /* ================ [ CODEC ] ================ */
+
     @Override
     public void encode(OutputStream out) {
         encodeDouble(x, out);

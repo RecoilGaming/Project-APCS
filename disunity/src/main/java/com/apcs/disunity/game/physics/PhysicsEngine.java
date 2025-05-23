@@ -1,8 +1,8 @@
 package com.apcs.disunity.game.physics;
 
 import com.apcs.disunity.game.nodes.Scene;
+import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.disunity.game.nodes.twodim.Collider;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
 
@@ -34,10 +34,10 @@ public class PhysicsEngine {
 
     private static void searchCollider(Node<?> node, Vector2 absPos, ArrayList<ColliderInfo> infos) {
         if (node instanceof Collider collider) {
-            infos.add(new ColliderInfo(collider, absPos.add(collider.getPos())));
+            infos.add(new ColliderInfo(collider, absPos.add(collider.getPosition())));
         } else {
             if (node instanceof Node2D<?> node2D) {
-                node.getAllChildren().forEach(n -> searchCollider(n, absPos.add(node2D.getPos()), infos));
+                node.getAllChildren().forEach(n -> searchCollider(n, absPos.add(node2D.getPosition()), infos));
             } else {
                 node.getAllChildren().forEach(n -> searchCollider(n, absPos, infos));
             }

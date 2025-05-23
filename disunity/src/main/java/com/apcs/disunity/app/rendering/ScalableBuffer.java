@@ -17,22 +17,21 @@ public class ScalableBuffer {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Image
+    // Buffer image instance & graphics
     private BufferedImage image;
     private Graphics2D graphics;
 
-    // Scale
+    // Buffer scaling ratio
     private final Vector2 ratio;
+
+    // Current buffer scale
     private double scale = 1;
 
     // Constructors
     public ScalableBuffer(Vector2 ratio) { this(ratio, ratio); }
 
     public ScalableBuffer(Vector2 ratio, Vector2 target) {
-        // Set ratio
         this.ratio = ratio;
-
-        // Refresh buffer
         this.setSize(target);
     }
 
@@ -57,8 +56,8 @@ public class ScalableBuffer {
     public void clear() { graphics.clearRect(0, 0, image.getWidth(), image.getHeight()); }
 
     // Getters
+    public Vector2 getDimensions() { return ratio; }
     public double getScale() { return scale; }
-
     public BufferedImage getImage() { return image; }
 
     /* ================ [ GRAPHICS ] ================ */
