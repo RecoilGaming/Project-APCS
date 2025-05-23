@@ -27,7 +27,7 @@ public class Immortal extends Body {
         AnimatedSprite s1, s2;
         sprite = new SelectorNode<String, AnimatedSprite>(
             s1 = new AnimatedSprite("idle", "player/player.png", Double.MAX_VALUE),
-            s2 = new AnimatedSprite("run", "player/run.png", 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
+            s2 = new AnimatedSprite("run", "player/run.png", true, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
 		);
 
         s1.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
@@ -63,9 +63,7 @@ public class Immortal extends Body {
 	/* ================ [ BODY ] ================ */
 
 	@Override
-	public void onCollision(CollisionInfo info) {
-		;
-	}
+	public void onCollision(CollisionInfo info) { }
 
 	/* ================ [ NODE ] ================ */
 
@@ -73,7 +71,9 @@ public class Immortal extends Body {
 	public void update(Transform offset, double delta) {
 		// Movement
 		setVelocity(moveDir.get().mul(STATS.getStat(StatType.SPEED)));
-		setRotation(getVelocity().heading());
+		if(getVelocity().xi != 0) {
+			setRotation(getVelocity().heading());
+		}
 
 		// Animation
 		if (getVelocity().length() < 0.1) {

@@ -52,8 +52,7 @@ public class Sprite extends Node2D<Node<?>> {
     @Override
     public void draw(Transform offset) {
 
-        if (isHidden())
-            return;
+        if (isHidden()) return;
 
         // Load sprite image
         BufferedImage img = imageLocation.getImage();

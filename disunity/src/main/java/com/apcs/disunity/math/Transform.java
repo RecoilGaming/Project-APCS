@@ -20,7 +20,7 @@ public class Transform {
     @SyncedObject
     public final Vector2 scale;
 
-    // Rotation
+    /// Rotation in radians
     @SyncedDouble
     public final double rot;
 
@@ -30,7 +30,7 @@ public class Transform {
     public Transform(Vector2 pos, Vector2 scale, double rot) {
         this.pos = pos;
         this.scale = scale;
-        this.rot = rot % 360;
+        this.rot = rot;
     }
 
     /* ================ [ METHODS ] ================ */
