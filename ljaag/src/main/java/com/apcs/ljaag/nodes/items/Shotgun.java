@@ -2,6 +2,7 @@ package com.apcs.ljaag.nodes.items;
 
 
 import com.apcs.disunity.app.resources.Sound;
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.Scene;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
@@ -30,7 +31,7 @@ public class Shotgun extends Node2D<Node<?>> implements Usable {
         double startingAngle = - range / 2;
         for (int i = 0; i < BULLET_COUNT; i++) {
             double angle = startingAngle + SPREAD * (Math.random() - 0.5 + i);
-            getRootAs(Scene.class).addChild(new Bullet(getParentAs(Node2D.class).getTransform().addPos(getParent().getParentAs(Node2D.class).getPosition()).rotate(angle).scale(0.1), Vector2.basis(angle + getParentAs(Node2D.class).getTransform().rot).mul(BULLET_SPEED).mul(Math.random() * 0.1 + 0.95)));
+            Game.getInstance().getScene().addChild(new Bullet(getParentAs(Node2D.class).getTransform().addPos(getParent().getParentAs(Node2D.class).getPosition()).rotate(angle).scale(0.1), Vector2.basis(angle + getParentAs(Node2D.class).getTransform().rot).mul(BULLET_SPEED).mul(Math.random() * 0.1 + 0.95)));
         }
     }
 
