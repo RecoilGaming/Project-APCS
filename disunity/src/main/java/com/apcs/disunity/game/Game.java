@@ -171,6 +171,10 @@ public class Game extends JPanel {
         globalSignal = scenes.select(name).GLOBAL_SIGNAL_BUS;
     }
 
+    public Scene getScene() {
+        return scenes.getSelected();
+    }
+
     public SignalBus getGlobalSignal() {
         return globalSignal;
     }

@@ -1,5 +1,7 @@
 package com.apcs.ljaag.nodes.characters;
 
+import java.util.UUID;
+
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.SelectorNode;
@@ -34,7 +36,10 @@ public class Immortal extends Body {
         s2.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
     }
 
-	// Default values
+	// Character id
+	private UUID id;
+
+	// Default stats
 	protected final Statset STATS = new Statset();
 
 	// Current stats
@@ -58,6 +63,8 @@ public class Immortal extends Body {
 			),
 			children
 		);
+
+		this.id = UUID.randomUUID();
 	}
 
 	/* ================ [ BODY ] ================ */
