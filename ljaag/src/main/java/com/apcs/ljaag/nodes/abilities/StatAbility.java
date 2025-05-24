@@ -2,7 +2,7 @@ package com.apcs.ljaag.nodes.abilities;
 
 import java.util.UUID;
 
-import com.apcs.disunity.game.signals.SignalBus;
+import com.apcs.disunity.game.signals.Signals;
 import com.apcs.ljaag.nodes.stats.Statset;
 
 public class StatAbility extends Ability {
@@ -21,7 +21,7 @@ public class StatAbility extends Ability {
 
 	@Override
 	public void trigger(UUID source) {
-		
+		Signals.trigger(Signals.getSignal(source, "STATS"), statset);
 	}
 
 }

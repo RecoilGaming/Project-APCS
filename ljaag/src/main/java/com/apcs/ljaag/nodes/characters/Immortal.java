@@ -67,6 +67,10 @@ public class Immortal extends Body {
 		this.id = UUID.randomUUID();
 	}
 
+	/* ================ [ METHODS ] ================ */
+
+	
+
 	/* ================ [ BODY ] ================ */
 
 	@Override
