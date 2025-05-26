@@ -14,8 +14,8 @@ public class AnimatedCollider extends Collider {
 	private long prevFrame = System.nanoTime();
 	private int frameCount = 0;
 
-	public AnimatedCollider(int w, int h, int w2, int h2, CollisionLayer layer, CollisionMask mask, double... frameDurations) {
-		super(w, h, layer, mask);
+	public AnimatedCollider(int w, int h, int w2, int h2, CollisionLayer layer, double... frameDurations) {
+		super(w, h, layer);
 		initialSize = Vector2.of(w, h);
 		finalSize = Vector2.of(w2, h2);
 		this.frameDurations = frameDurations;

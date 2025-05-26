@@ -1,12 +1,15 @@
 package com.apcs.disunity.game.physics;
 
 import com.apcs.disunity.game.nodes.Scene;
-import com.apcs.disunity.game.nodes.collider.Collider;
+import com.apcs.disunity.game.nodes.twodim.Area2D;
+import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Manages physics and collision detection for all nodes
@@ -14,33 +17,38 @@ import java.util.ArrayList;
  * @author Aayushya Patel
  */
 public class PhysicsEngine {
+    public static ArrayList<Area2D> area2DS = new ArrayList<>();
+    public static ArrayList<Body> bodies = new ArrayList<>();
 
     /**
      * Update the physics system
      */
     public static void run(Scene scene, double delta) {
-        ArrayList<ColliderInfo> colliders = new ArrayList<>();
+        for (Map.Entry<Area2D,Vector2> area: searchNode(scene, Vector2.ZERO, Area2D.class, new ArrayList<>())) {
+            for (Map.Entry<Body,Vector2> body: searchNode(scene, Vector2.ZERO, Body.class, new ArrayList<>())) {
 
-        searchCollider(scene, Vector2.ZERO, colliders);
-
-        for (ColliderInfo c1 : colliders) {
-            for (ColliderInfo c2 : colliders) {
-                if (c1 != c2 && c1.AABB.isColliding(c2.AABB)) {
-                    c1.COLLISION_INFO.emit(new CollisionInfo(c1.AABB, c2.AABB, delta));
+                if (
+                    body.getKey().area2D != area.getKey() &&
+                    (body.getKey().collider.LAYER.BITSET & area.getKey().MASK.BITSET) != 0 &&
+                        new AABB(body.getKey().collider.SIZE, body.getValue()).isColliding(new AABB(area.getKey().size, area.getValue()))
+                ) {
+                    area.getKey().bodyEnteredSignal.emit(new BodyEntered(body.getKey()));
                 }
             }
         }
     }
 
-    private static void searchCollider(Node<?> node, Vector2 absPos, ArrayList<ColliderInfo> infos) {
-        if (node instanceof Collider collider) {
-            infos.add(new ColliderInfo(collider, absPos.add(collider.getPosition())));
+    private static <T extends Node2D<?>> ArrayList<Map.Entry<T,Vector2>> searchNode(Node<?> node, Vector2 absPos, Class<T> clazz, ArrayList<Map.Entry<T,Vector2>> infos) {
+        if (clazz.isAssignableFrom(node.getClass())) {
+            T needle = (T) node;
+            infos.add(new AbstractMap.SimpleEntry<>(needle, absPos.add(needle.getPosition())));
         } else {
             if (node instanceof Node2D<?> node2D) {
-                node.getAllChildren().forEach(n -> searchCollider(n, absPos.add(node2D.getPosition()), infos));
+                node.getAllChildren().forEach(n -> searchNode(n, absPos.add(node2D.getPosition()), clazz, infos));
             } else {
-                node.getAllChildren().forEach(n -> searchCollider(n, absPos, infos));
+                node.getAllChildren().forEach(n -> searchNode(n, absPos, clazz, infos));
             }
         }
+        return infos;
     }
 }

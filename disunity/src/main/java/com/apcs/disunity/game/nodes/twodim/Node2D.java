@@ -90,6 +90,4 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     public void update(Transform offset, double delta) {
         super.update(delta);
     }
-
-    public void update(double dt, Transform t) { }
 }

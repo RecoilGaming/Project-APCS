@@ -4,7 +4,9 @@ import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.collider.Collider;
-import com.apcs.disunity.game.physics.CollisionInfo;
+import com.apcs.disunity.game.physics.AABB;
+import com.apcs.disunity.game.physics.BodyEntered;
+import com.apcs.disunity.game.physics.PhysicsEngine;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 
@@ -19,6 +21,8 @@ public abstract class Body extends Node2D<Node<?>> {
 
     @FieldChild
     public final Collider collider;
+    @FieldChild
+    public final Area2D area2D;
 
     /* ================ [ FIELDS ] ================ */
 
@@ -27,12 +31,17 @@ public abstract class Body extends Node2D<Node<?>> {
     private Vector2 velocity = Vector2.ZERO;
 
     // Constructors
-    public Body(Collider collider, Node<?>... children) { this(new Transform(), collider, children); }
-    public Body(Transform transform, Collider collider, Node<?>... children) {
+    public Body(Collider collider, Area2D area2D, Node<?>... children) { this(new Transform(), collider, area2D, children); }
+    public Body(Transform transform, Collider collider, Area2D area2D, Node<?>... children) {
         super(transform, children);
         this.collider = collider;
+        this.area2D = area2D;
 
-        this.collider.collisionInfo.connect(this::onCollision);
+        this.area2D.bodyEnteredSignal.connect(this::onBodyEntered);
+    }
+
+    {
+        PhysicsEngine.bodies.add(this);
     }
 
     /* ================ [ METHODS ] ================ */
@@ -52,6 +61,6 @@ public abstract class Body extends Node2D<Node<?>> {
         super.update(offset, delta);
     }
 
-    public abstract void onCollision(CollisionInfo info);
+    public abstract void onBodyEntered(BodyEntered signal);
 
 }

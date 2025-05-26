@@ -8,8 +8,9 @@ import com.apcs.disunity.game.nodes.SelectorNode;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
+import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
-import com.apcs.disunity.game.physics.CollisionInfo;
+import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.indexed.InputVector;
@@ -61,6 +62,7 @@ public class Immortal extends Body {
 				new Transform().addPos(Vector2.of(0, -8)),
 				8, 8
 			),
+			new Area2D(8,8),
 			children
 		);
 
@@ -74,7 +76,7 @@ public class Immortal extends Body {
 	/* ================ [ BODY ] ================ */
 
 	@Override
-	public void onCollision(CollisionInfo info) { }
+	public void onBodyEntered(BodyEntered signal) { }
 
 	/* ================ [ NODE ] ================ */
 
