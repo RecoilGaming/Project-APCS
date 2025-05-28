@@ -88,6 +88,16 @@ public class Immortal extends Body {
 		this.tempStats.addStats(stats);
 	}
 
+	// Modify health
+	public void modifyHealth(int amount) {
+		this.health += amount;
+	}
+
+	// Modify aura
+	public void modifyAura(int amount) {
+		this.aura += amount;
+	}
+
 	/* ================ [ METHODS ] ================ */
 
 	// Get immortal id
@@ -108,6 +118,8 @@ public class Immortal extends Body {
 		// Connect signals
 		Signals.connect(Signals.getSignal(id, "MODIFY_STATS"), this::modifyStats);
 		Signals.connect(Signals.getSignal(id, "MODIFY_TEMP_STATS"), this::modifyTempStats);
+		Signals.connect(Signals.getSignal(id, "MODIFY_HEALTH"), this::modifyHealth);
+		Signals.connect(Signals.getSignal(id, "MODIFY_AURA"), this::modifyAura);
 	}
 
 	// Get total stats
