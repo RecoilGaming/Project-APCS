@@ -3,6 +3,8 @@ package com.apcs.disunity.math;
 import com.apcs.disunity.app.network.packet.annotation.SyncedDouble;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * Contains position, scale, and rotation information
  * 
@@ -51,8 +53,19 @@ public class Transform {
     public Transform rotateTo(double amt) { return new Transform(pos, scale, amt); }
 
     // Apply another transform
+    /// returned transform represents affine transform with matrix
+    /// [this] x [t]
+    /// meaning t is applied before this transformation
     public Transform apply(Transform t) {
-        return new Transform(pos.mul(t.scale).rotate(t.rot).add(t.pos), scale.mul(t.scale), rot + t.rot);
+        return new Transform(t.pos.mul(scale).rotate(rot).add(pos), scale.mul(t.scale), rot + t.rot);
+    }
+
+    public AffineTransform toAT() {
+        AffineTransform at = new AffineTransform();
+        at.translate(pos.x,pos.y);
+        at.rotate(rot);
+        at.scale(scale.x,scale.y);
+        return at;
     }
 
     /* ================ [ OBJECT ] ================ */
