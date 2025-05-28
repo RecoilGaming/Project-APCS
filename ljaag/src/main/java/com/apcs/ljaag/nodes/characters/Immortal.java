@@ -90,13 +90,16 @@ public class Immortal extends Body {
 
 	/* ================ [ METHODS ] ================ */
 
+	// Get immortal id
+	public UUID getId() { return id; }
+
 	// Initialize character
 	public void initialize() {
 		this.id = UUID.randomUUID();
 
 		// Initialize leveling
 		this.levelInfo = new LevelInfo(data.MAX_LEVEL);
-		
+
 		// Initialize stats
 		this.stats = data.BASE_STATS.copy();
 		this.health = stats.getStat(StatType.HEALTH);
