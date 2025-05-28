@@ -24,6 +24,23 @@ public class Statset {
 		stats.put(StatType.SPLENDOR, StatType.SPLENDOR.getInitial());
 	}
 
+	// Constructors
+	public Statset() {}
+	public Statset(int health, int divinity, int range, int speed, int attackDamage, int attackSpeed, int defense, int abilityPower, int abilityHaste, int resistance, int lifesteal, int splendor) {
+		stats.put(StatType.HEALTH, health);
+		stats.put(StatType.DIVINITY, divinity);
+		stats.put(StatType.RANGE, range);
+		stats.put(StatType.SPEED, speed);
+		stats.put(StatType.ATTACK_DAMAGE, attackDamage);
+		stats.put(StatType.ATTACK_SPEED, attackSpeed);
+		stats.put(StatType.DEFENSE, defense);
+		stats.put(StatType.ABILITY_POWER, abilityPower);
+		stats.put(StatType.ABILITY_HASTE, abilityHaste);
+		stats.put(StatType.RESISTANCE, resistance);
+		stats.put(StatType.LIFESTEAL, lifesteal);
+		stats.put(StatType.SPLENDOR, splendor);
+	}
+
 	/* ================ [ METHODS ] ================ */
 
 	// Add one stat
@@ -41,6 +58,15 @@ public class Statset {
 	// Get one stat
 	public int getStat(StatType stat) {
 		return stats.get(stat);
+	}
+
+	// Get a copy of this statset
+	public Statset copy() {
+		Statset copy = new Statset();
+		for (StatType stat : StatType.values()) {
+			copy.stats.put(stat, stats.get(stat));
+		}
+		return copy;
 	}
 	
 }

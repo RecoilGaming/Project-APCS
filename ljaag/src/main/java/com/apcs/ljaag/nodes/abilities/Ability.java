@@ -1,30 +1,27 @@
 package com.apcs.ljaag.nodes.abilities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+
+import com.apcs.disunity.app.input.Inputs;
+import com.apcs.disunity.game.Game;
 
 public class Ability {
 
 	/* ================ [ FIELDS ] ================ */
-
-	// Components
-	private final List<Ability> components = new ArrayList<>();
+	
+	// Projectile data
+	private final ProjectileData projectile;
 
 	// Constructors
-	public Ability(Ability... components) {
-		for (Ability c : components) {
-			this.components.add(c);
-		}
+	public Ability(ProjectileData projectile) {
+		this.projectile = projectile;
 	}
 
 	/* ================ [ METHODS ] ================ */
 
 	// Trigger the ability
 	public void trigger(UUID source) {
-		for (Ability a : components) {
-			a.trigger(source);
-		}
+		Game.getInstance().getScene().addChild(projectile.instantiate(Inputs.getMousePos().normalized()));
 	}
 	
 }

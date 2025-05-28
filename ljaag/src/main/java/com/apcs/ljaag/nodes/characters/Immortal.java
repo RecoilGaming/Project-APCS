@@ -11,9 +11,11 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.physics.BodyEntered;
+import com.apcs.disunity.game.signals.Signals;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.indexed.InputVector;
+import com.apcs.ljaag.nodes.leveling.LevelInfo;
 import com.apcs.ljaag.nodes.stats.StatType;
 import com.apcs.ljaag.nodes.stats.Statset;
 
@@ -40,11 +42,15 @@ public class Immortal extends Body {
 	// Character id
 	private UUID id;
 
-	// Default stats
-	protected final Statset STATS = new Statset();
+	// Immortal data
+	private final ImmortalData data;
 
 	// Current stats
 	private Statset stats = new Statset();
+	private Statset tempStats = new Statset();
+
+	// Leveling information
+	private LevelInfo levelInfo;
 
 	// Resource amounts
 	private int health = 100;
@@ -54,8 +60,8 @@ public class Immortal extends Body {
 	private final InputVector moveDir = new InputVector("move");
 
 	// Constructors
-	public Immortal() { this(new Transform()); }
-	public Immortal(Transform transform, Node<?>... children) {
+	public Immortal(ImmortalData data) { this(new Transform(), data); }
+	public Immortal(Transform transform, ImmortalData data, Node<?>... children) {
 		super(
 			transform,
 			new Collider(
@@ -66,12 +72,45 @@ public class Immortal extends Body {
 			children
 		);
 
-		this.id = UUID.randomUUID();
+		this.data = data;
+		initialize();
+	}
+
+	/* ================ [ HELPERS ] ================ */
+
+	// Modify stats
+	private void modifyStats(Statset stats) {
+		this.stats.addStats(stats);
+	}
+
+	// Modify temporary stats
+	private void modifyTempStats(Statset stats) {
+		this.tempStats.addStats(stats);
 	}
 
 	/* ================ [ METHODS ] ================ */
 
-	
+	// Initialize character
+	public void initialize() {
+		this.id = UUID.randomUUID();
+
+		// Initialize leveling
+		this.levelInfo = new LevelInfo(data.MAX_LEVEL);
+		
+		// Initialize stats
+		this.stats = data.BASE_STATS.copy();
+		this.health = stats.getStat(StatType.HEALTH);
+		this.aura = stats.getStat(StatType.DIVINITY);
+
+		// Connect signals
+		Signals.connect(Signals.getSignal(id, "MODIFY_STATS"), this::modifyStats);
+		Signals.connect(Signals.getSignal(id, "MODIFY_TEMP_STATS"), this::modifyTempStats);
+	}
+
+	// Get total stats
+	public int getStat(StatType stat) {
+		return stats.getStat(stat) + stats.getStat(stat);
+	}
 
 	/* ================ [ BODY ] ================ */
 
@@ -83,8 +122,10 @@ public class Immortal extends Body {
 	@Override
 	public void update(Transform offset, double delta) {
 		// Movement
-		setVelocity(moveDir.get().mul(STATS.getStat(StatType.SPEED)));
-		if(getVelocity().xi != 0) {
+		setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
+
+		// Rotation
+		if (getVelocity().xi != 0) {
 			setRotation(getVelocity().heading());
 		}
 

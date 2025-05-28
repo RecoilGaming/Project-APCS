@@ -10,6 +10,7 @@ import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.characters.Immortal;
+import com.apcs.ljaag.nodes.characters.Immortals;
 import com.apcs.ljaag.nodes.items.Shotgun;
 import com.apcs.ljaag.nodes.items.UsetimeAnimation;
 import com.apcs.ljaag.nodes.items.UsetimeItem;
@@ -36,7 +37,7 @@ public class LJAAG {
         // Create the game scenes
         Scene scene = new Scene("test", new Sprite("background.png"));
 
-        Node c = new Immortal(new Transform(Vector2.of(60,0), Vector2.ONE, 0));
+        Node c = new Immortal(Immortals.ZHAO);
         Sprite s = new UsetimeSprite("weapons/boomstick.png");
         s.setScale(Vector2.of(0.1));
         UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
@@ -50,7 +51,7 @@ public class LJAAG {
         );
         s.setScale(Vector2.of(1));
         c.addChildren(shotgunAbility1, swordSwing, new Camera());
-        scene.addChildren(c, new Immortal());
+        scene.addChildren(c);
 
         // Create game application
         Game game = new Game(Vector2.of(480, 270));
