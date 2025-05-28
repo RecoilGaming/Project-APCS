@@ -54,22 +54,32 @@ public class Sprite extends Node2D<Node<?>> {
         if (isHidden()) return;
 
         AffineTransform imageTransform = new AffineTransform();
+        // apply ancestor transform after child transform
+        imageTransform.preConcatenate(offset.toAT());
+
         Transform localTransform = getTransform();
-        // quadrant of the angle, counting from 0
-        double quadrant = (int) ((2*localTransform.rot/Math.PI % 4 + 4) % 4);
+        // quadrant of the net angle, counting from 0
+        double quadrant = (int) ((2*(localTransform.rot+offset.rot)/Math.PI % 4 + 4) % 4);
 
         imageTransform.translate(localTransform.pos.x, localTransform.pos.y);
 
         switch (rotationType) {
-            case RotationType.LOCKED -> {}
+            // cancel offset's rotation with opposite rotation
+            case RotationType.LOCKED -> {
+                imageTransform.rotate(-offset.rot);
+            }
+            // rotate normally
+            case RotationType.NORMAL -> {
+                imageTransform.rotate(localTransform.rot);
+            }
+            // cancel offset's rotation + flip
             case RotationType.BIDIRECTIONAL -> {
+                imageTransform.rotate(-offset.rot);
                 if (quadrant == 1 || quadrant == 2) {
                     imageTransform.scale(-1,1);
                 }
             }
-            case RotationType.NORMAL -> {
-                imageTransform.rotate(localTransform.rot);
-            }
+            // rotate + flip
             case RotationType.UPRIGHT -> {
                 imageTransform.rotate(localTransform.rot);
                 if (quadrant == 1 || quadrant == 2) {
@@ -78,10 +88,10 @@ public class Sprite extends Node2D<Node<?>> {
             }
         }
 
-        // move center to origin
+        // scale before rotation
         imageTransform.scale(localTransform.scale.x, localTransform.scale.y);
+        // move center to origin
         imageTransform.translate(-imageLocation.SIZE.x/2, -imageLocation.SIZE.y/2);
-        imageTransform.preConcatenate(offset.toAT());
 
         // Draw image to buffer
         Game.getInstance().getBuffer().drawImage(imageLocation.getImage(), imageTransform);
