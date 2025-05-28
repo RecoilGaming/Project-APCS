@@ -1,4 +1,4 @@
-package com.apcs.ljaag.nodes.characters;
+package com.apcs.ljaag.nodes.characters.immortals;
 
 import com.apcs.ljaag.nodes.stats.Statset;
 

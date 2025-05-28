@@ -1,14 +1,12 @@
-package com.apcs.ljaag.nodes.characters;
+package com.apcs.ljaag.nodes.characters.immortals;
 
 import com.apcs.ljaag.nodes.abilities.Ability;
+import com.apcs.ljaag.nodes.characters.CharacterData;
 import com.apcs.ljaag.nodes.stats.Statset;
 
-public class ImmortalData {
+public class ImmortalData extends CharacterData {
 
 	/* ================ [ FIELDS ] ================ */
-
-	// Default stats
-	public final Statset BASE_STATS;
 
 	// Leveling stats (added per level)
 	public final Statset LEVELING_STATS;
@@ -21,7 +19,7 @@ public class ImmortalData {
 
 	// Constructors
 	public ImmortalData(Statset baseStats, Statset levelingStats, int maxLevel) {
-		this.BASE_STATS = baseStats;
+		super(baseStats);
 		this.LEVELING_STATS = levelingStats;
 		this.MAX_LEVEL = maxLevel;
 	}

@@ -14,17 +14,15 @@ import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.game.signals.Signals;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.nodes.indexed.InputVector;
-import com.apcs.ljaag.nodes.leveling.LevelInfo;
 import com.apcs.ljaag.nodes.stats.StatType;
 import com.apcs.ljaag.nodes.stats.Statset;
 
-public class Immortal extends Body {
+public class Character<T extends CharacterData> extends Body {
 
 	/* ================ [ NODES ] ================ */
 
 	@FieldChild
-    private final SelectorNode<String, AnimatedSprite> sprite;
+    protected final SelectorNode<String, AnimatedSprite> sprite;
 
 	/* ================ [ FIELDS ] ================ */
 
@@ -40,28 +38,21 @@ public class Immortal extends Body {
     }
 
 	// Character id
-	private UUID id;
+	private final UUID id;
 
-	// Immortal data
-	private final ImmortalData data;
+	// Character data
+	protected final T data;
 
 	// Current stats
 	private Statset stats = new Statset();
 	private Statset tempStats = new Statset();
 
-	// Leveling information
-	private LevelInfo levelInfo;
-
 	// Resource amounts
 	private int health = 100;
 	private int aura = 100;
 
-	// Movement input
-	private final InputVector moveDir = new InputVector("move");
-
 	// Constructors
-	public Immortal(ImmortalData data) { this(new Transform(), data); }
-	public Immortal(Transform transform, ImmortalData data, Node<?>... children) {
+	public Character(Transform transform, T data, Node<?>... children) {
 		super(
 			transform,
 			new Collider(
@@ -71,7 +62,8 @@ public class Immortal extends Body {
 			new Area2D(8,8),
 			children
 		);
-
+		
+		this.id = UUID.randomUUID();
 		this.data = data;
 		initialize();
 	}
@@ -79,47 +71,38 @@ public class Immortal extends Body {
 	/* ================ [ HELPERS ] ================ */
 
 	// Modify stats
-	private void modifyStats(Statset stats) {
-		this.stats.addStats(stats);
-	}
+	protected void modifyStats(Statset stats) { this.stats.addStats(stats); }
 
 	// Modify temporary stats
-	private void modifyTempStats(Statset stats) {
-		this.tempStats.addStats(stats);
-	}
+	protected void modifyTempStats(Statset stats) { this.tempStats.addStats(stats); }
 
 	// Modify health
-	public void modifyHealth(int amount) {
+	protected void modifyHealth(int amount) {
 		this.health += amount;
 	}
 
 	// Modify aura
-	public void modifyAura(int amount) {
+	protected void modifyAura(int amount) {
 		this.aura += amount;
 	}
-
+	
 	/* ================ [ METHODS ] ================ */
 
-	// Get immortal id
+	// Get character id
 	public UUID getId() { return id; }
 
 	// Initialize character
 	public void initialize() {
-		this.id = UUID.randomUUID();
-
-		// Initialize leveling
-		this.levelInfo = new LevelInfo(data.MAX_LEVEL);
-
 		// Initialize stats
 		this.stats = data.BASE_STATS.copy();
 		this.health = stats.getStat(StatType.HEALTH);
 		this.aura = stats.getStat(StatType.DIVINITY);
 
 		// Connect signals
-		Signals.connect(Signals.getSignal(id, "MODIFY_STATS"), this::modifyStats);
-		Signals.connect(Signals.getSignal(id, "MODIFY_TEMP_STATS"), this::modifyTempStats);
-		Signals.connect(Signals.getSignal(id, "MODIFY_HEALTH"), this::modifyHealth);
-		Signals.connect(Signals.getSignal(id, "MODIFY_AURA"), this::modifyAura);
+		Signals.connect(Signals.getSignal(getId(), "MODIFY_STATS"), this::modifyStats);
+		Signals.connect(Signals.getSignal(getId(), "MODIFY_TEMP_STATS"), this::modifyTempStats);
+		Signals.connect(Signals.getSignal(getId(), "MODIFY_HEALTH"), this::modifyHealth);
+		Signals.connect(Signals.getSignal(getId(), "MODIFY_AURA"), this::modifyAura);
 	}
 
 	// Get total stats
@@ -127,18 +110,10 @@ public class Immortal extends Body {
 		return stats.getStat(stat) + stats.getStat(stat);
 	}
 
-	/* ================ [ BODY ] ================ */
-
-	@Override
-	public void onBodyEntered(BodyEntered signal) { }
-
 	/* ================ [ NODE ] ================ */
 
 	@Override
 	public void update(Transform offset, double delta) {
-		// Movement
-		setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
-
 		// Rotation
 		if (getVelocity().xi != 0) {
 			setRotation(getVelocity().heading());
@@ -153,5 +128,10 @@ public class Immortal extends Body {
 
 		super.update(offset, delta);
 	}
-	
+
+	/* ================ [ BODY ] ================ */
+
+	@Override
+	public void onBodyEntered(BodyEntered signal) { }
+
 }

@@ -1,6 +1,12 @@
-package com.apcs.ljaag.nodes.leveling;
+package com.apcs.ljaag.nodes.characters.immortals;
 
-public class LevelInfo {
+import com.apcs.disunity.game.nodes.Node;
+import com.apcs.disunity.math.Transform;
+import com.apcs.ljaag.nodes.characters.Character;
+import com.apcs.ljaag.nodes.indexed.InputVector;
+import com.apcs.ljaag.nodes.stats.StatType;
+
+public class Immortal extends Character<ImmortalData> {
 
 	/* ================ [ FIELDS ] ================ */
 
@@ -10,7 +16,6 @@ public class LevelInfo {
 
 	// Level
 	private int level = 1;
-	private final int maxLevel;
 
 	// Experience
 	private int experience = 0;
@@ -18,9 +23,13 @@ public class LevelInfo {
 	// Skill points
 	private int skillPoints = 1;
 
+	// Movement input
+	private final InputVector moveDir = new InputVector("move");
+
 	// Constructors
-	public LevelInfo(int maxLevel) {
-		this.maxLevel = maxLevel;
+	public Immortal(ImmortalData data) { this(new Transform(), data); }
+	public Immortal(Transform transform, ImmortalData data, Node<?>... children) {
+		super(transform, data, children);
 	}
 
 	/* ================ [ METHODS ] ================ */
@@ -29,7 +38,7 @@ public class LevelInfo {
 	public int getLevel() { return level; }
 
 	// Get max level
-	public int getMaxLevel() { return maxLevel; }
+	public int getMaxLevel() { return data.MAX_LEVEL; }
 
 	// Get experience
 	public int getExperience() { return experience; }
@@ -42,8 +51,6 @@ public class LevelInfo {
 		return (int) (LEVELUP_EXP * Math.pow(LEVEPUP_EXP_MULT, level - 1));
 	}
 
-	/* ================ [ LEVELING ] ================ */
-
 	// Add experience
 	public void addExperience(int exp) {
 		experience += exp;
@@ -55,10 +62,20 @@ public class LevelInfo {
 
 	// Level up
 	public void levelUp() {
-		if (level < maxLevel) {
+		if (level < data.MAX_LEVEL) {
 			level++;
 			skillPoints++;
+			modifyStats(data.LEVELING_STATS);
 		}
+	}
+
+	/* ================ [ NODE ] ================ */
+
+	@Override
+	public void update(Transform offset, double delta) {
+		// Movement
+		setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
+		super.update(offset, delta);
 	}
 	
 }
