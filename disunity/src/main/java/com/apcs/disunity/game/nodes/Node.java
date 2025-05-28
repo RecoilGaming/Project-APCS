@@ -70,7 +70,7 @@ public abstract class Node<T extends Node> {
     }
 
     // Get dynamic child nodes
-    public List<T> getChildren() { return children; }
+    public List<T> getDynamicChildren() { return children; }
 
     // Get static child nodes
     public List<T> getStaticChildren() {
@@ -85,7 +85,7 @@ public abstract class Node<T extends Node> {
 
     // Get all child nodes
     public List<T> getAllChildren() {
-        return Stream.concat(getChildren().stream(), getStaticChildren().stream()).toList();
+        return Stream.concat(getDynamicChildren().stream(), getStaticChildren().stream()).toList();
     }
 
     /* ================ [ NODE ] ================ */
@@ -101,8 +101,9 @@ public abstract class Node<T extends Node> {
     /// Overload for default behavior of {@link #print(boolean, Function, List)}.
     /// Prints node names in tree structure
     public void print() { print(true, Node::defaultLabel, new ArrayList<>()); }
+    public void print(Function<Node<?>, String> formatter) { print(true, formatter, new ArrayList<>()); }
 
-    private static String defaultLabel(Node<?> node) {
+    public static String defaultLabel(Node<?> node) {
         StringBuilder builder = new StringBuilder();
         builder.append("( ) ");
         if (node instanceof Indexed<?> indexed)

@@ -5,6 +5,7 @@ import java.io.OutputStream;
 
 import static com.apcs.disunity.app.network.packet.CODEC.decodeDouble;
 import static com.apcs.disunity.app.network.packet.CODEC.encodeDouble;
+import static java.lang.Math.*;
 import com.apcs.disunity.app.network.packet.SelfCodec;
 
 /**
@@ -79,6 +80,10 @@ public class Vector2 implements SelfCodec<Vector2> {
     // Move towards another vector
     public Vector2 moveTowards(Vector2 v, double amt) {
         return this.add(v.sub(this).mul(amt));
+    }
+
+    public Vector2 rotate(double amt) {
+        return Vector2.of(cos(amt), sin(amt)).mul(x).add(Vector2.of(-sin(amt), cos(amt)).mul(y));
     }
 
     // Return the normalized vector

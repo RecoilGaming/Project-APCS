@@ -29,7 +29,7 @@ public class SelectorNode<K, V extends Node<?> & Indexed<K>> extends Node<V> {
     public void addChild(V node) { children.add(node); }
 
     @Override
-    public List<V> getChildren() { return children.values().stream().toList(); }
+    public List<V> getDynamicChildren() { return children.values().stream().toList(); }
 
     public V getSelected() { return children.getSelected(); }
 

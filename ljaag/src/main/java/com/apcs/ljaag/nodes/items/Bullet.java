@@ -38,6 +38,10 @@ public class Bullet extends Body {
 
 
 
+    // TODO: set proper collision layer
+    // currently, false collision is detected every time gun is shot,
+    // because bullets are close enough to collide with each other.
+    // setting the collision layer/mask to proper value will solve this issue.
     @Override
     public void onBodyEntered(BodyEntered signal) {
         System.out.println("bodyEntered detected from bullet");

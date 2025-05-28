@@ -1,11 +1,9 @@
 package com.apcs.disunity.app.rendering;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 
 /**
@@ -63,19 +61,12 @@ public class ScalableBuffer {
     /* ================ [ GRAPHICS ] ================ */
 
     // Draw image
-    public void drawImage(Image img, Transform transform) {
-        // Image dimensions
-        Vector2 imgDim = Vector2.of(img.getWidth(null), img.getHeight(null));
+    public void drawImage(BufferedImage img, AffineTransform transform) {
+        AffineTransform at = new AffineTransform();
+        at.scale(scale,scale);
+        transform.preConcatenate(at);
 
-        // Center pivot
-        Vector2 offset = imgDim.mul(transform.scale).mul(-0.5);
-        transform = transform.addPos(offset);
-
-        // Drawing inputs
-        Vector2 pos = transform.pos.mul(scale);
-        Vector2 dim = imgDim.mul(transform.scale).mul(this.scale);
-
-        graphics.drawImage(img, pos.xi, pos.yi, dim.xi, dim.yi, null);
+        graphics.drawImage(img, transform, null);
     }
 
 }

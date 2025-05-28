@@ -21,15 +21,13 @@ public class ImageLocation extends Node<Node<?>> {
 
     public ImageLocation(String path) {
         PATH = path;
-        POS = SIZE = null;
+        BufferedImage img = Resources.loadResource(PATH, Image.class).getBuffer();
+        POS = Vector2.ZERO;
+        SIZE = Vector2.of(img.getWidth(), img.getHeight());
     }
 
     public BufferedImage getImage() {
         BufferedImage img = Resources.loadResource(PATH, Image.class).getBuffer();
-        if (POS == null || SIZE == null) {
-            return img;
-        } else {
-            return img.getSubimage(POS.xi, POS.yi, SIZE.xi, SIZE.yi);
-        }
+        return img.getSubimage(POS.xi, POS.yi, SIZE.xi, SIZE.yi);
     }
 }

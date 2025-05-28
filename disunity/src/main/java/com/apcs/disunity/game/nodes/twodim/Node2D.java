@@ -70,24 +70,21 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     @Override
     public void draw(Transform offset) {
         // Draw children relative to this
-        super.draw(transform.apply(offset));
+        super.draw(offset.apply(transform));
     }
-
 
     @Override
     public final void update(double delta) {
-        if (!(getParent() instanceof Node2D)) {
-            this.update(new Transform(), delta);
-        }
-        for (Node child : getAllChildren()) {
-            if (child instanceof Node2D node) {
-                node.update(transform, delta);
-            }
-        }
-        super.update(delta);
+        update(new Transform(), delta);
     }
 
     public void update(Transform offset, double delta) {
-        super.update(delta);
+        for(Node<?> child: getAllChildren()) {
+            if (child instanceof Node2D<?> child2d) {
+                child2d.update(offset.apply(transform), delta);
+            } else {
+                child.update(delta);
+            }
+        }
     }
 }
