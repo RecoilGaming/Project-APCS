@@ -18,6 +18,12 @@ Period: Ferrante 5
 
 \> Started on the official character implementation by adding data classes to store character stats.
 
-## THURSDAY 5/22/2025 (0 hours)
+## THURSDAY 5/22/2025 -> MONDAY 5/26/2025 (0 hours)
 
-\> I was studying for my AP Seminar exam on friday and didn't have time to work on this project.
+\> I studied for and took AP Seminar, then had a day long CS competition, and then went on a road trip with my grandparents from China.
+
+## TUESDAY 5/23/2025 (3 hours)
+
+\> Continued to set up a generalized ability system with projectiles and signals connecting them to the player.
+
+\> Set down the groundwork for adding new characters with abilities (this should be done by Wednesday).
