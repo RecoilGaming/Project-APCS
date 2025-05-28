@@ -70,7 +70,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     @Override
     public void draw(Transform offset) {
         // Draw children relative to this
-        super.draw(transform.apply(offset));
+        super.draw(offset.apply(transform));
     }
 
     @Override

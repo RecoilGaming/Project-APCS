@@ -1,10 +1,9 @@
 package com.apcs.disunity.game.nodes.sprite;
 
-import java.awt.image.BufferedImage;
+import java.awt.geom.AffineTransform;
 
 import com.apcs.disunity.app.network.packet.annotation.SyncedBoolean;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
-import com.apcs.disunity.app.rendering.ImageUtil;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
@@ -54,34 +53,38 @@ public class Sprite extends Node2D<Node<?>> {
 
         if (isHidden()) return;
 
-        // Load sprite image
-        BufferedImage img = imageLocation.getImage();
+        AffineTransform imageTransform = new AffineTransform();
+        Transform localTransform = getTransform();
+        // quadrant of the angle, counting from 0
+        double quadrant = (int) ((2*localTransform.rot/Math.PI % 4 + 4) % 4);
 
-        Transform t = getTransform().apply(offset);
+        imageTransform.translate(localTransform.pos.x, localTransform.pos.y);
 
         switch (rotationType) {
-        case RotationType.LOCKED -> {
-        }
-        case RotationType.BIDIRECTIONAL -> {
-            double angle = t.rot;
-            if (Math.abs(angle) > Math.PI / 2) {
-                img = ImageUtil.flipHorizontally(img);
+            case RotationType.LOCKED -> {}
+            case RotationType.BIDIRECTIONAL -> {
+                if (quadrant == 1 || quadrant == 2) {
+                    imageTransform.scale(-1,1);
+                }
             }
-        }
-        case RotationType.NORMAL -> {
-            img = ImageUtil.rotate(img, t.rot);
-        }
-        case RotationType.UPRIGHT -> {
-            double angle = t.rot;
-            if (Math.abs(angle) > Math.PI / 2) {
-                img = ImageUtil.flipVertically(img);
+            case RotationType.NORMAL -> {
+                imageTransform.rotate(localTransform.rot);
             }
-            img = ImageUtil.rotate(img, t.rot);
-        }
+            case RotationType.UPRIGHT -> {
+                imageTransform.rotate(localTransform.rot);
+                if (quadrant == 1 || quadrant == 2) {
+                    imageTransform.scale(1,-1);
+                }
+            }
         }
 
+        // move center to origin
+        imageTransform.scale(localTransform.scale.x, localTransform.scale.y);
+        imageTransform.translate(-imageLocation.SIZE.x/2, -imageLocation.SIZE.y/2);
+        imageTransform.preConcatenate(offset.toAT());
+
         // Draw image to buffer
-        Game.getInstance().getBuffer().drawImage(img, t);
+        Game.getInstance().getBuffer().drawImage(imageLocation.getImage(), imageTransform);
 
         // Draw children
         super.draw(offset);

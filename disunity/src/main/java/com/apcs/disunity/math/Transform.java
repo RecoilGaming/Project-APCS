@@ -47,15 +47,18 @@ public class Transform {
     public Transform scale(Vector2 amt) { return new Transform(pos, scale.mul(amt), rot); }
 
     // Rotate by an amount
-    public Transform rotate(double amt) { return new Transform(pos, scale, (rot + amt) % 360); }
+    public Transform rotate(double amt) { return new Transform(pos, scale, rot + amt); }
 
     // Rotates to an angle
     public Transform rotateTo(double amt) { return new Transform(pos, scale, amt); }
 
-    // Apply another transform
-    /// returned transform represents affine transform with matrix
-    /// [this] x [t]
-    /// meaning t is applied before this transformation
+    /**
+     * Apply another transform
+     *
+     * returned transform represents affine transform with matrix
+     * <div>[ this ] x [ t ]</div>
+     * meaning t is applied before this transformation
+     */
     public Transform apply(Transform t) {
         return new Transform(t.pos.mul(scale).rotate(rot).add(pos), scale.mul(t.scale), rot + t.rot);
     }
