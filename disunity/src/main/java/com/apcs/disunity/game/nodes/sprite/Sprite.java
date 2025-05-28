@@ -9,6 +9,7 @@ import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
 import com.apcs.disunity.math.Transform;
+import com.apcs.disunity.math.Vector2;
 
 /**
  * A 2d node that renders an image
@@ -53,48 +54,37 @@ public class Sprite extends Node2D<Node<?>> {
 
         if (isHidden()) return;
 
-        AffineTransform imageTransform = new AffineTransform();
-        // apply ancestor transform after child transform
-        imageTransform.preConcatenate(offset.toAT());
-
         Transform localTransform = getTransform();
         // quadrant of the net angle, counting from 0
         double quadrant = (int) ((2*(localTransform.rot+offset.rot)/Math.PI % 4 + 4) % 4);
 
-        imageTransform.translate(localTransform.pos.x, localTransform.pos.y);
-
         switch (rotationType) {
             // cancel offset's rotation with opposite rotation
             case RotationType.LOCKED -> {
-                imageTransform.rotate(-offset.rot);
+                localTransform = localTransform.rotateTo(-offset.rot);
             }
             // rotate normally
-            case RotationType.NORMAL -> {
-                imageTransform.rotate(localTransform.rot);
-            }
+            case RotationType.NORMAL -> {}
             // cancel offset's rotation + flip
             case RotationType.BIDIRECTIONAL -> {
-                imageTransform.rotate(-offset.rot);
+                localTransform = localTransform.rotateTo(-offset.rot);
                 if (quadrant == 1 || quadrant == 2) {
-                    imageTransform.scale(-1,1);
+                    localTransform = localTransform.scale(Vector2.of(-1,1));
                 }
             }
             // rotate + flip
             case RotationType.UPRIGHT -> {
-                imageTransform.rotate(localTransform.rot);
                 if (quadrant == 1 || quadrant == 2) {
-                    imageTransform.scale(1,-1);
+                    localTransform = localTransform.scale(Vector2.of(1,-1));
                 }
             }
         }
 
-        // scale before rotation
-        imageTransform.scale(localTransform.scale.x, localTransform.scale.y);
-        // move center to origin
-        imageTransform.translate(-imageLocation.SIZE.x/2, -imageLocation.SIZE.y/2);
-
         // Draw image to buffer
-        Game.getInstance().getBuffer().drawImage(imageLocation.getImage(), imageTransform);
+        Game.getInstance().getBuffer().drawImage(
+            imageLocation.getImage(),
+            offset.apply(localTransform).apply(new Transform(imageLocation.SIZE.mul(-0.5), Vector2.ONE, 0))
+        );
 
         // Draw children
         super.draw(offset);

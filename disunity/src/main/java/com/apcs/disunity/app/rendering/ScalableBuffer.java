@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 
 /**
@@ -61,12 +62,12 @@ public class ScalableBuffer {
     /* ================ [ GRAPHICS ] ================ */
 
     // Draw image
-    public void drawImage(BufferedImage img, AffineTransform transform) {
+    public void drawImage(BufferedImage img, Transform transform) {
         AffineTransform at = new AffineTransform();
         at.scale(scale,scale);
-        transform.preConcatenate(at);
+        at.concatenate(transform.toAT());
 
-        graphics.drawImage(img, transform, null);
+        graphics.drawImage(img, at, null);
     }
 
 }
