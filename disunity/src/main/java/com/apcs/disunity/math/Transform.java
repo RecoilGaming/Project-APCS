@@ -52,7 +52,7 @@ public class Transform {
 
     // Apply another transform
     public Transform apply(Transform t) {
-        return new Transform(pos.mul(t.scale).add(t.pos), scale.mul(t.scale), rot + t.rot);
+        return new Transform(pos.mul(t.scale).rotate(t.rot).add(t.pos), scale.mul(t.scale), rot + t.rot);
     }
 
     /* ================ [ OBJECT ] ================ */
