@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/// appends the annotated field to return value of {@link Node#getChildren()}.
+/// appends the annotated field to return value of {@link Node#getDynamicChildren()}.
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @EnforceFieldType(Node.class)

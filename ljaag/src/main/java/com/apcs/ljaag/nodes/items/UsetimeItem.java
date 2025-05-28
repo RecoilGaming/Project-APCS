@@ -36,11 +36,11 @@ public class UsetimeItem<T extends Node<?> & Usable> extends Node2D<T> {
         setPosition(pos);
         setRotation(pos.heading());
         if (cooldown <= 0) {
-            for (Usable u : getChildren()) {
+            for (Usable u : getAllChildren()) {
                 u.onReady();
             }
             if (Inputs.getAction(useAction)) {
-                for (Usable u : getChildren()) {
+                for (Usable u : getAllChildren()) {
                     u.onUse();
                 }
                 cooldown = usetime;

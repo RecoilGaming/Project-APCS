@@ -70,7 +70,7 @@ public abstract class Node<T extends Node> {
     }
 
     // Get dynamic child nodes
-    public List<T> getChildren() { return children; }
+    public List<T> getDynamicChildren() { return children; }
 
     // Get static child nodes
     public List<T> getStaticChildren() {
@@ -85,7 +85,7 @@ public abstract class Node<T extends Node> {
 
     // Get all child nodes
     public List<T> getAllChildren() {
-        return Stream.concat(getChildren().stream(), getStaticChildren().stream()).toList();
+        return Stream.concat(getDynamicChildren().stream(), getStaticChildren().stream()).toList();
     }
 
     /* ================ [ NODE ] ================ */

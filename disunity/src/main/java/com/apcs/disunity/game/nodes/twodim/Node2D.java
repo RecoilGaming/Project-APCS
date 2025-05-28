@@ -79,7 +79,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     }
 
     public void update(Transform offset, double delta) {
-        for(Node<?> child: getChildren()) {
+        for(Node<?> child: getAllChildren()) {
             if (child instanceof Node2D<?> child2d) {
                 child2d.update(offset.apply(transform), delta);
             } else {
