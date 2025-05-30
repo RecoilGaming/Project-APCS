@@ -4,8 +4,8 @@
   "right" : [ [ "D" ], [ "Right" ] ],
   "down" : [ [ "S" ], [ "Down" ] ],
   "basic": [ [ "Left Click" ] ],
-  "ability1": [ [ "E" ] ],
-  "ability2": [ [ "Q" ] ],
+  "skill1": [ [ "E" ] ],
+  "skill2": [ [ "Q" ] ],
   "ultimate": [ [ "R" ] ],
 
 

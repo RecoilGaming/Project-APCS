@@ -10,7 +10,7 @@ import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.character.Characters;
-import com.apcs.ljaag.nodes.character.immortals.Demon;
+import com.apcs.ljaag.nodes.character.enemies.Demon;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
 

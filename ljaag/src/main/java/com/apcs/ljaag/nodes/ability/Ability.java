@@ -67,11 +67,15 @@ public class Ability {
 		return new Projectile(
 			source,
 			new Transform(
-				position,
+				position.add(data.offset),
 				Vector2.of(1),
 				direction.heading()
 			),
-			data.collider, data.area2D, data.sprite, data::update
+			data.collider.get(),
+			data.area2D.get(),
+			data.sprite.get(),
+			data::onCollision,
+			data::update
 		);
 	}
 	

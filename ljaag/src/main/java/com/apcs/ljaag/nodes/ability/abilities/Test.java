@@ -11,15 +11,18 @@ import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.stats.StatType;
 
-public class Shotgun extends AbilityData {
+public class Test extends AbilityData {
 
 	/* ================ [ FIELDS ] ================ */
 
 	// Constructors
-	public Shotgun() {
+	public Test() {
 		super(
 			TriggerType.MOUSE_DIRECTION,
-			new Collider(1, 1), new Area2D(1, 1), new Sprite("weapons/bullet.png"),
+			Vector2.ZERO,
+			() -> new Collider(1, 1),
+			() -> new Area2D(1, 1),
+			() -> new Sprite("weapons/bullet.png"),
 			0.5
 		);
 	}

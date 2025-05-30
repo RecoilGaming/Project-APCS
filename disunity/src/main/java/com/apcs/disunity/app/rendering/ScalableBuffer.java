@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import com.apcs.disunity.game.nodes.collider.Collider;
+import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 
@@ -61,10 +63,18 @@ public class ScalableBuffer {
 
     /* ================ [ GRAPHICS ] ================ */
 
+    // Draw area
+    public void drawArea(Area2D area) {
+        Vector2 pos = Vector2.of(image.getWidth(), image.getHeight()).div(2).add(area.getTransform().pos.sub(area.size.mul(0.5)).mul(scale));
+        Vector2 sca = area.size.mul(scale);
+        graphics.setColor(Color.RED);
+        graphics.fillRect(pos.xi, pos.yi, sca.xi, sca.yi);
+    }
+
     // Draw image
     public void drawImage(BufferedImage img, Transform transform) {
         AffineTransform at = new AffineTransform();
-        at.scale(scale,scale);
+        at.scale(scale, scale);
         at.concatenate(transform.toAT());
 
         graphics.drawImage(img, at, null);
