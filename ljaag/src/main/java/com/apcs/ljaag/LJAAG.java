@@ -9,6 +9,8 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.ljaag.nodes.characters.Characters;
+import com.apcs.ljaag.nodes.characters.immortals.Demon;
 import com.apcs.ljaag.nodes.characters.immortals.Immortal;
 import com.apcs.ljaag.nodes.characters.immortals.Immortals;
 import com.apcs.ljaag.nodes.items.Shotgun;
@@ -37,7 +39,7 @@ public class LJAAG {
         // Create the game scenes
         Scene scene = new Scene("test", new Sprite("background.png"));
 
-        Node c = new Immortal(Immortals.ZHAO);
+        Node c = new Immortal(new Transform(), Immortals.ZHAO, "zhao/zhao.png", "zhao/run.png");
         Sprite s = new UsetimeSprite("weapons/boomstick.png");
         s.setScale(Vector2.of(0.1));
         UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
@@ -59,6 +61,27 @@ public class LJAAG {
         game.setScene("test");
 
         new App("Shotgun Simulator", 800, 450, game);
+
+        // spawn demons
+        new Thread(() -> {
+            double time = System.currentTimeMillis();
+            while (!Thread.currentThread().isInterrupted()) {
+                // if (false) {
+                if (System.currentTimeMillis() - time > 10000) {
+                    // prevent concurrent modification by locking the update list
+                    Demon e1 = new Demon(Characters.BROKEN_VESSEL);
+                    e1.setPosition(Vector2.of(100, 0));
+                    Demon e2 = new Demon(Characters.BROKEN_VESSEL);
+                    e2.setPosition(Vector2.of(-100, 0));
+                    // Demon e3 = new Demon(Characters.BROKEN_VESSEL);
+                    // e3.setPosition(Vector2.of(0, 100));
+                    // Demon e4 = new Demon(Characters.BROKEN_VESSEL);
+                    // e4.setPosition(Vector2.of(0, -100));
+                    scene.addChildren(e1, e2); // e2, e3, e4);
+                    time = System.currentTimeMillis();
+                }
+            }
+        }).start();
 
         game.start();
 

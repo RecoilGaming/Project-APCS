@@ -49,9 +49,11 @@ public abstract class Node<T extends Node> {
 
     // Add multiple child nodes
     public final void addChildren(T... nodes) {
-        for (T child : nodes) {
-            child.setParent(this);
-            addChild(child);
+        synchronized (nodes) {
+                for (T child : nodes) {
+                child.setParent(this);
+                addChild(child);
+            }
         }
     }
 

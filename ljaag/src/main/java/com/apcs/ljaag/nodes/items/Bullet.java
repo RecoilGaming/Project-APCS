@@ -8,10 +8,13 @@ import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.ljaag.nodes.characters.Character;
 
 public class Bullet extends Body {
 
     public static final double LIFECYCLE = 5;
+
+    public static final double BULLET_DAMAGE = 20;
 
     private double lifetime = 0;
 
@@ -44,7 +47,9 @@ public class Bullet extends Body {
     // setting the collision layer/mask to proper value will solve this issue.
     @Override
     public void onBodyEntered(BodyEntered signal) {
-        System.out.println("bodyEntered detected from bullet");
+        if (signal.body instanceof Character ch) {
+            ch.modifyHealth((int) -BULLET_DAMAGE);
+        }
     }
 
 }

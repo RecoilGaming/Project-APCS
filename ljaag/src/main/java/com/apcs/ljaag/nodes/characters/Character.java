@@ -48,8 +48,8 @@ public class Character<T extends CharacterData> extends Body {
 	private Statset tempStats = new Statset();
 
 	// Resource amounts
-	private int health = 100;
-	private int aura = 100;
+	protected int health = 100;
+	protected int aura = 100;
 
 	// Constructors
 	public Character(Transform transform, T data, Node<?>... children) {
@@ -77,12 +77,12 @@ public class Character<T extends CharacterData> extends Body {
 	protected void modifyTempStats(Statset stats) { this.tempStats.addStats(stats); }
 
 	// Modify health
-	protected void modifyHealth(int amount) {
+	public void modifyHealth(int amount) {
 		this.health += amount;
 	}
 
 	// Modify aura
-	protected void modifyAura(int amount) {
+	public void modifyAura(int amount) {
 		this.aura += amount;
 	}
 	
@@ -114,6 +114,14 @@ public class Character<T extends CharacterData> extends Body {
 
 	@Override
 	public void update(Transform offset, double delta) {
+
+		if (health <= 0) {
+			// simple dealth thingy
+			this.setVelocity(Vector2.ZERO);
+			killAllSprites(this);
+			setRotation(- Math.PI / 2);
+		}
+
 		// Rotation
 		if (getVelocity().xi != 0) {
 			setRotation(getVelocity().heading());
@@ -133,5 +141,14 @@ public class Character<T extends CharacterData> extends Body {
 
 	@Override
 	public void onBodyEntered(BodyEntered signal) { }
+
+	private void killAllSprites(Node<? extends Node> n) {
+		for (Node<? extends Node> c : n.getAllChildren()) {
+			if (c instanceof Sprite s) {
+				s.setRotationType(Sprite.RotationType.NORMAL);
+			}
+			killAllSprites(c);
+		}
+	}
 
 }

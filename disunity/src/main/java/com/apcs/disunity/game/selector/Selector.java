@@ -1,9 +1,9 @@
 package com.apcs.disunity.game.selector;
 
-import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
-
 import java.util.HashMap;
 import java.util.List;
+
+import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 
 /// wrapper of map with some extra restrictions
 public class Selector<K, V extends Indexed<K>> {
@@ -28,14 +28,18 @@ public class Selector<K, V extends Indexed<K>> {
     }
 
     public V getSelected() {
-        if (index.equals(fallback.index()))
-            return fallback;
-        return indexedValues.getOrDefault(index, fallback);
+        return get(index);
     }
 
     public V select(K index) {
         this.index = index;
         return getSelected();
+    }
+
+    public V get(K index) {
+        if (index.equals(fallback.index()))
+            return fallback;
+        return indexedValues.getOrDefault(index, fallback);
     }
 
     public List<V> values() { return indexedValues.values().stream().toList(); }

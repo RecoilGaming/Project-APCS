@@ -18,7 +18,7 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
     // Animation name
     private final String name;
     private long prevFrame = System.nanoTime();
-    private final ImageLocation baseImage;
+    private ImageLocation baseImage;
 
     // Frame durations list
     private final double[] frameDurations;
@@ -96,6 +96,10 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
     public void play() {
         reset();
         setHidden(false);
+    }
+
+    public void setBaseImage(ImageLocation val) {
+        this.baseImage = val;
     }
 
 }

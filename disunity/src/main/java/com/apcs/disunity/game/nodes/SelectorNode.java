@@ -1,11 +1,11 @@
 package com.apcs.disunity.game.nodes;
 
+import java.util.List;
+
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 import com.apcs.disunity.game.selector.Indexed;
 import com.apcs.disunity.game.selector.Selector;
 import com.apcs.disunity.math.Transform;
-
-import java.util.List;
 
 /// Node that selects one of its children to be updated or drawn.
 public class SelectorNode<K, V extends Node<?> & Indexed<K>> extends Node<V> {
@@ -34,4 +34,6 @@ public class SelectorNode<K, V extends Node<?> & Indexed<K>> extends Node<V> {
     public V getSelected() { return children.getSelected(); }
 
     public V select(K index) { return children.select(index); }
+
+    public V get(K index) { return children.get(index); }
 }

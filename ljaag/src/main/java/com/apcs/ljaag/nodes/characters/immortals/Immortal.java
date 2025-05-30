@@ -1,6 +1,7 @@
 package com.apcs.ljaag.nodes.characters.immortals;
 
 import com.apcs.disunity.game.nodes.Node;
+import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.math.Transform;
 import com.apcs.ljaag.nodes.characters.Character;
 import com.apcs.ljaag.nodes.indexed.InputVector;
@@ -30,6 +31,12 @@ public class Immortal extends Character<ImmortalData> {
 	public Immortal(ImmortalData data) { this(new Transform(), data); }
 	public Immortal(Transform transform, ImmortalData data, Node<?>... children) {
 		super(transform, data, children);
+	}
+
+	public Immortal(Transform transform, ImmortalData data, String idle, String run, Node<?>... children) {
+		this(transform, data, children);
+		sprite.get("idle").setImageLocation(new ImageLocation(idle));
+		sprite.get("run").setBaseImage(new ImageLocation(run));
 	}
 
 	/* ================ [ METHODS ] ================ */
@@ -73,8 +80,10 @@ public class Immortal extends Character<ImmortalData> {
 
 	@Override
 	public void update(Transform offset, double delta) {
+		if (health > 0) {
+			setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
+		}
 		// Movement
-		setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
 		super.update(offset, delta);
 	}
 	
