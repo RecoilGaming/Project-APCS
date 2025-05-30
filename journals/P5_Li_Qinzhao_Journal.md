@@ -22,8 +22,16 @@ Period: Ferrante 5
 
 \> I studied for and took AP Seminar, then had a day long CS competition, and then went on a road trip with my grandparents from China.
 
-## TUESDAY 5/23/2025 (3 hours)
+## TUESDAY 5/27/2025 (3 hours)
 
 \> Continued to set up a generalized ability system with projectiles and signals connecting them to the player.
 
 \> Set down the groundwork for adding new characters with abilities (this should be done by Wednesday).
+
+## THURSDAY 5/29/2025 (2.5 hours)
+
+\> Converted ability system from just data to actual activatable abilities.
+
+\> Ported over the shotgun item to the ability system.
+
+\> Started generalized ability casting system (unpushed).

@@ -8,7 +8,7 @@ import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.nodes.characters.Character;
+import com.apcs.ljaag.nodes.character.Character;
 
 public class Bullet extends Body {
 

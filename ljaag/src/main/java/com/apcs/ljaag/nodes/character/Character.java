@@ -1,17 +1,15 @@
-package com.apcs.ljaag.nodes.characters;
-
-import java.util.UUID;
+package com.apcs.ljaag.nodes.character;
 
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.SelectorNode;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
+import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.physics.BodyEntered;
-import com.apcs.disunity.game.signals.Signals;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.stats.StatType;
@@ -29,7 +27,7 @@ public class Character<T extends CharacterData> extends Body {
 	{
         AnimatedSprite s1, s2;
         sprite = new SelectorNode<String, AnimatedSprite>(
-            s1 = new AnimatedSprite("idle", "player/player.png", Double.MAX_VALUE),
+            s1 = new AnimatedSprite("idle", "player/idle.png", Double.MAX_VALUE),
             s2 = new AnimatedSprite("run", "player/run.png", true, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
 		);
 
@@ -37,8 +35,6 @@ public class Character<T extends CharacterData> extends Body {
         s2.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
     }
 
-	// Character id
-	private final UUID id;
 
 	// Character data
 	protected final T data;
@@ -63,7 +59,6 @@ public class Character<T extends CharacterData> extends Body {
 			children
 		);
 		
-		this.id = UUID.randomUUID();
 		this.data = data;
 		initialize();
 	}
@@ -71,10 +66,10 @@ public class Character<T extends CharacterData> extends Body {
 	/* ================ [ HELPERS ] ================ */
 
 	// Modify stats
-	protected void modifyStats(Statset stats) { this.stats.addStats(stats); }
+	public void modifyStats(Statset stats) { this.stats.addStats(stats); }
 
 	// Modify temporary stats
-	protected void modifyTempStats(Statset stats) { this.tempStats.addStats(stats); }
+	public void modifyTempStats(Statset stats) { this.tempStats.addStats(stats); }
 
 	// Modify health
 	public void modifyHealth(int amount) {
@@ -88,21 +83,16 @@ public class Character<T extends CharacterData> extends Body {
 	
 	/* ================ [ METHODS ] ================ */
 
-	// Get character id
-	public UUID getId() { return id; }
-
 	// Initialize character
 	public void initialize() {
+		// Initialize animations
+		sprite.get("idle").setImageLocation(new ImageLocation(data.id + "/idle.png"));
+		sprite.get("run").setBaseImage(new ImageLocation(data.id + "/run.png"));
+
 		// Initialize stats
 		this.stats = data.BASE_STATS.copy();
 		this.health = stats.getStat(StatType.HEALTH);
 		this.aura = stats.getStat(StatType.DIVINITY);
-
-		// Connect signals
-		Signals.connect(Signals.getSignal(getId(), "MODIFY_STATS"), this::modifyStats);
-		Signals.connect(Signals.getSignal(getId(), "MODIFY_TEMP_STATS"), this::modifyTempStats);
-		Signals.connect(Signals.getSignal(getId(), "MODIFY_HEALTH"), this::modifyHealth);
-		Signals.connect(Signals.getSignal(getId(), "MODIFY_AURA"), this::modifyAura);
 	}
 
 	// Get total stats
