@@ -20,3 +20,9 @@ Continued with my divide and conquer of the demo shotgun: I make the previously 
 
 ### May 21 **IN CLASS** ~1 hour
 Debugged the image util class. I had previously heavily relied on examples from documentation and therefore didn't understand the classes used as much as I had thought. This made it very hard to debug. The issue, which I had known would happen since I added rotation, was that images that weren't close to squares would have part of the image cut off because the transformation wasn't the same dimensions as the original image. I tried a bunch of fixes, but the key thing I missed was that transformation steps in affine transform were applied in reverse order. When I realized this (by looking at the api and through experimentation) I was able to fix rotations and make them rotate without clipping. I was feeling really sick on friday so I wasn't that productive in class and rested at home. I'm writing this on saturday and feel much better.
+
+### MAY 28 **BOTH** ~2 hours
+On another branch, I tried to get the multiplayer started up again to see how hard it would be to add it back (we had decided to remove it until the game is done and we're likely going to continue with that). The node reconcilation was a bit of a nightmare and the mutliplayer doesn't work, but I think that's just something we'll need to deal with later. I was unable to fix the issues.
+
+### May 29 **AT HOME** ~1 hour
+I added a basic enemy with contact damage that walks towards the player using the character system Qinzhao implemented. The enemy just deals contact damage to immortals, and it's velocity is calculated to be the heading to the nearest immortal times it's speed, as opposed to the input velocity vector times speed. On a less serious note I had my mom play my quick demo and she hated it because she's extremely bad at videogames, but once she got the hang of it she said it was fun. The current demo is extremely basic.
