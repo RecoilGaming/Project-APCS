@@ -21,8 +21,8 @@ public class Zhao1 extends AbilityData {
 		super(
 			TriggerType.SOURCE_POSITION,
 			Vector2.ZERO,
-			() -> new Collider(24, 8),
-			() -> new Area2D(24, 8),
+			() -> new Collider(24, 12),
+			() -> new Area2D(24, 12),
 			() -> new AnimatedSprite("push", new ImageLocation("zhao/abil1.png"), 0.15, 0.15, 0.15),
 			0.5
 		);
