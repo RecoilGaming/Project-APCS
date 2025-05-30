@@ -104,9 +104,8 @@ public class Character<T extends CharacterData> extends Body {
 
 	@Override
 	public void update(Transform offset, double delta) {
-
+		// Death
 		if (health <= 0) {
-			// simple dealth thingy
 			this.setVelocity(Vector2.ZERO);
 			killAllSprites(this);
 			setRotation(- Math.PI / 2);

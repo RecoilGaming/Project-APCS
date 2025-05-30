@@ -1,7 +1,9 @@
 package com.apcs.ljaag.nodes.character.immortals;
 
+import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.math.Transform;
+import com.apcs.ljaag.nodes.ability.Ability;
 import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.indexed.InputVector;
 import com.apcs.ljaag.nodes.stats.StatType;
@@ -14,15 +16,17 @@ public class Immortal extends Character<ImmortalData> {
 	public static final int LEVELUP_EXP = 100;
 	public static final double LEVEPUP_EXP_MULT = 1.2;
 
-	// Level
+	// Levelling
 	private int level = 1;
-
-	// Experience
 	private int experience = 0;
-
-	// Skill points
 	private int skillPoints = 1;
 
+	// Abilities
+	private Ability basicAbility;
+	private Ability skill1Ability;
+	private Ability skill2Ability;
+	private Ability ultimateAbility;
+	
 	// Movement input
 	private final InputVector moveDir = new InputVector("move");
 
@@ -73,14 +77,42 @@ public class Immortal extends Character<ImmortalData> {
 		}
 	}
 
+	/* ================ [ CHARACTER ] ================ */
+
+	@Override
+	public void initialize() {
+		super.initialize();
+
+		// Initialize abilities
+		this.basicAbility = new Ability(data.BASIC);
+		this.skill1Ability = new Ability(data.SKILL_1);
+		this.skill2Ability = new Ability(data.SKILL_2);
+		this.ultimateAbility = new Ability(data.ULTIMATE);
+	}
+
 	/* ================ [ NODE ] ================ */
 
 	@Override
 	public void update(Transform offset, double delta) {
+		// Movement
 		if (health > 0) {
 			setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
 		}
-		// Movement
+
+		// Abilities
+		if (Inputs.getAction("basic")) {
+			basicAbility.use(this);
+		}
+		if (Inputs.getAction("skill1")) {
+			skill1Ability.use(this);
+		}
+		if (Inputs.getAction("skill2")) {
+			skill2Ability.use(this);
+		}
+		if (Inputs.getAction("ultimate")) {
+			ultimateAbility.use(this);
+		}
+
 		super.update(offset, delta);
 	}
 	

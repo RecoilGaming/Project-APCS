@@ -13,9 +13,9 @@ public class Immortals {
 		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		15,
 		new Shotgun(),
-		null,
-		null,
-		null
+		new Shotgun(),
+		new Shotgun(),
+		new Shotgun()
 	);
 	
 }

@@ -40,19 +40,19 @@ public class LJAAG {
         Scene scene = new Scene("test", new Sprite("background.png"));
 
         Node c = new Immortal(new Transform(), Immortals.ZHAO, "zhao/zhao.png", "zhao/run.png");
-        Sprite s = new UsetimeSprite("weapons/boomstick.png");
-        s.setScale(Vector2.of(0.1));
-        UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
-            s,
-            new Shotgun(),
-            new UsetimeSound("sounds/boomstick.wav")
-        );
-        UsetimeItem swordSwing = new UsetimeItem(20, 0.30, "swing",
-            s = new UsetimeAnimation("swing", "weapons/sword.png", 0.05, 0.05, 0.05, 0.05, 0.05),
-            new UsetimeSound("sounds/swoosh.wav")
-        );
-        s.setScale(Vector2.of(1));
-        c.addChildren(shotgunAbility1, swordSwing, new Camera());
+        // Sprite s = new UsetimeSprite("weapons/boomstick.png");
+        // s.setScale(Vector2.of(0.1));
+        // UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
+        //     s,
+        //     new Shotgun(),
+        //     new UsetimeSound("sounds/boomstick.wav")
+        // );
+        // UsetimeItem swordSwing = new UsetimeItem(20, 0.30, "swing",
+        //     s = new UsetimeAnimation("swing", "weapons/sword.png", 0.05, 0.05, 0.05, 0.05, 0.05),
+        //     new UsetimeSound("sounds/swoosh.wav")
+        // );
+        // s.setScale(Vector2.of(1));
+        c.addChildren(new Camera());
         scene.addChildren(c);
 
         // Create game application

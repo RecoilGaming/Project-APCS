@@ -30,8 +30,7 @@ public class Projectile extends Body {
 
 	@Override
 	public void onBodyEntered(BodyEntered signal) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'onBodyEntered'");
+		;
 	}
 
 	/* ================ [ NODE ] ================ */

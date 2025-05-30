@@ -3,6 +3,12 @@
   "up" : [ [ "W" ], [ "Up" ] ],
   "right" : [ [ "D" ], [ "Right" ] ],
   "down" : [ [ "S" ], [ "Down" ] ],
+  "basic": [ [ "Left Click" ] ],
+  "ability1": [ [ "E" ] ],
+  "ability2": [ [ "Q" ] ],
+  "ultimate": [ [ "R" ] ],
+
+
   "fire" : [ [ "F" ], [ "Left Click" ] ],
   "swing" : [ [ "R" ] ]
 }
