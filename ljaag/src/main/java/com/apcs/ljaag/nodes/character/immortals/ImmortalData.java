@@ -1,6 +1,6 @@
 package com.apcs.ljaag.nodes.character.immortals;
 
-import com.apcs.ljaag.nodes.ability.Ability;
+import com.apcs.ljaag.nodes.ability.AbilityData;
 import com.apcs.ljaag.nodes.character.CharacterData;
 import com.apcs.ljaag.nodes.stats.Statset;
 
@@ -15,13 +15,13 @@ public class ImmortalData extends CharacterData {
 	public final int MAX_LEVEL;
 
 	// Abilities
-	public final Ability BASIC;
-	public final Ability SKILL_1;
-	public final Ability SKILL_2;
-	public final Ability ULTIMATE;
+	public final AbilityData BASIC;
+	public final AbilityData SKILL_1;
+	public final AbilityData SKILL_2;
+	public final AbilityData ULTIMATE;
 
 	// Constructors
-	public ImmortalData(String id, Statset baseStats, Statset levelingStats, int maxLevel, Ability basic, Ability skill1, Ability skill2, Ability ultimate) {
+	public ImmortalData(String id, Statset baseStats, Statset levelingStats, int maxLevel, AbilityData basic, AbilityData skill1, AbilityData skill2, AbilityData ultimate) {
 		super(id, baseStats);
 		this.LEVELING_STATS = levelingStats;
 		this.MAX_LEVEL = maxLevel;

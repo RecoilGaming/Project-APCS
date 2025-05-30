@@ -3,7 +3,12 @@
   "up" : [ [ "W" ], [ "Up" ] ],
   "right" : [ [ "D" ], [ "Right" ] ],
   "down" : [ [ "S" ], [ "Down" ] ],
-  "fire" : [ [ "F" ] ],
-  "fireuzi" : [ [ "Left Click" ] ],
+  "basic": [ [ "Left Click" ] ],
+  "skill1": [ [ "E" ] ],
+  "skill2": [ [ "Q" ] ],
+  "ultimate": [ [ "R" ] ],
+
+
+  "fire" : [ [ "F" ], [ "Left Click" ] ],
   "swing" : [ [ "R" ] ]
 }

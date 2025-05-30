@@ -35,3 +35,9 @@ Period: Ferrante 5
 \> Ported over the shotgun item to the ability system.
 
 \> Started generalized ability casting system (unpushed).
+
+## FRIDAY 5/30/2025 (1 hours)
+
+\> Finished the ability and casting system.
+
+\> Implemented the first ability for my character.

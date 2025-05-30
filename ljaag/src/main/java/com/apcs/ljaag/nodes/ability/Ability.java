@@ -2,9 +2,6 @@ package com.apcs.ljaag.nodes.ability;
 
 import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.game.Game;
-import com.apcs.disunity.game.nodes.collider.Collider;
-import com.apcs.disunity.game.nodes.sprite.Sprite;
-import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.character.Character;
@@ -15,8 +12,6 @@ public class Ability {
 
 	public enum TriggerType {
 
-		/* ================ [ VALUES ] ================ */
-
 		SOURCE_POSITION, // Activate at player position
 		SOURCE_DIRECTION, // Activate from player in the movement direction
 		MOUSE_DIRECTION, // Activate from player in the mouse direction
@@ -24,43 +19,47 @@ public class Ability {
 		
 	}
 
-
 	/* ================ [ FIELDS ] ================ */
 
-	// Trigger type
-	private final TriggerType trigger;
+	// Ability data
+	private final AbilityData data;
 
-	// Projectile components
-	private final Collider collider;
-	private final Area2D area2D;
-	private final Sprite sprite;
+	// Last used timestamp
+	private double lastUsed = 0;
 
 	// Constructors
-	public Ability(TriggerType trigger, Collider collider, Area2D area2D, Sprite sprite) {
-		this.trigger = trigger;
-		this.collider = collider;
-		this.area2D = area2D;
-		this.sprite = sprite;
+	public Ability(AbilityData data) {
+		this.data = data;
 	}
 
 	/* ================ [ METHODS ] ================ */
 
-	// Trigger the ability
-	public void trigger(Character source, Transform transform) {
-		switch (trigger) {
+	// Use the ability
+	public boolean use(Character source) {
+		if (System.currentTimeMillis() - lastUsed < data.cooldown * 1000) {
+			return false;
+		}
+
+		lastUsed = System.currentTimeMillis();
+
+		switch (data.trigger) {
 			case SOURCE_POSITION:
-				Game.getInstance().getScene().addChild(instantiate(source, transform.pos, Vector2.ZERO));
+				Game.getInstance().getScene().addChild(instantiate(source, source.getPosition(), Vector2.ZERO));
 				break;
 			case SOURCE_DIRECTION:
-				Game.getInstance().getScene().addChild(instantiate(source, transform.pos, Vector2.fromAngle(transform.rot)));
+				Game.getInstance().getScene().addChild(instantiate(source, source.getPosition(), Vector2.fromAngle(source.getRotation())));
 				break;
 			case MOUSE_DIRECTION:
-				Game.getInstance().getScene().addChild(instantiate(source, transform.pos, Inputs.getMousePos().normalized()));
+				Game.getInstance().getScene().addChild(instantiate(source, source.getPosition(), Inputs.getMousePos().sub(source.getPosition()).normalized()));
 				break;
 			case MOUSE_POSITION:
-				Game.getInstance().getScene().addChild(instantiate(source, Inputs.getMousePos(), Inputs.getMousePos().normalized()));
+				Game.getInstance().getScene().addChild(instantiate(source, Inputs.getMousePos(), Inputs.getMousePos().sub(source.getPosition()).normalized()));
+				break;
+			default:
 				break;
 		}
+
+		return true;
 	}
 
 	// Instantiate ability projectile
@@ -68,17 +67,16 @@ public class Ability {
 		return new Projectile(
 			source,
 			new Transform(
-				position,
+				position.add(data.offset),
 				Vector2.of(1),
 				direction.heading()
 			),
-			collider, area2D, sprite, this::update
+			data.collider.get(),
+			data.area2D.get(),
+			data.sprite.get(),
+			data::onCollision,
+			data::update
 		);
-	}
-
-	// Update ability projectile
-	public void update(Character source, Projectile projectile, Transform offset, double delta) {
-		;
 	}
 	
 }

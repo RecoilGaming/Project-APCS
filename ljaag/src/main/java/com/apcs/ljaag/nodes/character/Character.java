@@ -52,10 +52,10 @@ public class Character<T extends CharacterData> extends Body {
 		super(
 			transform,
 			new Collider(
-				new Transform().addPos(Vector2.of(0, -8)),
+				new Transform().addPos(Vector2.of(0, 8)),
 				8, 8
 			),
-			new Area2D(8,8),
+			new Area2D(8, 8),
 			children
 		);
 		
@@ -104,9 +104,8 @@ public class Character<T extends CharacterData> extends Body {
 
 	@Override
 	public void update(Transform offset, double delta) {
-
+		// Death
 		if (health <= 0) {
-			// simple dealth thingy
 			this.setVelocity(Vector2.ZERO);
 			killAllSprites(this);
 			setRotation(- Math.PI / 2);
