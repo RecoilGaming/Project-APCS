@@ -1,6 +1,5 @@
 package com.apcs.ljaag.nodes.ability.abilities;
 
-import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;

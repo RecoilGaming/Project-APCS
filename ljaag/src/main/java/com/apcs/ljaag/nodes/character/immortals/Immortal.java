@@ -36,10 +36,6 @@ public class Immortal extends Character<ImmortalData> {
 		super(transform, data, children);
 	}
 
-	public Immortal(Transform transform, ImmortalData data, String idle, String run, Node<?>... children) {
-		this(transform, data, children);
-	}
-
 	/* ================ [ METHODS ] ================ */
 
 	// Get level

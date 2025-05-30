@@ -13,11 +13,6 @@ import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.immortals.Demon;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
-import com.apcs.ljaag.nodes.items.Shotgun;
-import com.apcs.ljaag.nodes.items.UsetimeAnimation;
-import com.apcs.ljaag.nodes.items.UsetimeItem;
-import com.apcs.ljaag.nodes.items.UsetimeSound;
-import com.apcs.ljaag.nodes.items.UsetimeSprite;
 
 /**
  * Untitled game
@@ -37,28 +32,17 @@ public class LJAAG {
         Inputs.fromJSON("keybinds.json");
 
         // Create the game scenes
-        Scene scene = new Scene("test", new Sprite("background.png"));
-
-        Node c = new Immortal(new Transform(), Immortals.ZHAO, "zhao/zhao.png", "zhao/run.png");
-        // Sprite s = new UsetimeSprite("weapons/boomstick.png");
-        // s.setScale(Vector2.of(0.1));
-        // UsetimeItem shotgunAbility1 = new UsetimeItem(15, 1, "fire",
-        //     s,
-        //     new Shotgun(),
-        //     new UsetimeSound("sounds/boomstick.wav")
-        // );
-        // UsetimeItem swordSwing = new UsetimeItem(20, 0.30, "swing",
-        //     s = new UsetimeAnimation("swing", "weapons/sword.png", 0.05, 0.05, 0.05, 0.05, 0.05),
-        //     new UsetimeSound("sounds/swoosh.wav")
-        // );
-        // s.setScale(Vector2.of(1));
-        c.addChildren(new Camera());
-        scene.addChildren(c);
+        Scene scene = new Scene("game",
+            new Sprite("background.png"),
+            new Immortal(new Transform(), Immortals.ZHAO,
+                new Camera()
+            )
+        );
 
         // Create game application
         Game game = new Game(Vector2.of(480, 270));
         game.addScene(scene);
-        game.setScene("test");
+        game.setScene("game");
 
         new App("Shotgun Simulator", 800, 450, game);
 
@@ -83,8 +67,8 @@ public class LJAAG {
             }
         }).start();
 
+        // Start game
         game.start();
-
     }
 
     public static void own(Node<?> node, int clientId) {
