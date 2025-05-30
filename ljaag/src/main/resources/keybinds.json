@@ -3,6 +3,7 @@
   "up" : [ [ "W" ], [ "Up" ] ],
   "right" : [ [ "D" ], [ "Right" ] ],
   "down" : [ [ "S" ], [ "Down" ] ],
-  "fire" : [ [ "F" ], [ "Left Click" ] ],
+  "fire" : [ [ "F" ] ],
+  "fireuzi" : [ [ "Left Click" ] ],
   "swing" : [ [ "R" ] ]
 }

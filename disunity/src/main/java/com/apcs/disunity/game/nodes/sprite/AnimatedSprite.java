@@ -21,7 +21,7 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
     private ImageLocation baseImage;
 
     // Frame durations list
-    private final double[] frameDurations;
+    private double[] frameDurations;
 
     boolean looping = false;
 
@@ -100,6 +100,11 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
 
     public void setBaseImage(ImageLocation val) {
         this.baseImage = val;
+        updateFrame();
+    }
+
+    public void setFrameDurations(double[] durations) {
+        this.frameDurations = durations;
     }
 
 }
