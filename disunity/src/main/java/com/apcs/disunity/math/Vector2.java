@@ -47,6 +47,9 @@ public class Vector2 implements SelfCodec<Vector2> {
     public static Vector2 of(double x) { return new Vector2(x, x); }
     public static Vector2 of(double x, double y) { return new Vector2(x, y); }
 
+    // From an angle
+    public static Vector2 fromAngle(double rad) { return new Vector2(Math.cos(rad), Math.sin(rad)); }
+
     // Get the basis vector of an angle
     public static Vector2 basis(double rad) { return new Vector2(Math.cos(rad), Math.sin(rad)); }
 

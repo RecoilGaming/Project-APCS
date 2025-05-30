@@ -1,9 +1,9 @@
-package com.apcs.ljaag.nodes.characters.immortals;
+package com.apcs.ljaag.nodes.character.immortals;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
-import com.apcs.ljaag.nodes.characters.Character;
-import com.apcs.ljaag.nodes.characters.CharacterData;
+import com.apcs.ljaag.nodes.character.Character;
+import com.apcs.ljaag.nodes.character.CharacterData;
 import com.apcs.ljaag.nodes.stats.StatType;
 
 public class Demon extends Character<CharacterData> {

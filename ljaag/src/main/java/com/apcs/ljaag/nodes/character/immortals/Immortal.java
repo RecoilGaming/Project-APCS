@@ -1,9 +1,8 @@
-package com.apcs.ljaag.nodes.characters.immortals;
+package com.apcs.ljaag.nodes.character.immortals;
 
 import com.apcs.disunity.game.nodes.Node;
-import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.math.Transform;
-import com.apcs.ljaag.nodes.characters.Character;
+import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.indexed.InputVector;
 import com.apcs.ljaag.nodes.stats.StatType;
 
@@ -35,8 +34,6 @@ public class Immortal extends Character<ImmortalData> {
 
 	public Immortal(Transform transform, ImmortalData data, String idle, String run, Node<?>... children) {
 		this(transform, data, children);
-		sprite.get("idle").setImageLocation(new ImageLocation(idle));
-		sprite.get("run").setBaseImage(new ImageLocation(run));
 	}
 
 	/* ================ [ METHODS ] ================ */
