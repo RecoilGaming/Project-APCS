@@ -1,7 +1,5 @@
 package com.apcs.disunity.game.nodes.sprite;
 
-import java.awt.geom.AffineTransform;
-
 import com.apcs.disunity.app.network.packet.annotation.SyncedBoolean;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 import com.apcs.disunity.game.Game;

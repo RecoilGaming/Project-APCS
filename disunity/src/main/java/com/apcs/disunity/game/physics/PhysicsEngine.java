@@ -24,24 +24,24 @@ public class PhysicsEngine {
      * Update the physics system
      */
     public static void run(Scene scene, double delta) {
-        for (Map.Entry<Area2D,Vector2> area: searchNode(scene, Vector2.ZERO, Area2D.class, new ArrayList<>())) {
-            for (Map.Entry<Body,Vector2> body: searchNode(scene, Vector2.ZERO, Body.class, new ArrayList<>())) {
+        for (Area2D area: searchNode(scene, Vector2.ZERO, Area2D.class, new ArrayList<>())) {
+            for (Body body: searchNode(scene, Vector2.ZERO, Body.class, new ArrayList<>())) {
 
                 if (
-                    body.getKey().area2D != area.getKey() &&
-                    (body.getKey().collider.LAYER.BITSET & area.getKey().MASK.BITSET) != 0 &&
-                        new AABB(body.getKey().collider.SIZE, body.getValue()).isColliding(new AABB(area.getKey().size, area.getValue()))
+                    body.area2D != area &&
+                    (body.collider.LAYER.BITSET & area.MASK.BITSET) != 0 &&
+                        new AABB(body.collider.SIZE, body.getGlobalTrans().pos).isColliding(new AABB(area.size, area.getGlobalTrans().pos))
                 ) {
-                    area.getKey().bodyEnteredSignal.emit(new BodyEntered(body.getKey()));
+                    area.bodyEnteredSignal.emit(new BodyEntered(body));
                 }
             }
         }
     }
 
-    private static <T extends Node2D<?>> ArrayList<Map.Entry<T,Vector2>> searchNode(Node<?> node, Vector2 absPos, Class<T> clazz, ArrayList<Map.Entry<T,Vector2>> infos) {
+    private static <T extends Node2D<?>> ArrayList<T> searchNode(Node<?> node, Vector2 absPos, Class<T> clazz, ArrayList<T> infos) {
         if (clazz.isAssignableFrom(node.getClass())) {
             T needle = (T) node;
-            infos.add(new AbstractMap.SimpleEntry<>(needle, absPos.add(needle.getPosition())));
+            infos.add(needle);
         } else {
             if (node instanceof Node2D<?> node2D) {
                 node.getAllChildren().forEach(n -> searchNode(n, absPos.add(node2D.getPosition()), clazz, infos));
