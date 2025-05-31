@@ -12,3 +12,6 @@ I made a Transform test since I have encountered many issues stemming from it an
 
 ## 5/28/25 ~10 min
 I decided to use disunity transform as a wrapper of AffineTransform, so I replaced AffineTransform in Sprite.java to Transform.
+
+## 5/30/25 ~15 min
+I made the global location cached inside node 2D, since only tracking local transform created a lot of hassle when we needed global transform just for one time. Now, collision code can depend on global transform and physics engine does not have to calculate global transform for every tick.
