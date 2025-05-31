@@ -34,9 +34,9 @@ public class TransformTest {
         }
 
         @Override
-        public void update(Transform offset, double delta) {
+        public void update(double delta) {
             setRotation(getRotation()+0.01);
-            super.update(offset, delta);
+            super.update(delta);
         }
 
         public static Circle chain(int num) {
@@ -48,7 +48,7 @@ public class TransformTest {
                 circle.addChild(child);
                 return circle;
             } else {
-                Sprite sp = new Sprite("player/player.png");
+                Sprite sp = new Sprite("player/idle.png");
                 sp.setPosition(Vector2.of(47.5,0));
                 circle.addChild(sp);
             }

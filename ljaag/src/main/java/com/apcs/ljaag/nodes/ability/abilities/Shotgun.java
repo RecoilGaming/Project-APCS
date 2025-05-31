@@ -27,7 +27,7 @@ public class Shotgun extends AbilityData {
 	/* ================ [ ABILITY ] ================ */
 
 	@Override
-	public void update(Character source, Projectile projectile, Transform offset, double delta) {
+	public void update(Character source, Projectile projectile, double delta) {
 		projectile.setVelocity(Vector2.fromAngle(projectile.getRotation()).mul(100));
 
 		if (projectile.getPosition().sub(source.getPosition()).length() > source.getStat(StatType.RANGE)) {

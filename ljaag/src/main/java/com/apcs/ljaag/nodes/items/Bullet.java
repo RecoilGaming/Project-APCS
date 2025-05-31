@@ -30,13 +30,13 @@ public class Bullet extends Body {
     }
 
     @Override
-    public void update(Transform offset, double delta) {
+    public void update(double delta) {
         if (lifetime > LIFECYCLE) {
             // getParent().removeChild((Node) this);
             sprite.setHidden(true);
             return;
         }
-        super.update(offset, delta);
+        super.update(delta);
     }
 
 

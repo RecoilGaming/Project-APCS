@@ -54,10 +54,10 @@ public abstract class Body extends Node2D<Node<?>> {
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void update(Transform offset, double delta) {
+    public void update(double delta) {
         addPosition(velocity.mul(delta));
 
-        super.update(offset, delta);
+        super.update(delta);
     }
 
     public abstract void onBodyEntered(BodyEntered signal);

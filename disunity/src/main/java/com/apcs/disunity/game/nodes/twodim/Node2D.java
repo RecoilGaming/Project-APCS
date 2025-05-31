@@ -14,55 +14,87 @@ public class Node2D<T extends Node<?>> extends Node<T> {
 
     /* ================ [ FIELDS ] ================ */
 
-    // Transform
+    // transform relative to parent's coordinate system
     @SyncedObject
-    private Transform transform;
+    private Transform localTrans;
+    // global transform of parent
+    private Transform parentGT = new Transform();
 
     // Constructors
     public Node2D(T... children) {
         this(new Transform(), children);
     }
 
-    public Node2D(Transform transform, T... children) {
+    public Node2D(Transform localTrans, T... children) {
         super(children);
-        this.transform = transform;
+        this.localTrans = localTrans;
+    }
+
+    @Override
+    public void setParent(Node<?> parent) {
+        super.setParent(parent);
+        if(parent instanceof Node2D<?> n2 && n2.parentGT != null) {
+            parentGT = n2.parentGT.apply(n2.localTrans);
+            propagateTransformChange();
+        }
     }
 
     /* ================ [ METHODS ] ================ */
 
+    protected void propagateTransformChange() {
+        for(Node child: getAllChildren()) {
+            if(child instanceof Node2D<?> n2) {
+                n2.parentGT = this.parentGT.apply(localTrans);
+            }
+        }
+    }
+
     // Move position
     public void addPosition(Vector2 vel) {
-        transform = transform.addPos(vel);
+        localTrans = localTrans.addPos(vel);
+        propagateTransformChange();
     }
 
     // Setters
     public void setPosition(Vector2 pos) {
-        transform = new Transform(pos, transform.scale, transform.rot);
+        localTrans = new Transform(pos, localTrans.scale, localTrans.rot);
+        propagateTransformChange();
     }
 
     public void setScale(Vector2 scale) {
-        transform = new Transform(transform.pos, scale, transform.rot);
+        localTrans = new Transform(localTrans.pos, scale, localTrans.rot);
+        propagateTransformChange();
     }
 
     public void setRotation(double rot) {
-        transform = new Transform(transform.pos, transform.scale, rot);
+        localTrans = new Transform(localTrans.pos, localTrans.scale, rot);
+        propagateTransformChange();
     }
+
 
     // Getters
     public Vector2 getPosition() {
-        return transform.pos;
+        return localTrans.pos;
     }
 
     public Vector2 getScale() {
-        return transform.scale;
+        return localTrans.scale;
     }
 
     public double getRotation() {
-        return transform.rot;
+        return localTrans.rot;
     }
 
     public Transform getTransform() {
-        return transform;
+        return localTrans;
+    }
+
+    public Transform getGlobalTrans() {
+        return parentGT.apply(localTrans);
+    }
+
+    public Transform getParentGT() {
+        return parentGT;
     }
 
     /* ================ [ NODE ] ================ */
@@ -70,21 +102,6 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     @Override
     public void draw(Transform offset) {
         // Draw children relative to this
-        super.draw(offset.apply(transform));
-    }
-
-    @Override
-    public final void update(double delta) {
-        update(new Transform(), delta);
-    }
-
-    public void update(Transform offset, double delta) {
-        for(Node<?> child: getAllChildren()) {
-            if (child instanceof Node2D<?> child2d) {
-                child2d.update(offset.apply(transform), delta);
-            } else {
-                child.update(delta);
-            }
-        }
+        super.draw(offset.apply(localTrans));
     }
 }

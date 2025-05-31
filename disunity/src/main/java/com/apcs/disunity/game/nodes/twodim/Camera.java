@@ -3,6 +3,7 @@ package com.apcs.disunity.game.nodes.twodim;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.math.Transform;
+import com.apcs.disunity.math.Vector2;
 
 /**
  * A camera to control the viewport
@@ -25,9 +26,6 @@ public class Camera extends Node2D<Node<?>> {
         active = this;
     }
 
-    // Previous transform
-    private Transform prevT = new Transform();
-
     // Constructors
     public Camera(Node<?>... children) { super(children); }
     public Camera(Transform transform, Node<?>... children) { super(transform, children); }
@@ -40,14 +38,9 @@ public class Camera extends Node2D<Node<?>> {
     /* ================ [ NODE ] ================ */
 
     @Override
-    public void update(Transform offset, double delta) {
-        prevT = offset;
-
+    public void update(double delta) {
         // Update global transform
-        Game.getInstance().setTransform(new Transform(offset.pos.mul(-1), offset.scale, 0).apply(getTransform()));
-
-        // Update children
-        super.draw(offset);
+        Game.getInstance().setTransform(getGlobalTrans().rotateTo(0).scaleTo(Vector2.ONE));
     }
 
 }

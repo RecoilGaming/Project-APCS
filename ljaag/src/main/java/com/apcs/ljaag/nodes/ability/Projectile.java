@@ -1,6 +1,6 @@
 package com.apcs.ljaag.nodes.ability;
 
-import com.apcs.disunity.app.interfaces.QuadConsumer;
+import com.apcs.disunity.app.interfaces.TriConsumer;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
@@ -17,10 +17,10 @@ public class Projectile extends Body {
 	private final Character source;
 
 	// Update function
-	private final QuadConsumer<Character, Projectile, Transform, Double> update;
+	private final TriConsumer<Character, Projectile, Double> update;
 
 	// Constructors
-	public Projectile(Character source, Transform transform, Collider collider, Area2D area2D, Sprite sprite, QuadConsumer<Character, Projectile, Transform, Double> update) {
+	public Projectile(Character source, Transform transform, Collider collider, Area2D area2D, Sprite sprite, TriConsumer<Character, Projectile, Double> update) {
 		super(transform, collider, area2D, sprite);
 		this.source = source;
 		this.update = update;
@@ -36,9 +36,9 @@ public class Projectile extends Body {
 	/* ================ [ NODE ] ================ */
 
 	@Override
-	public void update(Transform offset, double delta) {
-		update.accept(source, this, offset, delta);
-		super.update(offset, delta);
+	public void update(double delta) {
+		update.accept(source, this, delta);
+		super.update(delta);
 	}
 	
 }

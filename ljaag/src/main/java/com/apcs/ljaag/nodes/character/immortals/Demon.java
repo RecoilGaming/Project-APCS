@@ -16,7 +16,7 @@ public class Demon extends Character<CharacterData> {
 	}
 
     @Override
-	public void update(Transform offset, double delta) {
+	public void update(double delta) {
 		if (health > 0) {
 			Immortal closestPlayer = null;
             for (Node n : getParent().getAllChildren()) {
@@ -29,7 +29,7 @@ public class Demon extends Character<CharacterData> {
             setVelocity(closestPlayer.getPosition().sub(getPosition()).normalized().mul(getStat(StatType.SPEED)));
 		}
 		// Movement
-		super.update(offset, delta);
+		super.update(delta);
 	}
 
     double lastAttack = 0;
