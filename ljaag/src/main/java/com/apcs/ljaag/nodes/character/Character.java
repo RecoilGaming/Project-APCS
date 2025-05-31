@@ -103,7 +103,7 @@ public class Character<T extends CharacterData> extends Body {
 	/* ================ [ NODE ] ================ */
 
 	@Override
-	public void update(Transform offset, double delta) {
+	public void update(double delta) {
 		// Death
 		if (health <= 0) {
 			this.setVelocity(Vector2.ZERO);
@@ -123,7 +123,7 @@ public class Character<T extends CharacterData> extends Body {
             sprite.select("run");
         }
 
-		super.update(offset, delta);
+		super.update(delta);
 	}
 
 	/* ================ [ BODY ] ================ */

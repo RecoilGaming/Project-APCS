@@ -9,3 +9,6 @@ I did a rework on physics engine (3a37093ee56de7de4f22bdb628ddbb0c1f8b8715) so t
 
 ## 5/27/25 ~180 min
 I made a Transform test since I have encountered many issues stemming from it and wanted to get it working for sure. Sharvil found there was an affine transform class in java, so I made the transform compatible with java's affine transform to integrate it to the rendering pipeline. I also fixed some issues around rendering, so our engine can now render more accurately scaled image correctly.
+
+## 5/28/25 ~10 min
+I decided to use disunity transform as a wrapper of AffineTransform, so I replaced AffineTransform in Sprite.java to Transform.

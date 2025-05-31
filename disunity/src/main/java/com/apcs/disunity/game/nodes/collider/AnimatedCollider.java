@@ -33,7 +33,7 @@ public class AnimatedCollider extends Collider {
     }
 
 	@Override
-    public void update(Transform offset, double delta) {
+    public void update(double delta) {
         // Update frame
         if (System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
             prevFrame = System.nanoTime();
@@ -41,7 +41,7 @@ public class AnimatedCollider extends Collider {
             updateFrame();
         }
 
-        super.update(offset, delta);
+        super.update(delta);
     }
 
 

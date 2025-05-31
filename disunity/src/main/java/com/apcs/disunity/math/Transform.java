@@ -45,6 +45,7 @@ public class Transform {
 
     // Scale by a vector
     public Transform scale(Vector2 amt) { return new Transform(pos, scale.mul(amt), rot); }
+    public Transform scaleTo(Vector2 amt) { return new Transform(pos, amt, rot); }
 
     // Rotate by an amount
     public Transform rotate(double amt) { return new Transform(pos, scale, rot + amt); }

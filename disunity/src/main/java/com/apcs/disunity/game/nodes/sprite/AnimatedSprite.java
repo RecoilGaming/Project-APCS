@@ -63,7 +63,7 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
     public String index() { return name; }
 
     @Override
-    public void update(Transform offset, double delta) {
+    public void update(double delta) {
         // Update frame
         if (!isHidden() && System.nanoTime() - prevFrame >= frameDuration() * 1e9) {
             prevFrame = System.nanoTime();
@@ -71,7 +71,7 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
             updateFrame();
         }
 
-        super.update(offset, delta);
+        super.update(delta);
     }
 
     public void updateFrame() {

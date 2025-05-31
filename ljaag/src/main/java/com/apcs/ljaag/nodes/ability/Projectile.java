@@ -1,6 +1,5 @@
 package com.apcs.ljaag.nodes.ability;
 
-import com.apcs.disunity.app.interfaces.QuadConsumer;
 import com.apcs.disunity.app.interfaces.TriConsumer;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
@@ -19,13 +18,13 @@ public class Projectile extends Body {
 
 	// Functions
 	private final TriConsumer<Character, Projectile, BodyEntered> onCollision;
-	private final QuadConsumer<Character, Projectile, Transform, Double> update;
+	private final TriConsumer<Character, Projectile, Double> update;
 
 	// Alive time
 	private double aliveTime = 0;
 
 	// Constructors
-	public Projectile(Character source, Transform transform, Collider collider, Area2D area2d, Sprite sprite, TriConsumer<Character, Projectile, BodyEntered> onCollision, QuadConsumer<Character, Projectile, Transform, Double> update) {
+	public Projectile(Character source, Transform transform, Collider collider, Area2D area2d, Sprite sprite, TriConsumer<Character, Projectile, BodyEntered> onCollision, TriConsumer<Character, Projectile, Double> update) {
 		super(transform, collider, area2d, sprite);
 		this.source = source;
 		this.onCollision = onCollision;
@@ -33,7 +32,7 @@ public class Projectile extends Body {
 	}
 
 	/* ================ [ METHODS ] ================ */
-	
+
 	public double getAliveTime() {
 		return aliveTime;
 	}
@@ -48,10 +47,10 @@ public class Projectile extends Body {
 	/* ================ [ NODE ] ================ */
 
 	@Override
-	public void update(Transform offset, double delta) {
-		update.accept(source, this, offset, delta);
+	public void update(double delta) {
+		update.accept(source, this, delta);
 		aliveTime += delta;
-		super.update(offset, delta);
+		super.update(delta);
 	}
 	
 }

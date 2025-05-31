@@ -101,7 +101,7 @@ public class Immortal extends Character<ImmortalData> {
 	/* ================ [ NODE ] ================ */
 
 	@Override
-	public void update(Transform offset, double delta) {
+	public void update(double delta) {
 		// Movement
 		if (health > 0) {
 			setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
@@ -121,7 +121,7 @@ public class Immortal extends Character<ImmortalData> {
 			ultimateAbility.use(this);
 		}
 
-		super.update(offset, delta);
+		super.update(delta);
 	}
 	
 }

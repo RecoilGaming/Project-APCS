@@ -30,7 +30,7 @@ public class UsetimeItem<T extends Node<?> & Usable> extends Node2D<T> {
     }
 
     @Override
-    public void update(Transform offset, double delta) {
+    public void update(double delta) {
         Vector2 mouseDir = Inputs.getMousePos().sub(getParentAs(Node2D.class).getPosition()).normalized();
         Vector2 pos = mouseDir.mul(this.offset.x).add(Vector2.of(-mouseDir.y, mouseDir.x).mul(this.offset.y));
         setPosition(pos);
@@ -49,7 +49,7 @@ public class UsetimeItem<T extends Node<?> & Usable> extends Node2D<T> {
             cooldown -= delta;
         }
 
-        super.update(offset, delta);
+        super.update(delta);
         
     }
     

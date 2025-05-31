@@ -47,7 +47,7 @@ public class AbilityData {
 	}
 
 	// Update ability projectile
-	public void update(Character source, Projectile projectile, Transform offset, double delta) {
+	public void update(Character source, Projectile projectile, double delta) {
 		;
 	}
 	

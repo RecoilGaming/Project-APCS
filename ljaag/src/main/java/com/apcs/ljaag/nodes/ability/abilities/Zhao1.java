@@ -38,7 +38,7 @@ public class Zhao1 extends AbilityData {
 	}
 
 	@Override
-	public void update(Character source, Projectile projectile, Transform offset, double delta) {
+	public void update(Character source, Projectile projectile, double delta) {
 		projectile.setPosition(source.getPosition().add(Vector2.of(0, 4)));
 
 		if (projectile.getAliveTime() > 0.5) {
