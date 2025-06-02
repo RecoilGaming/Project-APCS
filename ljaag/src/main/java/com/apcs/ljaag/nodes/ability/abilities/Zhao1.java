@@ -3,6 +3,7 @@ package com.apcs.ljaag.nodes.ability.abilities;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
@@ -28,7 +29,18 @@ public class Zhao1 extends AbilityData {
 			Vector2.ZERO,
 			() -> new Collider(48, 12),
 			() -> new Area2D(48, 12),
-			() -> new AnimatedSprite("push", new ImageLocation("zhao/abil1.png"), 0.15, 0.15, 0.15),
+			() -> {
+				new Thread(() -> {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					new Sound("sounds/swoosh.wav").play();
+				}).start();
+				return new AnimatedSprite("push", new ImageLocation("zhao/abil1.png"), 0.15, 0.15, 0.15);
+			},
 			0.5,
 			0.5
 		);
@@ -63,11 +75,7 @@ public class Zhao1 extends AbilityData {
 		};
 
 		pushing.replaceAll((key, val) -> val - 1);
-		for (Node2D key : pushing.keySet()) {
-			if (pushing.get(key) <= 0) {
-				pushing.remove(key);
-			}
-		}
+		pushing.entrySet().removeIf(entry -> entry.getValue() <= 0);
 
 		// Base update behavior
 		super.update(source, projectile, delta);
