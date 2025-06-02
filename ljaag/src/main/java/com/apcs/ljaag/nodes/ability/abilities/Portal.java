@@ -48,10 +48,20 @@ public class Portal extends AbilityData {
 	/* ================ [ ABILITY ] ================ */
 
 	public Map<Body,Integer> cooldowns = new HashMap<>();
-	public static final int COOLDOWN_FRAMES = 300;
+	public static final int COOLDOWN_FRAMES = 120;
 
 	@Override
 	public void onCollision(Character source, Projectile projectile, BodyEntered signal) {
+		boolean portalsTouching = projectiles.size() > 1 && projectiles.get(0).getPosition().sub(projectiles.get(1).getPosition()).length() < 48;
+		if (portalsTouching) {
+			projectiles.get(1).hide();
+			projectiles.get(0).setScale(Vector2.of(2,1));
+		} else {
+			for (Body b : projectiles) {
+				b.show();
+				b.setScale(Vector2.ONE);
+			}
+		}
 		if (cooldowns.keySet().contains(signal.body)) return;
 		Body b = null;
 		if (!projectiles.isEmpty() && projectile != projectiles.get(0)) {
@@ -63,7 +73,7 @@ public class Portal extends AbilityData {
 			signal.body.setRotation(signal.body.getRotation() + b.getRotation() - projectile.getRotation());
 			signal.body.setVelocity(Vector2.basis(signal.body.getRotation()).mul(signal.body.getVelocity().length()));
 			signal.body.setPosition(b.getPosition());
-			cooldowns.put(signal.body, COOLDOWN_FRAMES);
+			if (!portalsTouching) cooldowns.put(signal.body, COOLDOWN_FRAMES);
 		}
 	}
 
