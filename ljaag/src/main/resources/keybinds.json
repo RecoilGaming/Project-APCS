@@ -4,7 +4,7 @@
   "right" : [ [ "D" ], [ "Right" ] ],
   "down" : [ [ "S" ], [ "Down" ] ],
   "basic": [ [ "Left Click" ] ],
-  "skill1": [ [ "E" ] ],
+  "skill1": [ [ "E" ], [ "Right Click" ] ],
   "skill2": [ [ "Q" ] ],
   "ultimate": [ [ "R" ] ],
 

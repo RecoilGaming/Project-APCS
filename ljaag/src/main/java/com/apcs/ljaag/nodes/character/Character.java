@@ -44,8 +44,8 @@ public class Character<T extends CharacterData> extends Body {
 	private Statset tempStats = new Statset();
 
 	// Resource amounts
-	protected int health = 100;
-	protected int aura = 100;
+	protected int health = getStat(StatType.HEALTH);
+	protected int aura = getStat(StatType.DIVINITY);
 
 	// Constructors
 	public Character(Transform transform, T data, Node<?>... children) {
@@ -139,5 +139,13 @@ public class Character<T extends CharacterData> extends Body {
 			killAllSprites(c);
 		}
 	}
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getAura() {
+        return aura;
+    }
 
 }

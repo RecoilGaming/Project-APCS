@@ -1,9 +1,9 @@
 package com.apcs.disunity.math;
 
+import java.awt.geom.AffineTransform;
+
 import com.apcs.disunity.app.network.packet.annotation.SyncedDouble;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
-
-import java.awt.geom.AffineTransform;
 
 /**
  * Contains position, scale, and rotation information
@@ -33,6 +33,10 @@ public class Transform {
         this.pos = pos;
         this.scale = scale;
         this.rot = rot;
+    }
+
+    public Transform(Vector2 pos) {
+        this(pos, Vector2.ONE, 0);
     }
 
     /* ================ [ METHODS ] ================ */

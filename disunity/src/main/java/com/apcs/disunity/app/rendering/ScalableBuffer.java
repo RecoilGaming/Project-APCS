@@ -1,10 +1,10 @@
 package com.apcs.disunity.app.rendering;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -78,6 +78,13 @@ public class ScalableBuffer {
         at.concatenate(transform.toAT());
 
         graphics.drawImage(img, at, null);
+    }
+
+    // Draw image
+    public void drawRect(int width, int height, Color c, Transform transform) {
+       graphics.setPaint(c);
+       graphics.fillRect((int) (scale * transform.pos.xi), (int) (scale * transform.pos.yi), (int) (scale * transform.scale.xi * width), (int) (scale * transform.scale.yi * height));
+        
     }
 
 }

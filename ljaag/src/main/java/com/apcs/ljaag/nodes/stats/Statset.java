@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Statset {
 
+	public static final Statset DEFAULT = new Statset(100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 	/* ================ [ FIELDS ] ================ */
 
 	// Maps stats to their values
@@ -57,7 +59,7 @@ public class Statset {
 
 	// Get one stat
 	public int getStat(StatType stat) {
-		return stats.get(stat);
+		return stats.getOrDefault(stat, 0);
 	}
 
 	// Get a copy of this statset

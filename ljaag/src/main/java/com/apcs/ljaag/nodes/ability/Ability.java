@@ -36,6 +36,8 @@ public class Ability {
 
 	// Use the ability
 	public boolean use(Character source) {
+		if (data == null) return false;
+
 		if (System.currentTimeMillis() - lastUsed < data.cooldown * 1000) {
 			return false;
 		}

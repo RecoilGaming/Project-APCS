@@ -9,10 +9,15 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.ljaag.nodes.HealthBar;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
+import com.apcs.ljaag.nodes.items.Shotgun;
+import com.apcs.ljaag.nodes.items.UsetimeItem;
+import com.apcs.ljaag.nodes.items.UsetimeSound;
+import com.apcs.ljaag.nodes.items.UsetimeSprite;
 
 /**
  * Untitled game
@@ -31,11 +36,29 @@ public class LJAAG {
         // Import keybinds from a JSON file
         Inputs.fromJSON("keybinds.json");
 
+        UsetimeSprite s = new UsetimeSprite("weapons/boomstick.png");
+        s.setScale(Vector2.of(0.1));
+
         // Create the game scenes
         Scene scene = new Scene("game",
             new Sprite("background.png"),
             new Immortal(new Transform(), Immortals.ZHAO,
-                new Camera()
+                new Camera(),
+                new UsetimeItem(
+                    20,
+                    1,
+                    "fire",
+                    new UsetimeSound("sounds/boomstick.wav"),
+                    new Shotgun()
+                ),
+                new UsetimeItem(
+                    10,
+                    1,
+                    "fire",
+                    s
+                ),
+                new HealthBar(new Transform(Vector2.of(0, -15)))
+
             )
         );
 
@@ -52,14 +75,26 @@ public class LJAAG {
             while (!Thread.currentThread().isInterrupted()) {
                 if (System.currentTimeMillis() - time > 10000) {
                     // prevent concurrent modification by locking the update list
-                    Demon e1 = new Demon(Characters.BROKEN_VESSEL);
-                    e1.setPosition(Vector2.of(100, 0));
-                    Demon e2 = new Demon(Characters.BROKEN_VESSEL);
-                    e2.setPosition(Vector2.of(-100, 0));
-                    Demon e3 = new Demon(Characters.BROKEN_VESSEL);
-                    e3.setPosition(Vector2.of(0, 100));
-                    Demon e4 = new Demon(Characters.BROKEN_VESSEL);
-                    e4.setPosition(Vector2.of(0, -100));
+                    Demon e1 = new Demon(
+                        new Transform(Vector2.of(+100, 0)),
+                        Characters.BROKEN_VESSEL,
+                        new HealthBar(new Transform(Vector2.of(0, -15)))
+                    );
+                    Demon e2 = new Demon(
+                        new Transform(Vector2.of(-100, 0)),
+                        Characters.BROKEN_VESSEL,
+                        new HealthBar(new Transform(Vector2.of(0, -15)))
+                    );
+                    Demon e3 = new Demon(
+                        new Transform(Vector2.of(0, +100)),
+                        Characters.BROKEN_VESSEL,
+                        new HealthBar(new Transform(Vector2.of(0, -15)))
+                    );
+                    Demon e4 = new Demon(
+                        new Transform(Vector2.of(0, -100)),
+                        Characters.BROKEN_VESSEL,
+                        new HealthBar(new Transform(Vector2.of(0, -15)))
+                    );
                     scene.addChildren(e1, e2, e3, e4);
                     time = System.currentTimeMillis();
                 }
