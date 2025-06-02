@@ -67,7 +67,7 @@ public class Node2D<T extends Node<?>> extends Node<T> {
     }
 
     public void setRotation(double rot) {
-        localTrans = new Transform(localTrans.pos, localTrans.scale, rot);
+        localTrans = new Transform(localTrans.pos, localTrans.scale, rot % (2 * Math.PI));
         propagateTransformChange();
     }
 
