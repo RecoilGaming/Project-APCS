@@ -15,3 +15,6 @@ I decided to use disunity transform as a wrapper of AffineTransform, so I replac
 
 ## 5/30/25 ~15 min
 I made the global location cached inside node 2D, since only tracking local transform created a lot of hassle when we needed global transform just for one time. Now, collision code can depend on global transform and physics engine does not have to calculate global transform for every tick.
+
+## 6/2/25 >5 min
+I made the collision layer an enum since there is only 32 of them, and it doesn't make sence to create multiple instances that represent the same layer. This has an additional bonus of allowing layers to be imported statically, so the future collision code will be less cumbersome to write.
