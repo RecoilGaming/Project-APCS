@@ -1,6 +1,7 @@
 package com.apcs.disunity.game.nodes.sprite;
 
 import com.apcs.disunity.app.network.packet.annotation.SyncedBoolean;
+import com.apcs.disunity.app.network.packet.annotation.SyncedDouble;
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.FieldChild;
@@ -18,6 +19,14 @@ public class Sprite extends Node2D<Node<?>> {
 
     public void setRotationType(RotationType rotationType) { this.rotationType = rotationType; }
 
+    public double getRotationOffset() {
+        return rotationOffset;
+    }
+
+    public void setRotationOffset(double rotationOffset) {
+        this.rotationOffset = rotationOffset;
+    }
+
     public enum RotationType {
         NORMAL, LOCKED, BIDIRECTIONAL, UPRIGHT
     }
@@ -34,6 +43,9 @@ public class Sprite extends Node2D<Node<?>> {
     @SyncedObject
     private RotationType rotationType = RotationType.NORMAL;
 
+    @SyncedDouble
+    private double rotationOffset = 0;
+
     public RotationType getRotationType() { return rotationType; }
 
     // Constructors
@@ -49,6 +61,8 @@ public class Sprite extends Node2D<Node<?>> {
 
     @Override
     public void draw(Transform offset) {
+
+        offset = offset.rotate(rotationOffset);
 
         if (isHidden()) return;
 

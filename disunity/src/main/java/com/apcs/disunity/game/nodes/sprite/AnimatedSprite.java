@@ -3,7 +3,6 @@ package com.apcs.disunity.game.nodes.sprite;
 import java.awt.image.BufferedImage;
 
 import com.apcs.disunity.game.selector.Indexed;
-import com.apcs.disunity.math.Transform;
 
 /**
  * sprite that renders timed cyclic animation, created by splicing a base image
@@ -103,8 +102,10 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
         updateFrame();
     }
 
-    public void setFrameDurations(double[] durations) {
+    public void setFrameDurations(double... durations) {
         this.frameDurations = durations;
+        frameCount = 0;
+        updateFrame();
     }
 
 }

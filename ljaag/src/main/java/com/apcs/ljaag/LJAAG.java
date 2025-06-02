@@ -12,6 +12,7 @@ import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.HealthBar;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
+import com.apcs.ljaag.nodes.character.enemies.WyrmSegment;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
 import com.apcs.ljaag.nodes.items.Shotgun;
@@ -38,6 +39,8 @@ public class LJAAG {
 
         UsetimeSprite s = new UsetimeSprite("weapons/boomstick.png");
         s.setScale(Vector2.of(0.1));
+        
+        WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(0, 40)), null, Characters.EOW);
 
         // Create the game scenes
         Scene scene = new Scene("game",
@@ -58,8 +61,15 @@ public class LJAAG {
                     s
                 ),
                 new HealthBar(new Transform(Vector2.of(0, -15)))
-
-            )
+            ),
+            ws,
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW),
+            ws = new WyrmSegment(ws, Characters.EOW)
         );
 
         // Create game application
@@ -99,7 +109,7 @@ public class LJAAG {
                     time = System.currentTimeMillis();
                 }
             }
-        }).start();
+        }); //.start();
 
         scene.print();
 
