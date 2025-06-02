@@ -5,6 +5,7 @@ import com.apcs.disunity.math.Vector2;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
 import com.apcs.disunity.game.physics.CollisionLayer;
+import static  com.apcs.disunity.game.physics.CollisionLayer.*;
 import com.apcs.disunity.game.physics.CollisionMask;
 
 /**
@@ -13,12 +14,13 @@ import com.apcs.disunity.game.physics.CollisionMask;
  * @author Aayushya Patel
  */
 public class Collider extends Node2D<Node<?>> {
-    public static final CollisionLayer DEFAULT_LAYER = new CollisionLayer((byte) 0);
+    public static final CollisionLayer DEFAULT_LAYER = LAYER_0;
     public static final CollisionMask DEFAULT_MASK = new CollisionMask(DEFAULT_LAYER);
     public static final CollisionMask ALL_LAYER_MASK = new CollisionMask(~0);
     public static final CollisionMask NO_LAYER_MASK = new CollisionMask(0);
 
     public Vector2 SIZE;
+    /// represents the layer this collider can collide in
     public final CollisionLayer LAYER;
 
     public Collider(Transform t, int w, int h) {
