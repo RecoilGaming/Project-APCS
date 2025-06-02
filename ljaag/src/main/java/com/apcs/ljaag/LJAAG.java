@@ -39,8 +39,10 @@ public class LJAAG {
 
         UsetimeSprite s = new UsetimeSprite("weapons/boomstick.png");
         s.setScale(Vector2.of(0.1));
+
+        Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);
         
-        WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(0, 40)), null, Characters.EOW);
+        WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(0, 40)), null, Characters.EOW, new HealthBar(healthBarTransform));
 
         // Create the game scenes
         Scene scene = new Scene("game",
@@ -63,13 +65,14 @@ public class LJAAG {
                 new HealthBar(new Transform(Vector2.of(0, -15)))
             ),
             ws,
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW),
-            ws = new WyrmSegment(ws, Characters.EOW)
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
+            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform))
         );
 
         // Create game application
