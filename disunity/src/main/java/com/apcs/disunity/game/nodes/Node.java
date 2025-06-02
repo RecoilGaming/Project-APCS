@@ -27,6 +27,12 @@ public abstract class Node<T extends Node> {
     // List of children nodes
     private final List<T> children = new ArrayList<>();
 
+    // Whether or not the node is disabled
+    private boolean isDisabled = false;
+
+    // Whether or not the node is hidden
+    private boolean isHidden = false;
+
     // Constructors
     public Node(T... children) { addChildren(children); }
 
@@ -89,13 +95,39 @@ public abstract class Node<T extends Node> {
         return Stream.concat(getDynamicChildren().stream(), getStaticChildren().stream()).toList();
     }
 
+    // Get whether or not the node is disabled
+    public boolean isDisabled() { return isDisabled; }
+
+    // Disable the node
+    public void disable() { setDisabled(true); }
+    public void enable() { setDisabled(false); }
+    public void setDisabled(boolean isDisabled) { this.isDisabled = isDisabled; }
+
+    // Get whether or not the node is hidden
+    public boolean isHidden() { return isHidden; }
+
+    // Hide the node
+    public void hide() { setHidden(true); }
+    public void show() { setHidden(false); }
+    public void setHidden(boolean isHidden) { this.isHidden = isHidden; }
+
     /* ================ [ NODE ] ================ */
 
     // Update node
-    public void update(double delta) { getAllChildren().forEach(child -> child.update(delta)); }
+    public void update(double delta) {
+        for (Node<?> child : getAllChildren()) {
+            if (child.isDisabled()) continue;
+            child.update(delta);
+        }
+    }
 
     // Draw node
-    public void draw(Transform offset) { getAllChildren().forEach(child -> child.draw(offset)); }
+    public void draw(Transform offset) {
+        for (Node<?> child : getAllChildren()) {
+            if (child.isHidden()) continue;
+            child.draw(offset);
+        }
+    }
 
     /* ================ [ PRINT ] ================ */
 

@@ -5,7 +5,6 @@ import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.physics.BodyEntered;
-import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.ability.AbilityData;
@@ -21,9 +20,10 @@ public class Zhao1 extends AbilityData {
 		super(
 			TriggerType.SOURCE_POSITION,
 			Vector2.ZERO,
-			() -> new Collider(24, 12),
-			() -> new Area2D(24, 12),
+			() -> new Collider(48, 12),
+			() -> new Area2D(48, 12),
 			() -> new AnimatedSprite("push", new ImageLocation("zhao/abil1.png"), 0.15, 0.15, 0.15),
+			0.5,
 			0.5
 		);
 	}
@@ -33,7 +33,8 @@ public class Zhao1 extends AbilityData {
 	@Override
 	public void onCollision(Character source, Projectile projectile, BodyEntered signal) {
 		if (signal.body instanceof Character target) {
-			target.addPosition(target.getPosition().sub(source.getPosition()).normalized().mul(25));
+			target.addPosition(target.getPosition().sub(source.getPosition()).normalized().mul(50));
+			target.modifyHealth(-20);
 		}
 	}
 
@@ -41,10 +42,8 @@ public class Zhao1 extends AbilityData {
 	public void update(Character source, Projectile projectile, double delta) {
 		projectile.setPosition(source.getPosition().add(Vector2.of(0, 4)));
 
-		if (projectile.getAliveTime() > 0.5) {
-			// ((Node) projectile.getParent()).removeChild(projectile);
-			;
-		}
+		// Base update behavior
+		super.update(source, projectile, delta);
 	}
 	
 }

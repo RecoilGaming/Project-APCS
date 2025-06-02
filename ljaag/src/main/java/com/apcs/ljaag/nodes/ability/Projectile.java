@@ -41,6 +41,7 @@ public class Projectile extends Body {
 
 	@Override
 	public void onBodyEntered(BodyEntered signal) {
+		if (isDisabled()) return;
 		onCollision.accept(source, this, signal);
 	}
 

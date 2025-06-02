@@ -36,8 +36,19 @@ Period: Ferrante 5
 
 \> Started generalized ability casting system (unpushed).
 
-## FRIDAY 5/30/2025 (1 hours)
+## FRIDAY 5/30/2025 (1.5 hours)
 
 \> Finished the ability and casting system.
 
 \> Implemented the first ability for my character.
+
+\> Add the ability for areas to render themselves on screen (doesn't use global transform but shape is correct).
+
+## SUNDAY 6/1/2025 (1 hours)
+
+\> Make nodes able to be disabled and hidden.
+
+\> Update ability system to disable projectiles after a certain amount of time.
+
+\> Update my character's ability to deal damage and be more accurate.
+

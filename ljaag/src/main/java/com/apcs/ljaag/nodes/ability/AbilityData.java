@@ -6,7 +6,6 @@ import com.apcs.disunity.game.nodes.collider.Collider;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.physics.BodyEntered;
-import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.character.Character;
@@ -26,16 +25,18 @@ public class AbilityData {
 	public final Supplier<Area2D> area2D;
 	public final Supplier<Sprite> sprite;
 
-	// Cooldown
+	// lifespan & cooldown
+	public final double lifespan;
 	public final double cooldown;
 
 	// Constructors
-	public AbilityData(TriggerType trigger, Vector2 offset, Supplier<Collider> collider, Supplier<Area2D> area2D, Supplier<Sprite> sprite, double cooldown) {
+	public AbilityData(TriggerType trigger, Vector2 offset, Supplier<Collider> collider, Supplier<Area2D> area2D, Supplier<Sprite> sprite, double lifespan, double cooldown) {
 		this.trigger = trigger;
 		this.offset = offset;
 		this.collider = collider;
 		this.area2D = area2D;
 		this.sprite = sprite;
+		this.lifespan = lifespan;
 		this.cooldown = cooldown;
 	}
 
@@ -48,7 +49,10 @@ public class AbilityData {
 
 	// Update ability projectile
 	public void update(Character source, Projectile projectile, double delta) {
-		;
+		if (projectile.getAliveTime() > lifespan) {
+			projectile.disable();
+			projectile.hide();
+		}
 	}
 	
 }

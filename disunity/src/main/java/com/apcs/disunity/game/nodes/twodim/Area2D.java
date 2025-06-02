@@ -24,7 +24,10 @@ public class Area2D extends Node2D<Node<?>> {
     public Area2D(double w, double h) { this(Vector2.of(w,h)); }
 
     @Override
+    @SuppressWarnings("unused")
     public void draw(Transform offset) {
-        // Game.getInstance().getBuffer().drawArea(this);
+        if (false) { // Toggle drawing of areas
+            Game.getInstance().getBuffer().drawArea(this);
+        }
     }
 }
