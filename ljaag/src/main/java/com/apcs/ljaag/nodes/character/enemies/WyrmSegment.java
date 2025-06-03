@@ -1,6 +1,7 @@
 package com.apcs.ljaag.nodes.character.enemies;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
+import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
@@ -28,8 +29,11 @@ public class WyrmSegment extends Character<CharacterData> {
         }
         AnimatedSprite idle = sprite.get("idle");
         AnimatedSprite run = sprite.get("run");
+        idle.setBaseImage(new ImageLocation("worm/idle.png"));
+        run.setBaseImage(new ImageLocation("worm/idle.png"));
         idle.setFrameDurations(Double.MAX_VALUE);
 		run.setFrameDurations(Double.MAX_VALUE);
+        
         idle.setScale(Vector2.of(0.05, 0.05));
 		run.setScale(Vector2.of(0.05, 0.05));
         idle.setRotationType(Sprite.RotationType.NORMAL);
@@ -40,38 +44,38 @@ public class WyrmSegment extends Character<CharacterData> {
 
     @Override
 	public void update(double delta) {
-        if (leader == null || leader instanceof WyrmSegment && leader.getHealth() <= 0) {
-            Immortal closestPlayer = null;
-            for (Node n : getParent().getAllChildren()) {
-                if (n instanceof Immortal i) {
-                    if (closestPlayer == null || closestPlayer.getPosition().sub(getPosition()).length() < i.getPosition().sub(getPosition()).length()) {
-                        closestPlayer = i;
+        super.update(delta);
+		if (health >= 0) {
+            if (leader == null || leader instanceof WyrmSegment && leader.getHealth() <= 0) {
+                Immortal closestPlayer = null;
+                for (Node n : getParent().getAllChildren()) {
+                    if (n instanceof Immortal i) {
+                        if (closestPlayer == null || closestPlayer.getPosition().sub(getPosition()).length() < i.getPosition().sub(getPosition()).length()) {
+                            closestPlayer = i;
+                        }
                     }
                 }
+                leader = closestPlayer;
             }
-            leader = closestPlayer;
-        }
-		if (health > 0) {
             setVelocity(leader.getPosition().sub(getPosition()).normalized().mul(getStat(StatType.SPEED)));
-            if (leader instanceof WyrmSegment && leader.getPosition().sub(getPosition()).length() < FOLLOW_RADIUS) {
-                setVelocity(getVelocity().mul(0.1));
+            if (leader instanceof WyrmSegment) {
+                setVelocity(getVelocity().mul(leader.getPosition().sub(getPosition()).length() / FOLLOW_RADIUS));
             }
-            if (leader instanceof WyrmSegment && leader.getPosition().sub(getPosition()).length() > 2 * FOLLOW_RADIUS) {
-                setVelocity(getVelocity().mul(10));
-            }
-		} else {
-            sprite.get("idle").setRotationOffset(Math.PI / 2);
-        }
-        
-		// Movement
-		super.update(delta);
+		}
 	}
+
+    @Override
+    protected void onDeath() {
+        setVelocity(Vector2.ZERO);
+    }
 
     double lastAttack = 0;
 
     @Override
     public void onBodyEntered(BodyEntered signal) {
-        super.onBodyEntered(signal);
+        if (!(signal.body instanceof WyrmSegment)) {
+            super.onBodyEntered(signal);
+        }
         if (health <= 0) {
             return;
         }

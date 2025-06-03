@@ -104,8 +104,7 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
 
     public void setFrameDurations(double... durations) {
         this.frameDurations = durations;
-        frameCount = 0;
-        updateFrame();
+        reset();
     }
 
 }

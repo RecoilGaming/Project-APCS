@@ -9,6 +9,7 @@ import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
+import com.apcs.disunity.game.physics.AABB;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -52,10 +53,10 @@ public class Character<T extends CharacterData> extends Body {
 		super(
 			transform,
 			new Collider(
-				new Transform().addPos(Vector2.of(0, 8)),
-				8, 8
+				new Transform().addPos(Vector2.of(0, 15)),
+				15, 15
 			),
-			new Area2D(8, 8),
+			new Area2D(15, 15),
 			children
 		);
 		
@@ -106,9 +107,7 @@ public class Character<T extends CharacterData> extends Body {
 	public void update(double delta) {
 		// Death
 		if (health <= 0) {
-			this.setVelocity(Vector2.ZERO);
-			killAllSprites(this);
-			setRotation(- Math.PI / 2);
+			onDeath();
 		}
 
 		// Rotation
@@ -126,10 +125,19 @@ public class Character<T extends CharacterData> extends Body {
 		super.update(delta);
 	}
 
+	protected void onDeath() {
+		this.setVelocity(Vector2.ZERO);
+		killAllSprites(this);
+		setRotation(- Math.PI / 2);
+	}
+
 	/* ================ [ BODY ] ================ */
 
 	@Override
-	public void onBodyEntered(BodyEntered signal) { }
+	public void onBodyEntered(BodyEntered signal) {
+		// TODO: handle collisions so that the player cannot phase through walls
+
+	}
 
 	private void killAllSprites(Node<? extends Node> n) {
 		for (Node<? extends Node> c : n.getAllChildren()) {
