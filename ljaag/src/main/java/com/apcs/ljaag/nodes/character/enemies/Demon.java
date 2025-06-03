@@ -9,7 +9,6 @@ import com.apcs.ljaag.nodes.stats.StatType;
 
 public class Demon extends Character<CharacterData> {
 
-
     // Constructors
 	public Demon(CharacterData data) { this(new Transform(), data); }
 	public Demon(Transform transform, CharacterData data, Node<?>... children) {

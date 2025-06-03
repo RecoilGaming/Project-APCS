@@ -1,11 +1,8 @@
 package com.apcs.ljaag;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.apcs.disunity.app.App;
@@ -18,7 +15,6 @@ import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.nodes.twodim.Camera;
-import com.apcs.disunity.game.nodes.twodim.Node2D;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -51,11 +47,29 @@ public class LJAAG {
         // Import keybinds from a JSON file
         Inputs.fromJSON("keybinds.json");
 
-        Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);
+        UsetimeSprite s = new UsetimeSprite("weapons/boomstick.png");
+        s.setScale(Vector2.of(0.1));
         
         // Create the game scenes
         Scene scene = new Scene("game",
-            new Sprite("background.png")
+            new Sprite("background.png"),
+            new Immortal(new Transform(), Immortals.ZHAO,
+                new Camera(),
+                new UsetimeItem(
+                    20,
+                    1,
+                    "fire",
+                    new UsetimeSound("sounds/boomstick.wav"),
+                    new Shotgun()
+                ),
+                new UsetimeItem(
+                    10,
+                    1,
+                    "fire",
+                    s
+                ),
+                new HealthBar(new Transform(Vector2.of(0, -15)))
+            )
         );
 
         // Create game application
@@ -94,18 +108,16 @@ public class LJAAG {
                     time = System.currentTimeMillis();
                 }
             }
-        });//.start();
+        }).start();
 
-        try {
-            loadLevel("levels/test.txt", scene);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        scene.print();
-
+        // try {
+        //     loadLevel("levels/test.txt", scene);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        
         // Start game
+        scene.print();
         game.start();
     }
 

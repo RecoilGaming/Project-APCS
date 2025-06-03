@@ -9,7 +9,6 @@ import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
-import com.apcs.disunity.game.physics.AABB;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
@@ -28,8 +27,8 @@ public class Character<T extends CharacterData> extends Body {
 	{
         AnimatedSprite s1, s2;
         sprite = new SelectorNode<String, AnimatedSprite>(
-            s1 = new AnimatedSprite("idle", "player/idle.png", Double.MAX_VALUE),
-            s2 = new AnimatedSprite("run", "player/run.png", true, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
+            s1 = new AnimatedSprite("idle", "demon/idle.png", Double.MAX_VALUE),
+            s2 = new AnimatedSprite("run", "demon/run.png", true, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15)
 		);
 
         s1.setRotationType(Sprite.RotationType.BIDIRECTIONAL);
