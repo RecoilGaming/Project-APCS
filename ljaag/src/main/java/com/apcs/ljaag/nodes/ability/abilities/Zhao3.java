@@ -11,11 +11,11 @@ import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.ability.AbilityData;
 import com.apcs.ljaag.nodes.ability.Projectile;
-import com.apcs.ljaag.nodes.character.immortals.Immortal;
-import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.character.Character;
+import com.apcs.ljaag.nodes.character.immortals.Immortal;
 
 public class Zhao3 extends AbilityData {
 
@@ -33,19 +33,19 @@ public class Zhao3 extends AbilityData {
 			() -> new Area2D(48, 48),
 			() -> {
 				new Thread(() -> {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) { e.printStackTrace(); }
-					new Sound("sounds/swoosh.wav").play();
+					// try {
+					// 	Thread.sleep(100);
+					// } catch (InterruptedException e) { e.printStackTrace(); }
+					new Sound("sounds/doom.wav").play();
 				}).start();
 				return new AnimatedSprite(new Transform(
 					Vector2.of(0, -48),
 					Vector2.of(1),
 					0
-				), "sword", new ImageLocation("zhao/abil3.png"), 0.15, 0.15, 0.15, 0.15, 0.15, 0.15);
+				), "sword", new ImageLocation("zhao/abil3.png"), 0.1, 0.1, 0.1, 0.1, 0.1, 1);
 			},
-			1,
-			15
+			2,
+			10
 		);
 	}
 

@@ -27,4 +27,15 @@ public class Characters {
 		null
 	);
 
+	public static final CharacterData SPAWNER = new ImmortalData(
+		"spawner",
+		new Statset(500, 0, 200, 20, 10, 50, 0, 100, 100, 0, 0, 0),
+		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+		15,
+		null,
+		null,
+		null,
+		null
+	);
+
 }

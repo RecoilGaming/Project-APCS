@@ -10,10 +10,13 @@ import java.util.Scanner;
 
 import com.apcs.disunity.app.App;
 import com.apcs.disunity.app.input.Inputs;
+import com.apcs.disunity.app.resources.Image;
+import com.apcs.disunity.app.resources.Resources;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.Scene;
 import com.apcs.disunity.game.nodes.collider.Collider;
+import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
@@ -25,6 +28,7 @@ import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.HealthBar;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
+import com.apcs.ljaag.nodes.character.enemies.Spawner;
 import com.apcs.ljaag.nodes.character.enemies.WyrmSegment;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
@@ -33,6 +37,7 @@ import com.apcs.ljaag.nodes.items.Shotgun;
 import com.apcs.ljaag.nodes.items.UsetimeItem;
 import com.apcs.ljaag.nodes.items.UsetimeSound;
 import com.apcs.ljaag.nodes.items.UsetimeSprite;
+import com.apcs.ljaag.nodes.character.Character;
 
 /**
  * Untitled game
@@ -54,9 +59,7 @@ public class LJAAG {
         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);
         
         // Create the game scenes
-        Scene scene = new Scene("game",
-            new Sprite("background.png")
-        );
+        Scene scene = new Scene("game");
 
         // Create game application
         Game game = new Game(Vector2.of(480, 270));
@@ -128,34 +131,70 @@ public class LJAAG {
         }
         Scanner s = new Scanner(source);
         int blockSize = s.hasNextInt() ? s.nextInt() : 10;
+        int width = s.hasNextInt() ? s.nextInt() : 10;
+        int height = s.hasNextInt() ? s.nextInt() : 10;
         int x, y = x = 0;
+        Sprite sp = new Sprite("ground.png");
+        sp.setScale(Vector2.of(width * blockSize / sp.getImageLocation().getImage().getWidth(), height * blockSize / sp.getImageLocation().getImage().getHeight()));
+        sp.setPosition(Vector2.of(width * blockSize / 2, width * blockSize / 2));
+        dist.addChild(sp);
         while (s.hasNextLine()) {
             x = 0;
             String line = s.nextLine();
             for (char c : line.toCharArray()) {
                 switch (c) {
-                    // walls
-                    case 'W' -> {
+                    // void (removed)
+                    // case 'V' -> {
+                    //     Body n;
+                    //     dist.addChild(n = new Body(
+                    //         new Transform(Vector2.of(x * blockSize, y * blockSize)),
+                    //         new Collider(blockSize, blockSize),
+                    //         new Area2D(Vector2.of(blockSize))
+                    //     ) {
+                    //         @Override
+                    //         public void draw(Transform offset) {
+                    //             super.draw(offset);
+                    //             Game.getInstance().getBuffer().drawRect(blockSize, blockSize, Color.BLACK, offset.apply(getTransform()).addPos(Vector2.of(blockSize).mul(-0.5)));
+                    //         }
+
+                    //         @Override
+                    //         public void onBodyEntered(BodyEntered signal) { }
+
+                    //         @Override
+                    //         public void setPosition(Vector2 pos) {}
+                    //     });
+                    // }
+                    // Lava
+                    case 'L' -> {
                         Body n;
+                        double[] framesDurations = new double[45];
+                        for (int i = 0; i < framesDurations.length; i++) {
+                            framesDurations[i] = 0.1;
+                        }
+                        double scale = blockSize / (Resources.loadResource("lava.png", Image.class).getBuffer().getWidth() / 45.);
                         dist.addChild(n = new Body(
+                            new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
                             new Collider(blockSize, blockSize),
-                            new Area2D(Vector2.of(blockSize))
+                            new Area2D(Vector2.of(blockSize)),
+                            new AnimatedSprite("lava", "lava.png", true, framesDurations)
                         ) {
+                            
+
                             @Override
-                            public void draw(Transform offset) {
-                                super.draw(offset);
-                                Game.getInstance().getBuffer().drawRect(blockSize, blockSize, Color.BLACK, offset.apply(getTransform()).addPos(Vector2.of(blockSize).mul(-0.5)));
+                            public void onBodyEntered(BodyEntered signal) {
+                                if (signal.body instanceof Character c) {
+                                    c.modifyHealth(-1);
+                                }
                             }
 
                             @Override
-                            public void onBodyEntered(BodyEntered signal) { }
+                            public void setPosition(Vector2 pos) {}
                         });
-                        n.setPosition(Vector2.of(x * blockSize, y * blockSize));
                     }
                     // player spawn
-                    case 'P' -> {
+                    case 'P', 'p' -> {
                         UsetimeSprite uzi = new UsetimeSprite("weapons/uzi.png");
-                        uzi.setScale(Vector2.of(0.05));
+                        uzi.setScale(Vector2.of(0.08));
                         dist.addChild(new Immortal(new Transform(Vector2.of(x * blockSize, y * blockSize)), Immortals.ZHAO,
                             new Camera(),
                             // new UsetimeItem(
@@ -187,8 +226,8 @@ public class LJAAG {
                             new HealthBar(new Transform(Vector2.of(0, -15)))
                         ));
                     }
-                    // wyrms spawn
-                    case 'Y' -> {
+                    // wyrms starting spawn
+                    case 'y' -> {
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
                         WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(x * blockSize, y * blockSize)), null, Characters.EOW, new HealthBar(healthBarTransform));
                         dist.addChildren(
@@ -203,10 +242,31 @@ public class LJAAG {
                             ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform))
                         );
                     }
+                    // wyrm spawner
+                    case 'Y' -> {
+                        Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
+                        dist.addChildren(
+                            new Spawner(5, (t) -> {
+                                WyrmSegment ws = new WyrmSegment(t, null, Characters.EOW, new HealthBar(healthBarTransform));
+                                dist.addChildren(
+                                    ws,
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform))
+                                );
+                            },
+                            new Transform(Vector2.of(x * blockSize, y * blockSize)),
+                            Characters.SPAWNER,
+                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.65), Vector2.of(blockSize / 20), 0))
+                            )
+                        );
+                    }
                     default -> {}
-                }
-                if (!Character.isSpaceChar(c)) {
-                    
                 }
                 x++;
             }

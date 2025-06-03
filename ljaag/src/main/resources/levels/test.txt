@@ -1,7 +1,10 @@
-100
-WWWWWWWWWWW
-W    P    W
-W         W
-W         W
-W    Y    W
-WWWWWWWWWWW
+200 11 9
+LLLLLLLLLLL
+LLLLLLLLLLL
+LL   p   LL
+LL       LL
+LL       LL
+LL       LL
+LL   Y   LL
+LLLLLLLLLLL
+LLLLLLLLLLL
