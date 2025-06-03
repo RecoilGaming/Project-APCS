@@ -1,0 +1,15 @@
+100 16 12
+levels/test3.txt
+LLLLLLLLLLLLLLLL
+LL     Y     LLL
+LL LLLLLLLLL   L
+LL L       L   L
+LL L   p   L   L
+LL LLLLL LLL   L
+LL     L   L   L
+LL G   L   L   L
+LL     L   L   L
+LL LLLLL   L   L
+LL       Y     L
+LLL         LLLL
+LLLLLLLLLLLLLLLL

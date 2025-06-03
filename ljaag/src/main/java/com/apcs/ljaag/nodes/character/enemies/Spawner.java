@@ -5,12 +5,11 @@ import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.character.CharacterData;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.stats.StatType;
 
-public class Spawner extends Character<CharacterData> {
+public class Spawner extends Enemy {
 
 
     // Constructors

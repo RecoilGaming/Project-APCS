@@ -175,6 +175,10 @@ public class Game extends JPanel {
         return scenes.getSelected();
     }
 
+    public boolean hasScene(String identifier) {
+        return scenes.contains(identifier);
+    }
+
     public SignalBus getGlobalSignal() {
         return globalSignal;
     }

@@ -3,6 +3,8 @@ package com.apcs.ljaag;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.apcs.disunity.app.App;
@@ -21,6 +23,7 @@ import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
+import com.apcs.ljaag.nodes.Gate;
 import com.apcs.ljaag.nodes.HealthBar;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
@@ -34,6 +37,8 @@ import com.apcs.ljaag.nodes.items.UsetimeItem;
 import com.apcs.ljaag.nodes.items.UsetimeSound;
 import com.apcs.ljaag.nodes.items.UsetimeSprite;
 import com.apcs.ljaag.nodes.character.Character;
+import com.apcs.ljaag.nodes.character.enemies.Enemy;
+import com.apcs.ljaag.nodes.character.enemies.EnemyManager;
 
 /**
  * Untitled game
@@ -44,6 +49,8 @@ import com.apcs.ljaag.nodes.character.Character;
  * @author Toshiki Takeuchi
  */
 public class LJAAG {
+
+    public static final double SIMULATION_DISTANCE_CHUNKS = 5;
 
     /* ================ [ METHODS ] ================ */
 
@@ -97,7 +104,7 @@ public class LJAAG {
         });//.start();
 
         try {
-            loadLevel("levels/test.txt", scene);
+            loadLevel("levels/test.txt", scene, game);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,7 +125,7 @@ public class LJAAG {
 
     public static void main(String[] args) { play(true); }
 
-    public static void loadLevel(String name, Node dist) throws IOException {
+    public static void loadLevel(String name, Scene scene, Game game) throws IOException {
         InputStream source = LJAAG.class.getClassLoader().getResourceAsStream(name);
         if (source == null) {
             System.out.println("unable to load level: "+name);
@@ -129,45 +136,65 @@ public class LJAAG {
         int width = s.hasNextInt() ? s.nextInt() : 10;
         int height = s.hasNextInt() ? s.nextInt() : 10;
         int x, y = x = 0;
+        s.nextLine();
+
+        scene.clearChildren();
+
+        EnemyManager m = new EnemyManager(blockSize * SIMULATION_DISTANCE_CHUNKS);
+        scene.addChild(m);
+
         Sprite sp = new Sprite("ground.png");
         sp.setScale(Vector2.of(width * blockSize / sp.getImageLocation().getImage().getWidth(), height * blockSize / sp.getImageLocation().getImage().getHeight()));
-        sp.setPosition(Vector2.of(width * blockSize / 2, width * blockSize / 2));
-        dist.addChild(sp);
+        sp.setPosition(Vector2.of(width * blockSize / 2, height * blockSize / 2));
+        scene.addChild(sp);
+        String nextLevelPath = s.nextLine().trim();
+        System.out.println(nextLevelPath);
+        if (!nextLevelPath.contains("NONE") && !game.hasScene(nextLevelPath)) {
+            Scene nextScene = new Scene(nextLevelPath);
+            game.addScene(nextScene);
+            try {
+                loadLevel(nextLevelPath, nextScene, game);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         while (s.hasNextLine()) {
             x = 0;
             String line = s.nextLine();
             for (char c : line.toCharArray()) {
                 switch (c) {
-                    // void (removed)
-                    // case 'V' -> {
-                    //     Body n;
-                    //     dist.addChild(n = new Body(
-                    //         new Transform(Vector2.of(x * blockSize, y * blockSize)),
-                    //         new Collider(blockSize, blockSize),
-                    //         new Area2D(Vector2.of(blockSize))
-                    //     ) {
-                    //         @Override
-                    //         public void draw(Transform offset) {
-                    //             super.draw(offset);
-                    //             Game.getInstance().getBuffer().drawRect(blockSize, blockSize, Color.BLACK, offset.apply(getTransform()).addPos(Vector2.of(blockSize).mul(-0.5)));
-                    //         }
-
-                    //         @Override
-                    //         public void onBodyEntered(BodyEntered signal) { }
-
-                    //         @Override
-                    //         public void setPosition(Vector2 pos) {}
-                    //     });
-                    // }
+                    // gates to next level
+                    case 'G' -> {
+                        double scale = blockSize / (Resources.loadResource("gate.png", Image.class).getBuffer().getHeight());
+                        scene.addChild(
+                            new Gate(
+                                new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
+                                () -> {
+                                    boolean allDead = true;
+                                    for (Node n : scene.getAllChildren()) {
+                                        if (n instanceof Enemy e && e.getHealth() > 0) {
+                                            allDead = false;
+                                        } 
+                                    }
+                                    return !nextLevelPath.contains("NONE") && allDead;
+                                },
+                                () -> {
+                                    game.setScene(nextLevelPath);
+                                    
+                                },
+                                new Collider(blockSize / 2, blockSize / 2),
+                                new Area2D(Vector2.of(blockSize / 2))
+                            )
+                        );
+                    }
                     // Lava
                     case 'L' -> {
-                        Body n;
                         double[] framesDurations = new double[45];
                         for (int i = 0; i < framesDurations.length; i++) {
                             framesDurations[i] = 0.1;
                         }
                         double scale = blockSize / (Resources.loadResource("lava.png", Image.class).getBuffer().getWidth() / 45.);
-                        dist.addChild(n = new Body(
+                        scene.addChild(new Body(
                             new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
                             new Collider(blockSize, blockSize),
                             new Area2D(Vector2.of(blockSize)),
@@ -190,7 +217,7 @@ public class LJAAG {
                     case 'P', 'p' -> {
                         UsetimeSprite uzi = new UsetimeSprite("weapons/uzi.png");
                         uzi.setScale(Vector2.of(0.08));
-                        dist.addChild(new Immortal(new Transform(Vector2.of(x * blockSize, y * blockSize)), Immortals.ZHAO,
+                        scene.addChild(new Immortal(new Transform(Vector2.of(x * blockSize, y * blockSize)), Immortals.ZHAO,
                             new Camera(),
                             // new UsetimeItem(
                             //     20,
@@ -225,7 +252,7 @@ public class LJAAG {
                     case 'y' -> {
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
                         WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(x * blockSize, y * blockSize)), null, Characters.EOW, new HealthBar(healthBarTransform));
-                        dist.addChildren(
+                        scene.addChildren(
                             ws,
                             ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
                             ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
@@ -240,10 +267,10 @@ public class LJAAG {
                     // wyrm spawner
                     case 'Y' -> {
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
-                        dist.addChildren(
+                        scene.addChildren(
                             new Spawner(5, (t) -> {
                                 WyrmSegment ws = new WyrmSegment(t, null, Characters.EOW, new HealthBar(healthBarTransform));
-                                dist.addChildren(
+                                scene.addChildren(
                                     ws,
                                     ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
                                     ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
@@ -254,6 +281,36 @@ public class LJAAG {
                                     ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
                                     ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform))
                                 );
+                                m.getEnemies().clear();
+                                m.getPlayers().clear();
+                                for (Node n : scene.getAllChildren()) {
+                                    switch (n) {
+                                        case Enemy e -> m.getEnemies().add(e);
+                                        case Immortal i -> m.getPlayers().add(i);
+                                        default -> {}
+                                    }
+                                }
+                            },
+                            new Transform(Vector2.of(x * blockSize, y * blockSize)),
+                            Characters.SPAWNER,
+                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.65), Vector2.of(blockSize / 20), 0))
+                            )
+                        );
+                    }
+                    // demon
+                    case 'd' -> {
+                        Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
+                        Demon d = new Demon(new Transform(Vector2.of(x * blockSize, y * blockSize)), Characters.BROKEN_VESSEL, new HealthBar(healthBarTransform));
+                        scene.addChild(d);
+                    }
+
+                    // demon spawner
+                    case 'D' -> {
+                        Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
+                        scene.addChildren(
+                            new Spawner(5, (t) -> { 
+                                Demon d = new Demon(t, Characters.BROKEN_VESSEL, new HealthBar(healthBarTransform));
+                                scene.addChild(d);
                             },
                             new Transform(Vector2.of(x * blockSize, y * blockSize)),
                             Characters.SPAWNER,
@@ -267,6 +324,14 @@ public class LJAAG {
             }
             y++;
             
+        }
+
+        for (Node n : scene.getAllChildren()) {
+            switch (n) {
+                case Enemy e -> m.getEnemies().add(e);
+                case Immortal i -> m.getPlayers().add(i);
+                default -> {}
+            }
         }
     }
 

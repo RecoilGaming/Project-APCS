@@ -1,9 +1,10 @@
 200 11 9
+levels/test2.txt
 LLLLLLLLLLL
 LLLLLLLLLLL
 LL   p   LL
 LL       LL
-LLY     YLL
+LL   G   LL
 LL       LL
 LL   Y   LL
 LLLLLLLLLLL

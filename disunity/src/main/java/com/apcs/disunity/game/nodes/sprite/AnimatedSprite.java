@@ -28,6 +28,11 @@ public class AnimatedSprite extends Sprite implements Indexed<String> {
     // Current frame
     private int frameCount = 0;
 
+    public void setFrame(int frameCount) {
+        this.frameCount = frameCount;
+        updateFrame();
+    }
+
     public AnimatedSprite(Transform transform, String name, ImageLocation imageLocation, double... frameDurations) {
         super(transform, imageLocation);
         baseImage = imageLocation;

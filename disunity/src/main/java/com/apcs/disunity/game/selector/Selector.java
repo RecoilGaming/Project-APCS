@@ -42,5 +42,9 @@ public class Selector<K, V extends Indexed<K>> {
         return indexedValues.getOrDefault(index, fallback);
     }
 
+    public boolean contains(K index) {
+        return indexedValues.containsKey(index);
+    }
+
     public List<V> values() { return indexedValues.values().stream().toList(); }
 }

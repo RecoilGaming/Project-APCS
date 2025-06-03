@@ -2,12 +2,11 @@ package com.apcs.ljaag.nodes.character.enemies;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
-import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.character.CharacterData;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.stats.StatType;
 
-public class Demon extends Character<CharacterData> {
+public class Demon extends Enemy {
 
     // Constructors
 	public Demon(CharacterData data) { this(new Transform(), data); }

@@ -11,7 +11,7 @@ import com.apcs.ljaag.nodes.character.CharacterData;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.stats.StatType;
 
-public class WyrmSegment extends Character<CharacterData> {
+public class WyrmSegment extends Enemy {
 
     private Character leader;
 
