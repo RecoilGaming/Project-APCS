@@ -52,3 +52,13 @@ Period: Ferrante 5
 
 \> Update my character's ability to deal damage and be more accurate.
 
+
+## MONDAY 6/2/2025 (2.5 hours)
+
+\> Add sprites for the different class characters.
+
+\> Add the third ability with my character and sprites for that.
+
+\> Add the ability to stun enemies.
+
+\> Update background sprite to be larger.

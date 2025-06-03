@@ -48,7 +48,7 @@ public class TransformTest {
                 circle.addChild(child);
                 return circle;
             } else {
-                Sprite sp = new Sprite("player/idle.png");
+                Sprite sp = new Sprite("demon/idle.png");
                 sp.setPosition(Vector2.of(47.5,0));
                 circle.addChild(sp);
             }
