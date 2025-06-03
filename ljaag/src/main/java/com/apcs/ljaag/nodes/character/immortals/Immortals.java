@@ -2,6 +2,7 @@ package com.apcs.ljaag.nodes.character.immortals;
 
 import com.apcs.ljaag.nodes.ability.abilities.Portal;
 import com.apcs.ljaag.nodes.ability.abilities.Zhao1;
+import com.apcs.ljaag.nodes.ability.abilities.Zhao3;
 import com.apcs.ljaag.nodes.stats.Statset;
 
 public class Immortals {
@@ -16,7 +17,7 @@ public class Immortals {
 		null,
 		new Zhao1(),
 		new Portal(),
-		null
+		new Zhao3()
 	);
 	
 }

@@ -22,6 +22,7 @@ import com.apcs.ljaag.nodes.character.Character;
 public class Portal extends AbilityData {
 
     // Constructors
+	@SuppressWarnings("resource")
 	public Portal() {
 		super(
 			TriggerType.MOUSE_POSITION,
@@ -33,7 +34,6 @@ public class Portal extends AbilityData {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					new Sound("sounds/swoosh.wav").play();
@@ -41,7 +41,7 @@ public class Portal extends AbilityData {
 				return new AnimatedSprite("push", new ImageLocation("zhao/portal.png"), true, 0.12, 0.12, 0.12, 0.2);
 			},
 			0.1,
-			1
+			5
 		);
 	}
 

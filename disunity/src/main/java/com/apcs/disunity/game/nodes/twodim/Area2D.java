@@ -32,4 +32,5 @@ public class Area2D extends Node2D<Node<?>> {
             Game.getInstance().getBuffer().drawArea(this);
         }
     }
+
 }

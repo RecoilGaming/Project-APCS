@@ -55,7 +55,7 @@ public class Ability {
 				Game.getInstance().getScene().addChild(instantiate(source, source.getPosition(), Inputs.getMousePos().sub(source.getPosition()).normalized()));
 				break;
 			case MOUSE_POSITION:
-				Game.getInstance().getScene().addChild(instantiate(source, Inputs.getMousePos(), Inputs.getMousePos().sub(source.getPosition()).normalized()));
+				Game.getInstance().getScene().addChild(instantiate(source, Inputs.getMousePos(), Vector2.ZERO));
 				break;
 			default:
 				break;

@@ -49,6 +49,10 @@ public class Sprite extends Node2D<Node<?>> {
     public RotationType getRotationType() { return rotationType; }
 
     // Constructors
+    public Sprite(Transform transform, ImageLocation imageLocation) {
+        super(transform);
+        this.imageLocation = imageLocation;
+    }
     public Sprite(ImageLocation imageLocation) { this.imageLocation = imageLocation; }
 
     public Sprite(String path) { this.imageLocation = new ImageLocation(path); }

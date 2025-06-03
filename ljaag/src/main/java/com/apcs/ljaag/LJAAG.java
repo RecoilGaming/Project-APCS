@@ -70,7 +70,6 @@ public class LJAAG {
             double time = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
                 if (System.currentTimeMillis() - time > 10000) {
-                    // prevent concurrent modification by locking the update list
                     Demon e1 = new Demon(
                         new Transform(Vector2.of(+100, 0)),
                         Characters.BROKEN_VESSEL,
