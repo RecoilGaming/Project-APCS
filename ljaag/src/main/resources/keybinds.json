@@ -13,5 +13,6 @@
   "swing" : [ [ "Space" ] ],
   
   "restart" : [ [ "R" ], [ "Enter" ] ],
-  "pause": [ [ "Escape" ] ]
+  "pause": [ [ "Escape" ] ],
+  "menu": [ [ "Shift", "R" ] ]
 }

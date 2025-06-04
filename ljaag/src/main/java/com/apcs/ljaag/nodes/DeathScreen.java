@@ -1,11 +1,9 @@
 package com.apcs.ljaag.nodes;
 
-import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
-import com.apcs.ljaag.LJAAG;
 
 public class DeathScreen extends Sprite {
 

@@ -25,6 +25,7 @@ import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.Gate;
 import com.apcs.ljaag.nodes.HealthBar;
 import com.apcs.ljaag.nodes.Indicator;
+import com.apcs.ljaag.nodes.MenuScreen;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
 import com.apcs.ljaag.nodes.character.enemies.Spawner;
@@ -49,9 +50,6 @@ import com.apcs.ljaag.nodes.character.enemies.EnemyManager;
  */
 public class LJAAG {
 
-    private static Game game;
-    private static Scene scene;
-
     public static final double SIMULATION_DISTANCE_CHUNKS = 5;
 
     public static final String START = "levels/0_start.txt";
@@ -68,11 +66,13 @@ public class LJAAG {
         
         // Create the game scenes
         Scene scene = new Scene(START);
+        Scene menu = new Scene("menu", new MenuScreen(Vector2.ZERO));
 
         // Create game application
-        game = new Game(Vector2.of(480, 270));
+        Game game = new Game(Vector2.of(480, 270));
         game.addScene(scene);
-        game.setScene(START);
+        game.addScene(menu);
+        game.setScene("menu");
 
         new App("Shotgun Simulator", 800, 450, game);
 

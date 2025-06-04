@@ -4,7 +4,9 @@ import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
+import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.math.Transform;
+import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.DeathScreen;
 import com.apcs.ljaag.nodes.PauseScreen;
 import com.apcs.ljaag.nodes.ability.Ability;
@@ -125,6 +127,10 @@ public class Immortal extends Character<ImmortalData> {
 			wasPressed = true;
 		} else {
 			wasPressed = false;
+		}
+
+		if (Inputs.getAction("menu")) {
+			Game.getInstance().setScene("menu");
 		}
 
 		// Movement
