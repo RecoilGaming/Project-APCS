@@ -25,6 +25,7 @@ import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.Gate;
 import com.apcs.ljaag.nodes.HealthBar;
+import com.apcs.ljaag.nodes.Indicator;
 import com.apcs.ljaag.nodes.character.Characters;
 import com.apcs.ljaag.nodes.character.enemies.Demon;
 import com.apcs.ljaag.nodes.character.enemies.Spawner;
@@ -71,37 +72,6 @@ public class LJAAG {
         game.setScene("game");
 
         new App("Shotgun Simulator", 800, 450, game);
-
-        // spawn demons
-        new Thread(() -> {
-            double time = System.currentTimeMillis();
-            while (!Thread.currentThread().isInterrupted()) {
-                if (System.currentTimeMillis() - time > 10000) {
-                    Demon e1 = new Demon(
-                        new Transform(Vector2.of(+100, 0)),
-                        Characters.BROKEN_VESSEL,
-                        new HealthBar(new Transform(Vector2.of(0, -15)))
-                    );
-                    Demon e2 = new Demon(
-                        new Transform(Vector2.of(-100, 0)),
-                        Characters.BROKEN_VESSEL,
-                        new HealthBar(new Transform(Vector2.of(0, -15)))
-                    );
-                    Demon e3 = new Demon(
-                        new Transform(Vector2.of(0, +100)),
-                        Characters.BROKEN_VESSEL,
-                        new HealthBar(new Transform(Vector2.of(0, -15)))
-                    );
-                    Demon e4 = new Demon(
-                        new Transform(Vector2.of(0, -100)),
-                        Characters.BROKEN_VESSEL,
-                        new HealthBar(new Transform(Vector2.of(0, -15)))
-                    );
-                    scene.addChildren(e1, e2, e3, e4);
-                    time = System.currentTimeMillis();
-                }
-            }
-        });//.start();
 
         try {
             loadLevel("levels/test.txt", scene, game);
@@ -165,7 +135,7 @@ public class LJAAG {
                 switch (c) {
                     // gates to next level
                     case 'G' -> {
-                        double scale = blockSize / (Resources.loadResource("gate.png", Image.class).getBuffer().getHeight());
+                        double scale = (double) blockSize / (Resources.loadResource("gate.png", Image.class).getBuffer().getHeight());
                         scene.addChild(
                             new Gate(
                                 new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
@@ -217,7 +187,7 @@ public class LJAAG {
                     case 'P', 'p' -> {
                         UsetimeSprite uzi = new UsetimeSprite("weapons/uzi.png");
                         uzi.setScale(Vector2.of(0.08));
-                        scene.addChild(new Immortal(new Transform(Vector2.of(x * blockSize, y * blockSize)), Immortals.ZHAO,
+                        scene.addChild(new Immortal(new Transform(Vector2.of(x * blockSize, y * blockSize)), Immortals.ZHAO.get(),
                             new Camera(),
                             // new UsetimeItem(
                             //     20,
@@ -251,35 +221,36 @@ public class LJAAG {
                     // wyrms starting spawn
                     case 'y' -> {
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
-                        WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(x * blockSize, y * blockSize)), null, Characters.EOW, new HealthBar(healthBarTransform));
+                        WyrmSegment ws = new WyrmSegment(new Transform(Vector2.of(x * blockSize, y * blockSize)), null, Characters.EOW.get(), new HealthBar(healthBarTransform));
                         scene.addChildren(
                             ws,
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW, new HealthBar(healthBarTransform))
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                            ws = new WyrmSegment(new Transform(), ws, Characters.EOW.get(), new HealthBar(healthBarTransform))
                         );
                     }
                     // wyrm spawner
                     case 'Y' -> {
+                        double scale = (double) blockSize / (Resources.loadResource("spawner/idle.png", Image.class).getBuffer().getHeight());
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
                         scene.addChildren(
                             new Spawner(5, (t) -> {
-                                WyrmSegment ws = new WyrmSegment(t, null, Characters.EOW, new HealthBar(healthBarTransform));
+                                WyrmSegment ws = new WyrmSegment(t, null, Characters.EOW.get(), new HealthBar(healthBarTransform));
                                 scene.addChildren(
                                     ws,
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform)),
-                                    ws = new WyrmSegment(t, ws, Characters.EOW, new HealthBar(healthBarTransform))
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform)),
+                                    ws = new WyrmSegment(t, ws, Characters.EOW.get(), new HealthBar(healthBarTransform))
                                 );
                                 m.getEnemies().clear();
                                 m.getPlayers().clear();
@@ -291,30 +262,31 @@ public class LJAAG {
                                     }
                                 }
                             },
-                            new Transform(Vector2.of(x * blockSize, y * blockSize)),
-                            Characters.SPAWNER,
-                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.65), Vector2.of(blockSize / 20), 0))
+                            new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
+                            Characters.SPAWNER.get(),
+                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.75), Vector2.of(blockSize / 20), 0))
                             )
                         );
                     }
                     // demon
                     case 'd' -> {
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
-                        Demon d = new Demon(new Transform(Vector2.of(x * blockSize, y * blockSize)), Characters.BROKEN_VESSEL, new HealthBar(healthBarTransform));
+                        Demon d = new Demon(new Transform(Vector2.of(x * blockSize, y * blockSize)), Characters.BROKEN_VESSEL.get(), new HealthBar(healthBarTransform));
                         scene.addChild(d);
                     }
 
                     // demon spawner
                     case 'D' -> {
+                        double scale = (double) blockSize / (Resources.loadResource("spawner/idle.png", Image.class).getBuffer().getHeight());
                         Transform healthBarTransform = new Transform(Vector2.of(0, -10), Vector2.of(0.5), 0);   
                         scene.addChildren(
                             new Spawner(5, (t) -> { 
-                                Demon d = new Demon(t, Characters.BROKEN_VESSEL, new HealthBar(healthBarTransform));
+                                Demon d = new Demon(t, Characters.BROKEN_VESSEL.get(), new HealthBar(healthBarTransform));
                                 scene.addChild(d);
                             },
-                            new Transform(Vector2.of(x * blockSize, y * blockSize)),
-                            Characters.SPAWNER,
-                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.65), Vector2.of(blockSize / 20), 0))
+                            new Transform(Vector2.of(x * blockSize, y * blockSize), Vector2.of(scale), 0),
+                            Characters.SPAWNER.get(),
+                            new HealthBar(new Transform(Vector2.of(0, -blockSize * 0.75), Vector2.of(blockSize / 20), 0))
                             )
                         );
                     }
@@ -326,13 +298,28 @@ public class LJAAG {
             
         }
 
+        List<Spawner> spawners = new LinkedList<>();
+
         for (Node n : scene.getAllChildren()) {
             switch (n) {
-                case Enemy e -> m.getEnemies().add(e);
+                case Enemy e -> {
+                    m.getEnemies().add(e);
+                    if (n instanceof Spawner spawner) {
+                        spawners.add(spawner);
+                    }
+                }
                 case Immortal i -> m.getPlayers().add(i);
                 default -> {}
             }
         }
+
+        for (Immortal i : m.getPlayers()) {
+            for (Spawner spawner : spawners) {
+                i.addChild(new Indicator("spawner/indicator.png", spawner, 50));
+            }
+        }
+
+        scene.getDynamicChildren().sort((e1, e2) -> ((e1 instanceof Character) ? 1 : 0) - ((e2 instanceof Character) ? 1 : 0));
     }
 
 }

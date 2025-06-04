@@ -2,6 +2,7 @@ package com.apcs.ljaag.nodes;
 
 import java.util.function.Supplier;
 
+import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.collider.Collider;
@@ -11,6 +12,7 @@ import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
+import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 
 public class Gate extends Body {
@@ -26,6 +28,7 @@ public class Gate extends Body {
     {
         sprite.setRotationType(Sprite.RotationType.LOCKED);
         sprite.setFrame(CLOSED_FRAME);
+        sprite.setScale(Vector2.of(2));
         sprite.show();
     }
 
@@ -40,17 +43,29 @@ public class Gate extends Body {
         this.usedAction = usedAction;
     }
 
+    private boolean firstTime = true;
+
     @Override
     public void update(double delta) {
         super.update(delta);
-        sprite.setFrame(shouldBeOpen.get() ? OPEN_FRAME : CLOSED_FRAME);
+        boolean open = shouldBeOpen.get();
+        sprite.setFrame(open ? OPEN_FRAME : CLOSED_FRAME);
+        if (open && firstTime) {
+            new Sound("sounds/portal_activated.wav").play();
+            firstTime = false;
+        }
+        
     }
 
     @Override
     public void onBodyEntered(BodyEntered signal) {
         if (shouldBeOpen.get() && (signal.body instanceof Immortal)) {
+            new Sound("sounds/teleport.wav").play();
             usedAction.run();
         }
     }
+
+    @Override
+    public void setPosition(Vector2 pos) { }
     
 }

@@ -18,6 +18,7 @@ import com.apcs.ljaag.nodes.ability.Ability.TriggerType;
 import com.apcs.ljaag.nodes.ability.AbilityData;
 import com.apcs.ljaag.nodes.ability.Projectile;
 import com.apcs.ljaag.nodes.character.Character;
+import com.apcs.ljaag.nodes.character.immortals.Immortal;
 
 public class Portal extends AbilityData {
 
@@ -74,6 +75,7 @@ public class Portal extends AbilityData {
 			signal.body.setVelocity(Vector2.basis(signal.body.getRotation()).mul(signal.body.getVelocity().length()));
 			signal.body.setPosition(b.getPosition());
 			if (!portalsTouching) cooldowns.put(signal.body, COOLDOWN_FRAMES);
+			if (signal.body instanceof Immortal) new Sound("sounds/teleport.wav").play();
 		}
 	}
 

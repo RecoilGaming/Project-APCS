@@ -3,7 +3,6 @@ import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.sprite.AnimatedSprite;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.game.nodes.sprite.Sprite;
-import com.apcs.disunity.game.physics.BodyEntered;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.character.Character;
@@ -67,24 +66,6 @@ public class WyrmSegment extends Enemy {
     @Override
     protected void onDeath() {
         setVelocity(Vector2.ZERO);
-    }
-
-    double lastAttack = 0;
-
-    @Override
-    public void onBodyEntered(BodyEntered signal) {
-        if (!(signal.body instanceof WyrmSegment)) {
-            super.onBodyEntered(signal);
-        }
-        if (health <= 0) {
-            return;
-        }
-        if (signal.body instanceof Immortal m) {
-            if (System.currentTimeMillis() - lastAttack > StatType.ATTACK_SPEED.getInitial()) {
-                m.modifyHealth(-getStat(StatType.ATTACK_DAMAGE) * (leader == m ? 2 : 1));
-                lastAttack = System.currentTimeMillis();
-            }
-        }
     }
 
 }

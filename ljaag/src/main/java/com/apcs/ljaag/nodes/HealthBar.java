@@ -20,7 +20,7 @@ public class HealthBar extends Node2D<Node<?>> {
         super(localTrans, children);
     }
 
-    public static final Vector2 HEALTH_BAR_DIMENSIONS = Vector2.of(10, 2);
+    public static final Vector2 HEALTH_BAR_DIMENSIONS = Vector2.of(18, 3);
 
     @Override
     public void draw(Transform offset) {
@@ -28,8 +28,8 @@ public class HealthBar extends Node2D<Node<?>> {
         if (getParent() instanceof Character c) {
             double healthProportion = Math.max(0, 2 * (double) c.getHealth() / c.getStat(StatType.HEALTH));
             if (healthProportion == 0) return;
-            Game.getInstance().getBuffer().drawRect((int) (HEALTH_BAR_DIMENSIONS.xi * healthProportion * getScale().x), (int) (HEALTH_BAR_DIMENSIONS.yi * getScale().y), Color.green, offset.addPos(Vector2.of(-HEALTH_BAR_DIMENSIONS.xi / 2 * getScale().x, 0)).addPos(getPosition()));
-            Game.getInstance().getBuffer().drawRect((int) (HEALTH_BAR_DIMENSIONS.xi * (1 - healthProportion) * getScale().x), (int) (HEALTH_BAR_DIMENSIONS.yi * getScale().y), Color.red, offset.addPos(Vector2.of(HEALTH_BAR_DIMENSIONS.xi * (healthProportion - 0.5) * getScale().x, 0)).addPos(getPosition()));
+            Game.getInstance().getBuffer().drawRect((int) (HEALTH_BAR_DIMENSIONS.xi * healthProportion * getScale().x), (int) (HEALTH_BAR_DIMENSIONS.yi * getScale().y), Color.green, offset.scaleTo(Vector2.ONE).addPos(Vector2.of(-HEALTH_BAR_DIMENSIONS.xi / 2 * getScale().x, 0)).addPos(getPosition()));
+            Game.getInstance().getBuffer().drawRect((int) (HEALTH_BAR_DIMENSIONS.xi * (1 - healthProportion) * getScale().x), (int) (HEALTH_BAR_DIMENSIONS.yi * getScale().y), Color.red, offset.scaleTo(Vector2.ONE).addPos(Vector2.of(HEALTH_BAR_DIMENSIONS.xi * (healthProportion - 0.5) * getScale().x, 0)).addPos(getPosition()));
         } else {
             throw new RuntimeException("A health bar must belong to a character");
         }

@@ -128,13 +128,14 @@ public class Character<T extends CharacterData> extends Body {
 		this.setVelocity(Vector2.ZERO);
 		killAllSprites(this);
 		setRotation(- Math.PI / 2);
+		collider.disable();
+		area2D.disable();
 	}
 
 	/* ================ [ BODY ] ================ */
 
 	@Override
 	public void onBodyEntered(BodyEntered signal) {
-		// TODO: handle collisions so that the player cannot phase through walls
 
 	}
 
