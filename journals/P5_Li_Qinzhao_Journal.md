@@ -68,3 +68,5 @@ Period: Ferrante 5
 \> Basic implementation of pausing.
 
 \> Add death screen and pause screen.
+
+\> Add the ability to restart the game on death.
