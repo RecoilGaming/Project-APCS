@@ -2,6 +2,7 @@ package com.apcs.ljaag.nodes.items;
 
 
 import com.apcs.disunity.app.input.Inputs;
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.twodim.Node2D;
 import com.apcs.disunity.math.Transform;
@@ -35,7 +36,7 @@ public class UsetimeItem<T extends Node<?> & Usable> extends Node2D<T> {
         Vector2 pos = mouseDir.mul(this.offset.x).add(Vector2.of(-mouseDir.y, mouseDir.x).mul(this.offset.y));
         setPosition(pos);
         setRotation(pos.heading());
-        if (cooldown <= 0) {
+        if (cooldown <= 0 && !Game.getInstance().isPaused) {
             for (Usable u : getAllChildren()) {
                 u.onReady();
             }

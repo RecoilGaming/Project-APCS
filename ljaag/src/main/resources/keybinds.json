@@ -7,6 +7,8 @@
   "skill1": [ [ "E" ], [ "Right Click" ] ],
   "skill2": [ [ "Q" ] ],
   "ultimate": [ [ "R" ] ],
+  "restart": [ [ "R" ] ],
+  "pause": [ [ "Escape "] ],
 
 
   "fire" : [ [ "F" ], [ "Left Click" ] ],

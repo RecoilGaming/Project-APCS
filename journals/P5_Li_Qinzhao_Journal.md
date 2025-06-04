@@ -62,3 +62,9 @@ Period: Ferrante 5
 \> Add the ability to stun enemies.
 
 \> Update background sprite to be larger.
+
+## TUESDAY 6/3/2025 (1 hours)
+
+\> Basic implementation of pausing.
+
+\> Add death screen and pause screen.

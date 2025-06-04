@@ -51,6 +51,9 @@ import com.apcs.ljaag.nodes.character.enemies.EnemyManager;
  */
 public class LJAAG {
 
+    private static Game game;
+    private static Scene scene;
+
     public static final double SIMULATION_DISTANCE_CHUNKS = 5;
 
     /* ================ [ METHODS ] ================ */
@@ -64,20 +67,16 @@ public class LJAAG {
         s.setScale(Vector2.of(0.1));
         
         // Create the game scenes
-        Scene scene = new Scene("game");
+        scene = new Scene("game");
 
         // Create game application
-        Game game = new Game(Vector2.of(480, 270));
+        game = new Game(Vector2.of(480, 270));
         game.addScene(scene);
         game.setScene("game");
 
         new App("Shotgun Simulator", 800, 450, game);
 
-        try {
-            loadLevel("levels/test.txt", scene, game);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        restart();
         
         // Start game
         scene.print();
@@ -94,6 +93,19 @@ public class LJAAG {
     /* ================ [ DRIVER ] ================ */
 
     public static void main(String[] args) { play(true); }
+
+    public static void restart() {
+        Game.getInstance().resetScenes();
+
+        try {
+            loadLevel("levels/test.txt", scene, game);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        game.setScene("levels/test.txt");
+        Game.getInstance().unpause();
+    }
 
     public static void loadLevel(String name, Scene scene, Game game) throws IOException {
         InputStream source = LJAAG.class.getClassLoader().getResourceAsStream(name);
@@ -118,7 +130,7 @@ public class LJAAG {
         sp.setPosition(Vector2.of(width * blockSize / 2, height * blockSize / 2));
         scene.addChild(sp);
         String nextLevelPath = s.nextLine().trim();
-        System.out.println(nextLevelPath);
+        // System.out.println(nextLevelPath);
         if (!nextLevelPath.contains("NONE") && !game.hasScene(nextLevelPath)) {
             Scene nextScene = new Scene(nextLevelPath);
             game.addScene(nextScene);
@@ -150,7 +162,6 @@ public class LJAAG {
                                 },
                                 () -> {
                                     game.setScene(nextLevelPath);
-                                    
                                 },
                                 new Collider(blockSize / 2, blockSize / 2),
                                 new Area2D(Vector2.of(blockSize / 2))

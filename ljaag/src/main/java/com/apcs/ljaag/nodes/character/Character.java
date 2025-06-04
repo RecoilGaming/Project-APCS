@@ -1,5 +1,6 @@
 package com.apcs.ljaag.nodes.character;
 
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.SelectorNode;
