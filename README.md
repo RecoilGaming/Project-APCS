@@ -18,35 +18,39 @@
 
 ## MECHANICS
 
+**General Concept**
+
+Our general idea was to have a topdown dungeon crawler as explained below. We had to heavily downscope which unfortuately had us remove multiplayer components, but the idea of exploring stages and battling enemies still exists. The general idea for progression is simple: each level introduces a new mechanic or tests your skills and how well you were able to learn the abilities' functionalities and usecases. Kill all the enemies and enter the portal to reach the next stage.
+
+**Terrian**
+
+Lava -> hurts you if you step on it. Also damages enemies, but not as much
+
+Portal -> a portal to the next level. It unlocks when you've killed all the enemies
+
+**Enemies**
+
+Demon -> basic melee enemy that follows you around
+
+Wyrm -> a challenging, segmented enemy inspired by Terraria's Eater of Worlds
+
+Spawner -> an enemy that spawns other enemies
+
 **Controls**:
 
 WASD / Arrows: Directional movement
 
 Mouse: Aiming for abilities
 
-Left Click: Basic attack
+Left Click -> Shotgun: basic attack with burst fire and mediocre piercing
 
-Q / E / R: Use abilities
+Q -> Portal: Teleport yourself, projectiles, and enemies between portals, just like in Portal! Combining both portals in the same location allows you to lock enemies in place for prolonged periods of time.
 
-Shift: Dodge ability
+E -> Push: Push enemies away from you. Be careful, it has a 3 second cooldown
 
-H: Heal ability
+F -> Sword Smash: call down a sword of light from the sky to stun enemies
 
-**Aura**: The main unique mechanic in our game is that rather than consuming mana, abilities consume a resource called "aura", which can only be collected by performing certain actions. For instance, successfully dodging attacks, landing certain abilities, and killing minions all increase the player's aura amount.
-
-**Dodge**: The player's dodge ability has a 30 second cooldown, but allows the player to completely mitigate any source of damage. This ability is available by default and cannot be leveled up.
-
-**Heal**: The player's heal ability also has a 30 second cooldown and allows the player to regain 10% of their health. This ability is available by default and cannot be leveled up.
-
-**Leveling**: Characters start the game at level 1, and can reach up to a maximum level of 9. At each level, characters gain a minor stat boost, as well as a skill point that can be used to unlock and upgrade abilities.
-
-**Characters**: Before starting any stage, players must select a character to use. This allows for a wide variety of playstyles built around different characters and / or team compositions.
-
-## ELEMENTS
-
-**Characters**: ~ we have ideas but none of them are finalized
-
-**Boss Enemies**: ~ same as above
+R -> Restart the the current stage
 
 ## NOTES
 

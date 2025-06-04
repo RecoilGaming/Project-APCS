@@ -1,0 +1,5 @@
+10 100 100
+NONE
+L L LLL L L     L   L LLL L  L
+ L  L L L L  p  L L L  L  LL L
+ L  LLL LLL     LLLLL LLL L LL

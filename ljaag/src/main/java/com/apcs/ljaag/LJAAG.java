@@ -1,6 +1,5 @@
 package com.apcs.ljaag;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -9,7 +8,6 @@ import java.util.Scanner;
 
 import com.apcs.disunity.app.App;
 import com.apcs.disunity.app.input.Inputs;
-import com.apcs.disunity.app.input.actions.Action;
 import com.apcs.disunity.app.resources.Image;
 import com.apcs.disunity.app.resources.Resources;
 import com.apcs.disunity.game.Game;
@@ -22,8 +20,6 @@ import com.apcs.disunity.game.nodes.twodim.Area2D;
 import com.apcs.disunity.game.nodes.twodim.Body;
 import com.apcs.disunity.game.nodes.twodim.Camera;
 import com.apcs.disunity.game.physics.BodyEntered;
-import com.apcs.disunity.game.signals.Signal;
-import com.apcs.disunity.game.signals.SignalBus;
 import com.apcs.disunity.math.Transform;
 import com.apcs.disunity.math.Vector2;
 import com.apcs.ljaag.nodes.Gate;
@@ -35,7 +31,6 @@ import com.apcs.ljaag.nodes.character.enemies.Spawner;
 import com.apcs.ljaag.nodes.character.enemies.WyrmSegment;
 import com.apcs.ljaag.nodes.character.immortals.Immortal;
 import com.apcs.ljaag.nodes.character.immortals.Immortals;
-import com.apcs.ljaag.nodes.items.Machinegun;
 import com.apcs.ljaag.nodes.items.Shotgun;
 import com.apcs.ljaag.nodes.items.UsetimeItem;
 import com.apcs.ljaag.nodes.items.UsetimeSound;
@@ -59,6 +54,8 @@ public class LJAAG {
 
     public static final double SIMULATION_DISTANCE_CHUNKS = 5;
 
+    public static final String START = "levels/0_start.txt";
+
     /* ================ [ METHODS ] ================ */
 
     // Play the game 
@@ -70,17 +67,17 @@ public class LJAAG {
         s.setScale(Vector2.of(0.1));
         
         // Create the game scenes
-        Scene scene = new Scene("levels/0_start.txt");
+        Scene scene = new Scene(START);
 
         // Create game application
         game = new Game(Vector2.of(480, 270));
         game.addScene(scene);
-        game.setScene("levels/0_start.txt");
+        game.setScene(START);
 
         new App("Shotgun Simulator", 800, 450, game);
 
         try {
-            loadLevel("levels/0_start.txt", scene, game);
+            loadLevel(START, scene, game);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,5 @@
 50 40 40
-NONE
+levels/8_end.txt
 LLLLLLLLLLL
 LLLLLLLLLLL
 LLLLLGLLLLL
@@ -8,7 +8,7 @@ LLL     LLL
 LL  LWL  LL
 LL       LL
 LL  L L  LL
-LL      LLL
+LLL     LLL
 LLLLL LLLLL
 L   L L   L
 L L L L L L
