@@ -101,19 +101,6 @@ public class LJAAG {
 
     public static void main(String[] args) { play(true); }
 
-    public static void restart() {
-        // Game.getInstance().resetScenes();
-
-        // try {
-        //     loadLevel("levels/test.txt", scene, game);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
-
-        // game.setScene("levels/test.txt");
-        Game.getInstance().unpause();
-    }
-
     public static void loadLevel(String name, Scene scene, Game game) throws IOException {
         
         scene.clearChildren();
@@ -132,17 +119,17 @@ public class LJAAG {
         EnemyManager m = new EnemyManager(blockSize * SIMULATION_DISTANCE_CHUNKS);
         scene.addChild(m);
         scene.addChild(new Node<Node>() {
-            private double cooldown = 1;
             @Override
             public void update(double dt) {
-                cooldown -= dt;
-                if (cooldown <= 0 && Inputs.getAction("restart")) {
+                if (Inputs.getAction("restart")) {
                     try {
                         loadLevel(name, scene, game);
+                        Game.getInstance().unpause();
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
+                    Inputs.clearAction("restart");
                 }
             }
         });

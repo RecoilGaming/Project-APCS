@@ -21,9 +21,13 @@ public class PauseScreen extends Sprite {
 
 	/* ================ [ NODE ] ================ */
 
+	private boolean unpaused = false;
+
 	@Override
 	public void update(double delta) {
-		if (Inputs.getAction("pause")) {
+		if (!Inputs.getAction("pause")) {
+			unpaused = true;
+		} else if (unpaused) {
 			Game.getInstance().unpause();
 			hide();
 			disable();

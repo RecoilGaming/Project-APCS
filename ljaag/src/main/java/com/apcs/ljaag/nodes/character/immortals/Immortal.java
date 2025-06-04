@@ -113,12 +113,18 @@ public class Immortal extends Character<ImmortalData> {
 
 	/* ================ [ NODE ] ================ */
 
+	boolean wasPressed = false;
+
 	@Override
 	public void update(double delta) {
-		if (!Game.getInstance().isPaused && Inputs.getAction("pause")) {
-			Game.getInstance().pause();
-			Game.getInstance().getScene().addChild(new PauseScreen(getPosition()));
-			Inputs.clearAction("pause");
+		if (Inputs.getAction("pause")) {
+			if (wasPressed == false && !Game.getInstance().isPaused && Inputs.getAction("pause")) {
+				Game.getInstance().pause();
+				Game.getInstance().getScene().addChild(new PauseScreen(getPosition()));
+			}
+			wasPressed = true;
+		} else {
+			wasPressed = false;
 		}
 
 		// Movement
