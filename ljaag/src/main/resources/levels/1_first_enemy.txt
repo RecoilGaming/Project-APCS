@@ -1,0 +1,11 @@
+50 40 40
+levels/2_simple_army.txt
+LLLLLLLLLLL
+LLLLLLLLLLL
+LL       LL
+LL L G L LL
+LLd  p  dLL
+LL L   L LL
+LL       LL
+LLLLLLLLLLL
+LLLLLLLLLLL

@@ -46,6 +46,7 @@ public class Character<T extends CharacterData> extends Body {
 	// Resource amounts
 	protected int health = getStat(StatType.HEALTH);
 	protected int aura = getStat(StatType.DIVINITY);
+	protected int stunFrames = 0;
 
 	// Constructors
 	public Character(Transform transform, T data, Node<?>... children) {
@@ -104,22 +105,20 @@ public class Character<T extends CharacterData> extends Body {
 
 	@Override
 	public void update(double delta) {
+		stunFrames--;
+
 		// Death
 		if (health <= 0) {
 			onDeath();
 		}
 
-		// Rotation
-		if (getVelocity().xi != 0) {
+		// Rotation and animation
+		if (getVelocity().length() < 0.1) {
+			sprite.select("idle");
+		} else {
+			sprite.select("run");
 			setRotation(getVelocity().heading());
 		}
-
-		// Animation
-		if (getVelocity().length() < 0.1) {
-            sprite.select("idle");
-        } else {
-            sprite.select("run");
-        }
 
 		super.update(delta);
 	}
@@ -155,5 +154,14 @@ public class Character<T extends CharacterData> extends Body {
     public int getAura() {
         return aura;
     }
+
+	public boolean isStunned() {
+		return health <= 0 || stunFrames > 0;
+	}
+
+	public void stun(int frames) {
+		stunFrames = frames;
+		setVelocity(Vector2.ZERO);
+	}
 
 }

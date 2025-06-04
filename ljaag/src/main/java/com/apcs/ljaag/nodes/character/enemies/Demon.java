@@ -15,7 +15,7 @@ public class Demon extends Enemy {
 
     @Override
 	public void update(double delta) {
-		if (health > 0) {
+		if (!isStunned()) {
 			Immortal closestPlayer = null;
             for (Node n : getParent().getAllChildren()) {
                 if (n instanceof Immortal i) {

@@ -103,7 +103,7 @@ public class Immortal extends Character<ImmortalData> {
 	@Override
 	public void update(double delta) {
 		// Movement
-		if (health > 0) {
+		if (!isStunned()) {
 			setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
 		}
 

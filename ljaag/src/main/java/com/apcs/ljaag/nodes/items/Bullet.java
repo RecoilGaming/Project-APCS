@@ -14,7 +14,7 @@ public class Bullet extends Body {
 
     public static final double LIFECYCLE = 5;
 
-    public static final double BULLET_DAMAGE = 20;
+    public static final double BULLET_DAMAGE = 50;
 
     private double lifetime = 0;
 
@@ -32,8 +32,9 @@ public class Bullet extends Body {
     @Override
     public void update(double delta) {
         if (lifetime > LIFECYCLE) {
-            // getParent().removeChild((Node) this);
             sprite.setHidden(true);
+            getAllChildren().forEach(c -> c.disable());
+            disable();
             return;
         }
         super.update(delta);
@@ -47,8 +48,9 @@ public class Bullet extends Body {
     // setting the collision layer/mask to proper value will solve this issue.
     @Override
     public void onBodyEntered(BodyEntered signal) {
-        if (signal.body instanceof Character ch) {
+        if (!isDisabled() && signal.body instanceof Character ch && ch.getHealth() > 0) {
             ch.modifyHealth((int) -BULLET_DAMAGE);
+            lifetime += 0.5;
         }
     }
 

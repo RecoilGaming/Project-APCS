@@ -9,7 +9,7 @@ public class Characters {
 
     public static final Supplier<CharacterData> BROKEN_VESSEL = () -> new ImmortalData(
 		"demon",
-		new Statset(300, 0, 200, 10, 10, 50, 0, 100, 100, 0, 0, 0),
+		new Statset(1000, 0, 200, 10, 10, 50, 0, 100, 100, 0, 0, 0),
 		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		15,
 		null,
@@ -20,7 +20,7 @@ public class Characters {
 
 	public static final Supplier<CharacterData> EOW = () -> new ImmortalData(
 		"worm",
-		new Statset(500, 0, 200, 20, 10, 50, 0, 100, 100, 0, 0, 0),
+		new Statset(2000, 0, 200, 20, 10, 50, 0, 100, 100, 0, 0, 0),
 		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		15,
 		null,
@@ -31,7 +31,7 @@ public class Characters {
 
 	public static final Supplier<CharacterData> SPAWNER = () -> new ImmortalData(
 		"spawner",
-		new Statset(2000, 0, 200, 20, 10, 50, 0, 100, 100, 0, 0, 0),
+		new Statset(10000, 0, 200, 20, 10, 50, 0, 100, 100, 0, 0, 0),
 		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		15,
 		null,

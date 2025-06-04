@@ -1,0 +1,11 @@
+50 20 20
+levels/6_spawner_alley.txt
+LLLLLLLLL
+LLLLLLLLL
+LL  G  LL
+LLLLLLLLL
+LL  D  LL
+LLd   dLL
+LL  p  LL
+LLLLLLLLL
+LLLLLLLLL

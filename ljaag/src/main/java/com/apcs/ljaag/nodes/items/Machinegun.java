@@ -10,7 +10,7 @@ import com.apcs.disunity.math.Vector2;
 
 public class Machinegun extends Node2D<Node<?>> implements Usable {
 
-    private static final double BULLET_SPEED = 200;
+    private static final double BULLET_SPEED = 300;
     private static final double SPREAD = 0.1;
 
 

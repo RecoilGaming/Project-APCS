@@ -6,9 +6,11 @@
   "basic": [ [ "Left Click" ] ],
   "skill1": [ [ "E" ], [ "Right Click" ] ],
   "skill2": [ [ "Q" ] ],
-  "ultimate": [ [ "R" ] ],
+  "ultimate": [ [ "F" ] ],
 
 
-  "fire" : [ [ "F" ], [ "Left Click" ] ],
-  "swing" : [ [ "R" ] ]
+  "fire" : [ [ "Left Click" ] ],
+  "swing" : [ [ "Space" ] ],
+  
+  "restart" : [ [ "R" ], [ "Enter" ] ]
 }

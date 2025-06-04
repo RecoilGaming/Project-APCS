@@ -14,7 +14,7 @@ public class Shotgun extends Node2D<Node<?>> implements Usable {
 
     private static final double BULLET_COUNT = 3;
 
-    private static final double BULLET_SPEED = 100;
+    private static final double BULLET_SPEED = 200;
 
 
     public Shotgun() {

@@ -14,7 +14,7 @@ public class Indicator extends Sprite {
         super(path);
         this.target = target;
         this.distance = distance;
-        setRotationType(RotationType.UPRIGHT);
+        setRotationType(RotationType.NORMAL);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class Indicator extends Sprite {
         Vector2 pos = dir.normalized().mul(distance);
         setPosition(pos);
         setRotation(pos.heading());
-        setHidden(target.getScale().length() == 0 || target.isHidden() || dir.length() < distance);
+        setHidden(target.getScale().length() == 0 || target.isHidden() || dir.length() < distance * 5);
 
     }
 

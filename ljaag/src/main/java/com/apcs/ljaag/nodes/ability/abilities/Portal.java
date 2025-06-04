@@ -42,14 +42,14 @@ public class Portal extends AbilityData {
 				return new AnimatedSprite("push", new ImageLocation("zhao/portal.png"), true, 0.12, 0.12, 0.12, 0.2);
 			},
 			0.1,
-			5
+			1
 		);
 	}
 
 	/* ================ [ ABILITY ] ================ */
 
 	public Map<Body,Integer> cooldowns = new HashMap<>();
-	public static final int COOLDOWN_FRAMES = 120;
+	public static final int COOLDOWN_FRAMES = 400;
 
 	@Override
 	public void onCollision(Character source, Projectile projectile, BodyEntered signal) {
@@ -74,7 +74,7 @@ public class Portal extends AbilityData {
 			signal.body.setRotation(signal.body.getRotation() + b.getRotation() - projectile.getRotation());
 			signal.body.setVelocity(Vector2.basis(signal.body.getRotation()).mul(signal.body.getVelocity().length()));
 			signal.body.setPosition(b.getPosition());
-			if (!portalsTouching) cooldowns.put(signal.body, COOLDOWN_FRAMES);
+			if (!portalsTouching || !(signal.body instanceof Immortal)) cooldowns.put(signal.body, COOLDOWN_FRAMES);
 			if (signal.body instanceof Immortal) new Sound("sounds/teleport.wav").play();
 		}
 	}

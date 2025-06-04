@@ -42,10 +42,10 @@ public class Zhao3 extends AbilityData {
 					Vector2.of(0, -48),
 					Vector2.of(1),
 					0
-				), "sword", new ImageLocation("zhao/abil3.png"), 0.1, 0.1, 0.1, 0.1, 0.1, 1);
+				), "sword", new ImageLocation("zhao/abil3.png"), 0.1, 0.1, 0.1, 0.1, 0.1, 0.5);
 			},
 			2,
-			10
+			4
 		);
 	}
 
@@ -56,14 +56,14 @@ public class Zhao3 extends AbilityData {
 		if (signal.body instanceof Character target) {
 			if (target instanceof Immortal) return;
 			stunned.put(target, 1.0);
-			target.modifyHealth(-200);
+			target.modifyHealth(-2);
 		}
 	}
 
 	@Override
 	public void update(Character source, Projectile projectile, double delta) {		
 		for (Map.Entry<Character, Double> stun : stunned.entrySet()) {
-			stun.getKey().setVelocity(Vector2.ZERO);
+			stun.getKey().stun(20);
 		};
 
 		stunned.replaceAll((key, val) -> val - delta);

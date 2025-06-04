@@ -1,0 +1,12 @@
+50 40 40
+levels/3_first_spawner.txt
+LLLLLLLLLLL
+LLLLLLLLLLL
+LLd  G  dLL
+LL  d d  LL
+LL d d d LL
+LLd     dLL
+LL       LL
+LL   p   LL
+LLLLLLLLLLL
+LLLLLLLLLLL

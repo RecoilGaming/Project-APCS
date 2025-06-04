@@ -44,7 +44,7 @@ public class WyrmSegment extends Enemy {
     @Override
 	public void update(double delta) {
         super.update(delta);
-		if (health >= 0) {
+		if (!isStunned()) {
             if (leader == null || leader instanceof WyrmSegment && leader.getHealth() <= 0) {
                 Immortal closestPlayer = null;
                 for (Node n : getParent().getAllChildren()) {

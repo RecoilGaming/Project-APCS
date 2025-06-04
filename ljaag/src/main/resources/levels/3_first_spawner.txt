@@ -1,0 +1,13 @@
+50 40 40
+levels/4_first_wyrm.txt
+LLLLLLLLLLLLL
+LLLLLLLLLLLLL
+LL         LL
+LLD L G L DLL
+LL  L   L  LL
+LL         LL
+LL         LL
+LL         LL
+LLLLL L LLLLL
+LLLLL p LLLLL
+LLLLLLLLLLLLL

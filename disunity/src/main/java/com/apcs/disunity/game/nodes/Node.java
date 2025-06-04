@@ -70,9 +70,9 @@ public abstract class Node<T extends Node> {
 
     // Clear chi.d nodes
     public void clearChildren() {
-        for (T child : getDynamicChildren()) {
-            child.setParent(null);
-        }
+        // for (T child : getDynamicChildren()) {
+        //     child.setParent(null);
+        // }
         getDynamicChildren().clear();
     }
 

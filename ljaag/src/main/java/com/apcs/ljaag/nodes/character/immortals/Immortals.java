@@ -13,7 +13,7 @@ public class Immortals {
 
 	public static final Supplier<ImmortalData> ZHAO = () -> new ImmortalData(
 		"zhao",
-		new Statset(100, 100, 100, 100, 100, 100, 0, 100, 100, 0, 0, 0),
+		new Statset(500, 100, 100, 100, 100, 100, 0, 100, 100, 0, 0, 0),
 		new Statset(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 		15,
 		null,

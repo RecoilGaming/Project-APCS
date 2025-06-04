@@ -29,11 +29,13 @@ public class Spawner extends Enemy {
 	public void update(double delta) {
 		if (health > 0) {
             setScale(originalScale.mul((double) getHealth() / originalHealth * 0.75 + 0.25));
-			if (curTimeout <= 0) {
-                spawnBehavior.accept(getGlobalTrans().scaleTo(Vector2.ONE));
-                curTimeout = cooldown;
-            } else {
-                curTimeout -= delta;
+            if (!isStunned()) {
+                if (curTimeout <= 0) {
+                    spawnBehavior.accept(getGlobalTrans().scaleTo(Vector2.ONE));
+                    curTimeout = cooldown;
+                } else {
+                    curTimeout -= delta;
+                }
             }
 		} else {
             setScale(Vector2.ZERO);
