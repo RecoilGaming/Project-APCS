@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import com.apcs.disunity.app.Options;
 import com.apcs.disunity.app.input.InputHandler;
+import com.apcs.disunity.app.input.Inputs;
 import com.apcs.disunity.app.rendering.ScalableBuffer;
 import com.apcs.disunity.app.resources.Sound;
 import com.apcs.disunity.game.nodes.Node;
@@ -115,6 +116,7 @@ public class Game extends JPanel {
     /** Update the game */
     private void update() {
         scenes.getSelected().update(Options.getSPF());
+        Inputs.update();
     }
 
     /** Draw the game */

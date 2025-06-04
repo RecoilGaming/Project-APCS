@@ -25,6 +25,7 @@ public class DeathScreen extends Sprite {
 	public void update(double delta) {
 		if (Inputs.getAction("restart")) {
 			LJAAG.restart();
+			Inputs.clearAction("restart");
 		}
 
 		super.update(delta);

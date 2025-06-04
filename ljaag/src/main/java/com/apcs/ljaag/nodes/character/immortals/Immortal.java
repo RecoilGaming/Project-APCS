@@ -118,6 +118,7 @@ public class Immortal extends Character<ImmortalData> {
 		if (!Game.getInstance().isPaused && Inputs.getAction("pause")) {
 			Game.getInstance().pause();
 			Game.getInstance().getScene().addChild(new PauseScreen(getPosition()));
+			Inputs.clearAction("pause");
 		}
 
 		// Movement

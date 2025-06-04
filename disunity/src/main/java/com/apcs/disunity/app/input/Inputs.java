@@ -31,6 +31,8 @@ public class Inputs {
     // Tracks which inputs are currently pressed
     private static final Set<Input> inputs = new HashSet<>();
 
+    private static final Map<String, Integer> cleared = new HashMap<>();
+
     // Global mouse position on the screen
     static Vector2 rawMousePos = Vector2.of(-1);
 
@@ -56,6 +58,8 @@ public class Inputs {
 
     // Returns true if the specified action is currently triggered
     public static boolean getAction(String name) {
+        if (cleared.getOrDefault(name, 0) > 0) return false;
+
         ActionSet set = actions.get(name);
         if (set == null)
             return false;
@@ -73,6 +77,16 @@ public class Inputs {
         }
 
         return false;
+    }
+
+    // Clear an action for the frame
+    public static void clearAction(String name) {
+        cleared.put(name, 5);
+    }
+
+    public static void update() {
+        cleared.replaceAll((key, val) -> val - 1);
+		cleared.entrySet().removeIf(entry -> entry.getValue() <= 0);
     }
 
     /* ================ [ MOUSE ] ================ */
