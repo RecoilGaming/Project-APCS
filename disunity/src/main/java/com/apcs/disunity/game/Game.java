@@ -32,6 +32,8 @@ public class Game extends JPanel {
     /** Whether this game is the host instance */
     public final boolean isHost;
 
+    public boolean isPaused = false;
+
     /** The singleton instance of the game */
     private static Game instance;
 
@@ -47,7 +49,7 @@ public class Game extends JPanel {
     /** The buffer that draws and scales the game */
     private ScalableBuffer buffer;
 
-    private final Selector<String, Scene> scenes = new Selector<>(new Scene("default"));
+    private Selector<String, Scene> scenes = new Selector<>(new Scene("default"));
 
     private SignalBus globalSignal;
 
@@ -96,6 +98,14 @@ public class Game extends JPanel {
     }
 
     /* ================ [ GAME ] ================ */
+
+    public void pause() {
+        isPaused = true;
+    }
+
+    public void unpause() {
+        isPaused = false;
+    }
 
     /** Start the game loop */
     public void start() {
@@ -157,6 +167,10 @@ public class Game extends JPanel {
      */
     public static Game getInstance() {
         return instance;
+    }
+
+    public void resetScenes() {
+        scenes = new Selector<>(new Scene("default"));
     }
 
     public void addScene(String name, Node<?>... children) {

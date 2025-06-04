@@ -1,6 +1,7 @@
 package com.apcs.disunity.game.nodes.twodim;
 
 import com.apcs.disunity.app.network.packet.annotation.SyncedObject;
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.FieldChild;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.collider.Collider;
@@ -55,7 +56,9 @@ public abstract class Body extends Node2D<Node<?>> {
 
     @Override
     public void update(double delta) {
-        addPosition(velocity.mul(delta));
+        if (!Game.getInstance().isPaused) {
+            addPosition(velocity.mul(delta));
+        }
 
         super.update(delta);
     }

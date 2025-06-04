@@ -1,9 +1,12 @@
 package com.apcs.ljaag.nodes.character.immortals;
 
 import com.apcs.disunity.app.input.Inputs;
+import com.apcs.disunity.game.Game;
 import com.apcs.disunity.game.nodes.Node;
 import com.apcs.disunity.game.nodes.sprite.ImageLocation;
 import com.apcs.disunity.math.Transform;
+import com.apcs.ljaag.nodes.DeathScreen;
+import com.apcs.ljaag.nodes.PauseScreen;
 import com.apcs.ljaag.nodes.ability.Ability;
 import com.apcs.ljaag.nodes.character.Character;
 import com.apcs.ljaag.nodes.indexed.InputVector;
@@ -98,26 +101,41 @@ public class Immortal extends Character<ImmortalData> {
 		this.ultimateAbility = new Ability(data.ULTIMATE);
 	}
 
+	@Override
+	public void onDeath() {
+		if (Game.getInstance().isPaused) return;
+
+		super.onDeath();
+		Game.getInstance().pause();
+
+		Game.getInstance().getScene().addChild(new DeathScreen(getPosition()));
+	}
+
 	/* ================ [ NODE ] ================ */
 
 	@Override
 	public void update(double delta) {
+		if (!Game.getInstance().isPaused && Inputs.getAction("pause")) {
+			Game.getInstance().pause();
+			Game.getInstance().getScene().addChild(new PauseScreen(getPosition()));
+		}
+
 		// Movement
 		if (!isStunned()) {
 			setVelocity(moveDir.get().mul(getStat(StatType.SPEED)));
 		}
 
 		// Abilities
-		if (Inputs.getAction("basic")) {
+		if (Inputs.getAction("basic") && !Game.getInstance().isPaused) {
 			basicAbility.use(this);
 		}
-		if (Inputs.getAction("skill1")) {
+		if (Inputs.getAction("skill1") && !Game.getInstance().isPaused) {
 			skill1Ability.use(this);
 		}
-		if (Inputs.getAction("skill2")) {
+		if (Inputs.getAction("skill2") && !Game.getInstance().isPaused) {
 			skill2Ability.use(this);
 		}
-		if (Inputs.getAction("ultimate")) {
+		if (Inputs.getAction("ultimate") && !Game.getInstance().isPaused) {
 			ultimateAbility.use(this);
 		}
 

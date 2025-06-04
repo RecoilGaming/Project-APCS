@@ -54,6 +54,9 @@ import com.apcs.ljaag.nodes.character.enemies.EnemyManager;
  */
 public class LJAAG {
 
+    private static Game game;
+    private static Scene scene;
+
     public static final double SIMULATION_DISTANCE_CHUNKS = 5;
 
     /* ================ [ METHODS ] ================ */
@@ -70,7 +73,7 @@ public class LJAAG {
         Scene scene = new Scene("levels/0_start.txt");
 
         // Create game application
-        Game game = new Game(Vector2.of(480, 270));
+        game = new Game(Vector2.of(480, 270));
         game.addScene(scene);
         game.setScene("levels/0_start.txt");
 
@@ -97,6 +100,19 @@ public class LJAAG {
     /* ================ [ DRIVER ] ================ */
 
     public static void main(String[] args) { play(true); }
+
+    public static void restart() {
+        // Game.getInstance().resetScenes();
+
+        // try {
+        //     loadLevel("levels/test.txt", scene, game);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+
+        // game.setScene("levels/test.txt");
+        Game.getInstance().unpause();
+    }
 
     public static void loadLevel(String name, Scene scene, Game game) throws IOException {
         
@@ -163,7 +179,6 @@ public class LJAAG {
                                 },
                                 () -> {
                                     game.setScene(nextLevelPath);
-                                    
                                 },
                                 new Collider(blockSize / 2, blockSize / 2),
                                 new Area2D(Vector2.of(blockSize / 2))
@@ -188,7 +203,7 @@ public class LJAAG {
                             @Override
                             public void onBodyEntered(BodyEntered signal) {
                                 if (signal.body instanceof Character c) {
-                                    c.modifyHealth(-1);
+                                    c.modifyHealth((c instanceof Immortal) ? -10 : -2);
                                 }
                             }
 

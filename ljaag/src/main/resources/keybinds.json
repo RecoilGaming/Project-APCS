@@ -12,5 +12,6 @@
   "fire" : [ [ "Left Click" ] ],
   "swing" : [ [ "Space" ] ],
   
-  "restart" : [ [ "R" ], [ "Enter" ] ]
+  "restart" : [ [ "R" ], [ "Enter" ] ],
+  "pause": [ [ "Escape" ] ]
 }
